@@ -78,6 +78,28 @@ an `IntersectionObserver` that adds `.zn-in` on first intersection, staggered by
 position. This is presentation-only — don't rely on it for anything that must be visible
 without JS.
 
+**Motion system**: all motion is CSS-only (no JS animation loops, no libraries) and every
+keyframe is namespaced `zn-*`. The deliberate principle, borrowed from the Resend reference
+the direction came from, is that motion is *concentrated rather than scattered* — one
+signature plus slow ambient movement. Resist adding more effects per section; that is what
+makes this read as designed rather than generated.
+- **`.signal-net` is the signature.** An inline SVG in the hero where four source lines
+  converge into a single node, with accent pulses travelling along the curves via CSS
+  `offset-path` + `offset-distance` (not SMIL, so the global reduced-motion rule disables it
+  like any other animation). It encodes the company thesis — many systems integrated into
+  one — so keep the converging geometry if you restyle it. It is masked on the left
+  (`mask-image`) so pulses fade before they reach the headline, sits *below* `.hero-fade` in
+  DOM order so the fade veils it, and is `display: none` under 900px.
+- **`.eyebrow-wrap`** is the hero badge's rotating conic-gradient border: an oversized
+  `::before` square spinning under `overflow: hidden`, with the inner `.eyebrow` painting
+  `var(--bg)` over the middle to leave only a 1px rim. The wrapper's `background: var(--bd)`
+  is the fallback rim when the spinner is disabled.
+- `.hero-glow` drifts on an 18s loop; the marquee pauses on hover via `animation-play-state`.
+- **Reduced motion**: the global block already kills `animation`/`transition` everywhere, but
+  anything that would be left frozen mid-flight is additionally hidden (`.signal-pulse`,
+  `.signal-ping`, `.eyebrow-wrap::before`) — a pulse stranded mid-curve reads as a bug, not
+  as stillness. Check this when adding motion.
+
 **Lead form**: `#lead-form`'s submit handler validates a work email — free consumer
 providers (Gmail, Outlook, Yahoo, iCloud, etc., see the `FREE_EMAIL_DOMAINS` list in the
 script) are rejected inline before submission is attempted, which is deliberate business
