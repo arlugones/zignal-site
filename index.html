@@ -329,6 +329,47 @@
     outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
   }
   .field input[data-invalid="true"] { border-color: var(--bad); }
+
+  .phone-field {
+    position: relative;
+    display: flex; align-items: stretch;
+    background: var(--fill); border: 1px solid var(--bd); border-radius: 8px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .phone-field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .phone-country-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: transparent; border: none; border-right: 1px solid var(--bd); border-radius: 8px 0 0 8px;
+    padding: 0 10px 0 13px; color: var(--tx); font-size: 14px; font-family: inherit; cursor: pointer; flex: 0 0 auto;
+  }
+  .phone-country-btn .flag-icon { width: 20px; height: 14px; border-radius: 2px; flex-shrink: 0; overflow: hidden; }
+  .phone-country-btn .chev { width: 8px; height: 8px; flex-shrink: 0; color: var(--mut); }
+  .phone-country-btn .cc-placeholder {
+    width: 20px; height: 14px; border-radius: 2px; border: 1px dashed var(--bd); flex-shrink: 0;
+  }
+  .phone-country-btn .cc-selected { display: flex; align-items: center; gap: 6px; }
+  .phone-country-btn .cc-code { font-size: 13px; color: var(--tx2); }
+  .field .phone-field input.phone-number {
+    background: transparent; border: none; border-radius: 0 8px 8px 0; flex: 1; min-width: 0;
+    padding: 11px 13px; color: var(--tx); font-size: 15px;
+  }
+  .field .phone-field input.phone-number:focus { outline: none; box-shadow: none; }
+
+  .phone-country-list {
+    position: absolute; z-index: 20; top: calc(100% + 6px); left: 0;
+    width: 220px; max-height: 280px; overflow-y: auto;
+    background: var(--elev); border: 1px solid var(--bd); border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    list-style: none; padding: 6px;
+  }
+  .phone-country-list[hidden] { display: none; }
+  .phone-country-list li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 9px; border-radius: 6px; font-size: 14px; color: var(--tx2); cursor: pointer;
+  }
+  .phone-country-list li .flag-icon { width: 22px; height: 15px; border-radius: 2px; flex-shrink: 0; overflow: hidden; }
+  .phone-country-list li:hover, .phone-country-list li.is-focused { background: var(--hover); color: var(--tx); }
+
   .form-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .form-status { font-size: 14px; color: var(--mut); }
   .form-status.ok { color: var(--ok); }
@@ -588,8 +629,8 @@
           <h2><span lang="es">Agenda una demo</span><span lang="en">Book a demo</span></h2>
           <p><span lang="es">Cuéntanos qué proceso quieres automatizar. Respondemos en menos de 24 horas hábiles.</span><span lang="en">Tell us which process you want to automate. We reply within one business day.</span></p>
           <div class="contact-meta mono">
-            <div>hola@zignalnexora.com</div>
-            <div>+00 000 000 000</div>
+            <div>contact@zignalnexora.com</div>
+            <div>+593 98 315 6210</div>
           </div>
         </div>
 
@@ -609,10 +650,18 @@
             <span><span lang="es">Empresa</span><span lang="en">Company</span></span>
             <input name="company" required autocomplete="organization" data-es-ph="Nombre de la empresa" data-en-ph="Company name" placeholder="Nombre de la empresa">
           </label>
-          <label class="field">
-            <span><span lang="es">Teléfono (opcional)</span><span lang="en">Phone (optional)</span></span>
-            <input name="phone" autocomplete="tel" data-es-ph="+00 000 000 000" data-en-ph="+00 000 000 000" placeholder="+00 000 000 000">
-          </label>
+          <div class="field">
+            <label for="phone-number"><span lang="es">Teléfono (opcional)</span><span lang="en">Phone (optional)</span></label>
+            <div class="phone-field" id="phone-field">
+              <input type="hidden" name="phone_country" id="phone-country-value" value="">
+              <button type="button" class="phone-country-btn" id="phone-country-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="phone-country-list" aria-label="Country code">
+                <span class="cc-placeholder" id="phone-country-current"></span>
+                <svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 7l5 6 5-6"/></svg>
+              </button>
+              <ul class="phone-country-list" id="phone-country-list" role="listbox" tabindex="-1" aria-label="Country code" hidden></ul>
+              <input name="phone" type="tel" inputmode="tel" id="phone-number" class="phone-number" autocomplete="tel-national" data-es-ph="99 999 9999" data-en-ph="99 999 9999" placeholder="99 999 9999">
+            </div>
+          </div>
           <label class="field field-full">
             <span><span lang="es">¿Qué producto te interesa?</span><span lang="en">Which product are you interested in?</span></span>
             <select name="product">
@@ -667,8 +716,8 @@
       </div>
       <div class="footer-col">
         <div class="footer-col-title mono"><span lang="es">Contacto</span><span lang="en">Contact</span></div>
-        <a href="mailto:hola@zignalnexora.com">hola@zignalnexora.com</a>
-        <span class="static">+00 000 000 000</span>
+        <a href="mailto:contact@zignalnexora.com">contact@zignalnexora.com</a>
+        <span class="static">+593 98 315 6210</span>
         <span class="static">LATAM · <span lang="es">Remoto</span><span lang="en">Remote</span></span>
       </div>
     </div>
@@ -790,6 +839,274 @@
         restartTimer();
       }
 
+      /* ===== PHONE COUNTRY PICKER ===== */
+      (function () {
+        function rect(x, y, w, h, fill) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + fill + '"/>'; }
+        function circle(cx, cy, r, fill) { return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + fill + '"/>'; }
+        function poly(pts, fill) { return '<polygon points="' + pts + '" fill="' + fill + '"/>'; }
+        function star(cx, cy, r, fill) {
+          var p = [], rot = -Math.PI / 2;
+          for (var i = 0; i < 10; i++) { var a = rot + i * Math.PI / 5; var rr = i % 2 ? r * 0.4 : r; p.push((cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2)); }
+          return poly(p.join(' '), fill);
+        }
+        function hex(r, fill) {
+          r = r || 3;
+          return poly('10,' + (7 - r) + ' ' + (10 + r * 0.866).toFixed(2) + ',' + (7 - r * 0.5) + ' ' + (10 - r * 0.866).toFixed(2) + ',' + (7 - r * 0.5), fill) +
+                 poly('10,' + (7 + r) + ' ' + (10 - r * 0.866).toFixed(2) + ',' + (7 + r * 0.5) + ' ' + (10 + r * 0.866).toFixed(2) + ',' + (7 + r * 0.5), fill);
+        }
+        function fSolid(c) { return rect(0, 0, 20, 14, c); }
+        function fH(colors) { var n = colors.length, h = 14 / n, s = ''; for (var i = 0; i < n; i++) s += rect(0, i * h, 20, h, colors[i]); return s; }
+        function fHR(colors, ratios) { var t = ratios.reduce(function (a, b) { return a + b; }, 0), y = 0, s = ''; for (var i = 0; i < colors.length; i++) { var h = 14 * ratios[i] / t; s += rect(0, y, 20, h, colors[i]); y += h; } return s; }
+        function fV(colors) { var n = colors.length, w = 20 / n, s = ''; for (var i = 0; i < n; i++) s += rect(i * w, 0, w, 14, colors[i]); return s; }
+        function fVR(colors, ratios) { var t = ratios.reduce(function (a, b) { return a + b; }, 0), x = 0, s = ''; for (var i = 0; i < colors.length; i++) { var w = 20 * ratios[i] / t; s += rect(x, 0, w, 14, colors[i]); x += w; } return s; }
+        function fDisc(bg, fg, r) { return fSolid(bg) + circle(10, 7, r || 4, fg); }
+        function fCross(bg, fg) { return fSolid(bg) + rect(6.5, 0, 3, 14, fg) + rect(0, 5.5, 20, 3, fg); }
+        function fQuad(tl, tr, bl, br) { return rect(0, 0, 10, 7, tl) + rect(10, 0, 10, 7, tr) + rect(0, 7, 10, 7, bl) + rect(10, 7, 10, 7, br); }
+        function fCrescentStar(bg, fg) { return fSolid(bg) + circle(9.5, 7, 4.2, fg) + circle(10.7, 7, 3.5, bg) + star(14, 7, 1.6, fg); }
+        function fTriStripe(colors, triColor, starColor) { return fHR(colors, colors.map(function () { return 1; })) + poly('0,0 8,7 0,14', triColor) + (starColor ? star(2.8, 7, 1.4, starColor) : ''); }
+        function fUnionJack() {
+          return fSolid('#00247D') +
+            '<rect x="9.2" y="-4" width="1.6" height="22" fill="#FFFFFF" transform="rotate(35 10 7)"/>' +
+            '<rect x="9.2" y="-4" width="1.6" height="22" fill="#FFFFFF" transform="rotate(-35 10 7)"/>' +
+            rect(8.5, 0, 3, 14, '#FFFFFF') + rect(0, 5.5, 20, 3, '#FFFFFF') +
+            '<rect x="9.6" y="-4" width="0.8" height="22" fill="#CF142B" transform="rotate(35 10 7)"/>' +
+            '<rect x="9.6" y="-4" width="0.8" height="22" fill="#CF142B" transform="rotate(-35 10 7)"/>' +
+            rect(9.2, 0, 1.6, 14, '#CF142B') + rect(0, 6.2, 20, 1.6, '#CF142B');
+        }
+        function fSaltireField(bg, saltireColor) {
+          return fSolid(bg) +
+            poly('0,0 20,0 10,7', '#000000') + poly('0,14 20,14 10,7', '#000000') +
+            '<rect x="9.2" y="-4" width="1.6" height="22" fill="' + saltireColor + '" transform="rotate(35 10 7)"/>' +
+            '<rect x="9.2" y="-4" width="1.6" height="22" fill="' + saltireColor + '" transform="rotate(-35 10 7)"/>';
+        }
+        function fDiagonalBand(bg, bandColor, lineColor) {
+          return fSolid(bg) +
+            '<rect x="7" y="-6" width="6" height="26" fill="' + lineColor + '" transform="rotate(-35 10 7)"/>' +
+            '<rect x="8" y="-6" width="4" height="26" fill="' + bandColor + '" transform="rotate(-35 10 7)"/>';
+        }
+        function fTaeguk() {
+          return fSolid('#FFFFFF') +
+            '<path d="M10,3 A4,4 0 0,1 10,11 A2,2 0 0,0 10,7 A2,2 0 0,1 10,3 Z" fill="#CD2E3A"/>' +
+            '<path d="M10,3 A4,4 0 0,0 10,11 A2,2 0 0,1 10,7 A2,2 0 0,0 10,3 Z" fill="#0047A0"/>';
+        }
+        var flags = {
+          us: fH(['#B22234', '#FFFFFF', '#B22234', '#FFFFFF', '#B22234', '#FFFFFF']) + rect(0, 0, 8, 8, '#3C3B6E'),
+          ca: fV(['#FF0000', '#FFFFFF', '#FF0000']) + star(10, 7, 1.7, '#FF0000'),
+          do_: fQuad('#002D62', '#CE1126', '#CE1126', '#002D62') + rect(8.5, 0, 3, 14, '#FFFFFF') + rect(0, 5.5, 20, 3, '#FFFFFF'),
+          pr: fTriStripe(['#ED1C24', '#FFFFFF', '#ED1C24', '#FFFFFF', '#ED1C24'], '#0050A4', '#FFFFFF'),
+          jm: fSaltireField('#009B3A', '#FED100'),
+          tt: fDiagonalBand('#CE1126', '#000000', '#FFFFFF'),
+          ru: fH(['#FFFFFF', '#0039A6', '#D52B1E']),
+          eg: fH(['#CE1126', '#FFFFFF', '#000000']),
+          za: fH(['#DE3831', '#FFFFFF', '#007A4D', '#FFFFFF', '#001489']),
+          gr: fH(['#0D5EAF', '#FFFFFF', '#0D5EAF', '#FFFFFF']) + rect(0, 0, 8, 7, '#0D5EAF') + rect(2.7, 0, 2.6, 7, '#FFFFFF') + rect(0, 2.2, 8, 2.6, '#FFFFFF'),
+          nl: fH(['#AE1C28', '#FFFFFF', '#21468B']),
+          be: fV(['#000000', '#FFCD00', '#ED2939']),
+          fr: fV(['#0055A4', '#FFFFFF', '#EF4135']),
+          es: fHR(['#AA151B', '#F1BF00', '#AA151B'], [1, 2, 1]),
+          hu: fH(['#CD2A3E', '#FFFFFF', '#436F4D']),
+          it: fV(['#009246', '#FFFFFF', '#CE2B37']),
+          ro: fV(['#002B7F', '#FCD116', '#CE1126']),
+          ch: fSolid('#D52B1E') + rect(8.6, 4, 2.8, 6, '#FFFFFF') + rect(6, 5.6, 8, 2.8, '#FFFFFF'),
+          at: fH(['#ED2939', '#FFFFFF', '#ED2939']),
+          gb: fUnionJack(),
+          dk: fCross('#C60C30', '#FFFFFF'),
+          se: fCross('#006AA7', '#FECC02'),
+          no: fCross('#EF2B2D', '#FFFFFF') + rect(7.3, 0, 1.4, 14, '#002868') + rect(0, 6.3, 20, 1.4, '#002868'),
+          pl: fH(['#FFFFFF', '#DC143C']),
+          de: fH(['#000000', '#DD0000', '#FFCE00']),
+          pe: fV(['#D91023', '#FFFFFF', '#D91023']),
+          mx: fV(['#006847', '#FFFFFF', '#CE1126']),
+          cu: fTriStripe(['#002A8F', '#FFFFFF', '#002A8F', '#FFFFFF', '#002A8F'], '#CB1515', '#FFFFFF'),
+          ar: fH(['#75AADB', '#FFFFFF', '#75AADB']) + circle(10, 7, 1.5, '#F6B40E'),
+          br: fSolid('#009739') + poly('10,1.5 18,7 10,12.5 2,7', '#FEDD00') + circle(10, 7, 3.2, '#012169'),
+          cl: rect(0, 0, 20, 7, '#FFFFFF') + rect(0, 7, 20, 7, '#D52B1E') + rect(0, 0, 7, 7, '#0039A6') + star(3.5, 3.5, 1.6, '#FFFFFF'),
+          co: fHR(['#FCD116', '#003893', '#CE1126'], [2, 1, 1]),
+          ve: fHR(['#FCD116', '#00247D', '#CE1126'], [1, 1, 1]) + star(6, 7, 0.55, '#FFFFFF') + star(8, 7, 0.55, '#FFFFFF') + star(10, 7, 0.55, '#FFFFFF') + star(12, 7, 0.55, '#FFFFFF') + star(14, 7, 0.55, '#FFFFFF'),
+          my: fH(['#CC0001', '#FFFFFF', '#CC0001', '#FFFFFF']) + rect(0, 0, 9, 7.5, '#010066') + circle(4.3, 3.7, 2.2, '#FFCC00') + circle(5.1, 3.5, 1.9, '#010066') + star(6.8, 3.7, 1, '#FFCC00'),
+          au: fSolid('#00247D') + star(5, 4, 0.8, '#FFFFFF') + star(6.5, 6, 0.8, '#FFFFFF') + star(5.5, 8.2, 0.8, '#FFFFFF') + star(4, 9.5, 0.6, '#FFFFFF'),
+          id: fH(['#FF0000', '#FFFFFF']),
+          ph: rect(0, 0, 20, 7, '#0038A8') + rect(0, 7, 20, 7, '#CE1126') + poly('0,0 8,7 0,14', '#FFFFFF'),
+          nz: fSolid('#00247D') + star(13, 4, 0.7, '#CE1126') + star(16, 6.5, 0.9, '#CE1126') + star(14, 9, 0.7, '#CE1126') + star(11, 10.5, 0.6, '#CE1126'),
+          sg: fH(['#ED2939', '#FFFFFF']) + circle(4, 3.2, 1.6, '#FFFFFF') + circle(4.6, 3, 1.35, '#ED2939') + star(6.6, 3.2, 0.8, '#FFFFFF'),
+          th: fHR(['#A51931', '#F4F5F8', '#2D2A4A', '#F4F5F8', '#A51931'], [1, 1, 2, 1, 1]),
+          jp: fDisc('#FFFFFF', '#BC002D', 4.2),
+          kr: fTaeguk(),
+          vn: fSolid('#DA251D') + star(10, 7, 2.6, '#FFFF00'),
+          cn: fSolid('#DE2910') + star(5, 4, 2.2, '#FFDE00'),
+          tr: fCrescentStar('#E30A17', '#FFFFFF'),
+          in_: fH(['#FF9933', '#FFFFFF', '#138808']),
+          ma: fSolid('#C1272D') + star(10, 7, 3.2, '#006233'),
+          ng: fV(['#008751', '#FFFFFF', '#008751']),
+          ke: fH(['#000000', '#BB0000', '#006600']),
+          pt: fVR(['#046A38', '#DA291C'], [2, 3]),
+          ie: fV(['#169B62', '#FFFFFF', '#FF883E']),
+          fi: fCross('#FFFFFF', '#003580'),
+          ua: fH(['#005BBB', '#FFD500']),
+          cz: rect(0, 0, 20, 7, '#FFFFFF') + rect(0, 7, 20, 7, '#D7141A') + poly('0,0 8,7 0,14', '#11457E'),
+          bz: fHR(['#CE1126', '#003F87', '#CE1126'], [1, 4, 1]),
+          gt: fV(['#4997D0', '#FFFFFF', '#4997D0']),
+          sv: fH(['#0047AB', '#FFFFFF', '#0047AB']),
+          hn: fH(['#0073CF', '#FFFFFF', '#0073CF']),
+          ni: fH(['#0067C6', '#FFFFFF', '#0067C6']),
+          cr: fHR(['#002B7F', '#FFFFFF', '#CE1126', '#FFFFFF', '#002B7F'], [1, 1, 2, 1, 1]),
+          pa: fQuad('#FFFFFF', '#D21034', '#0072C6', '#FFFFFF') + star(5, 3.5, 1.4, '#0072C6') + star(15, 10.5, 1.4, '#D21034'),
+          ht: fH(['#00209F', '#D21034']),
+          bo: fH(['#DA291C', '#FFD100', '#007934']),
+          gy: fSolid('#009739') + poly('0,0 12,7 0,14', '#FCD116') + poly('0,0 7,7 0,14', '#CE1126'),
+          ec: fHR(['#FCD116', '#003893', '#CE1126'], [2, 1, 1]),
+          py: fH(['#D52B1E', '#FFFFFF', '#0038A8']),
+          sr: fHR(['#377E3F', '#FFFFFF', '#B40A2D', '#FFFFFF', '#377E3F'], [2, 1, 4, 1, 2]),
+          uy: fH(['#0038A8', '#FFFFFF', '#0038A8', '#FFFFFF', '#0038A8', '#FFFFFF']),
+          hk: fSolid('#DE2910') + star(10, 7, 2.6, '#FFFFFF'),
+          tw: fSolid('#FE0000') + rect(0, 0, 9, 7, '#000095') + star(4.5, 3.5, 1.7, '#FFFFFF'),
+          sa: fSolid('#006C35'),
+          ae: rect(5, 0, 15, 4.67, '#00732F') + rect(5, 4.67, 15, 4.67, '#FFFFFF') + rect(5, 9.34, 15, 4.67, '#000000') + rect(0, 0, 5, 14, '#FF0000'),
+          il: fSolid('#FFFFFF') + rect(0, 1.2, 20, 1.8, '#0038B8') + rect(0, 11, 20, 1.8, '#0038B8') + hex(3, '#0038B8')
+        };
+
+        var COUNTRIES = [
+          { iso: 'us', code: '+1', name: 'United States' },
+          { iso: 'ca', code: '+1', name: 'Canada' },
+          { iso: 'do_', code: '+1', name: 'Dominican Republic' },
+          { iso: 'pr', code: '+1', name: 'Puerto Rico' },
+          { iso: 'jm', code: '+1', name: 'Jamaica' },
+          { iso: 'tt', code: '+1', name: 'Trinidad and Tobago' },
+          { iso: 'ru', code: '+7', name: 'Russia' },
+          { iso: 'eg', code: '+20', name: 'Egypt' },
+          { iso: 'za', code: '+27', name: 'South Africa' },
+          { iso: 'gr', code: '+30', name: 'Greece' },
+          { iso: 'nl', code: '+31', name: 'Netherlands' },
+          { iso: 'be', code: '+32', name: 'Belgium' },
+          { iso: 'fr', code: '+33', name: 'France' },
+          { iso: 'es', code: '+34', name: 'Spain' },
+          { iso: 'hu', code: '+36', name: 'Hungary' },
+          { iso: 'it', code: '+39', name: 'Italy' },
+          { iso: 'ro', code: '+40', name: 'Romania' },
+          { iso: 'ch', code: '+41', name: 'Switzerland' },
+          { iso: 'at', code: '+43', name: 'Austria' },
+          { iso: 'gb', code: '+44', name: 'United Kingdom' },
+          { iso: 'dk', code: '+45', name: 'Denmark' },
+          { iso: 'se', code: '+46', name: 'Sweden' },
+          { iso: 'no', code: '+47', name: 'Norway' },
+          { iso: 'pl', code: '+48', name: 'Poland' },
+          { iso: 'de', code: '+49', name: 'Germany' },
+          { iso: 'pe', code: '+51', name: 'Peru' },
+          { iso: 'mx', code: '+52', name: 'Mexico' },
+          { iso: 'cu', code: '+53', name: 'Cuba' },
+          { iso: 'ar', code: '+54', name: 'Argentina' },
+          { iso: 'br', code: '+55', name: 'Brazil' },
+          { iso: 'cl', code: '+56', name: 'Chile' },
+          { iso: 'co', code: '+57', name: 'Colombia' },
+          { iso: 've', code: '+58', name: 'Venezuela' },
+          { iso: 'my', code: '+60', name: 'Malaysia' },
+          { iso: 'au', code: '+61', name: 'Australia' },
+          { iso: 'id', code: '+62', name: 'Indonesia' },
+          { iso: 'ph', code: '+63', name: 'Philippines' },
+          { iso: 'nz', code: '+64', name: 'New Zealand' },
+          { iso: 'sg', code: '+65', name: 'Singapore' },
+          { iso: 'th', code: '+66', name: 'Thailand' },
+          { iso: 'jp', code: '+81', name: 'Japan' },
+          { iso: 'kr', code: '+82', name: 'South Korea' },
+          { iso: 'vn', code: '+84', name: 'Vietnam' },
+          { iso: 'cn', code: '+86', name: 'China' },
+          { iso: 'tr', code: '+90', name: 'Turkey' },
+          { iso: 'in_', code: '+91', name: 'India' },
+          { iso: 'ma', code: '+212', name: 'Morocco' },
+          { iso: 'ng', code: '+234', name: 'Nigeria' },
+          { iso: 'ke', code: '+254', name: 'Kenya' },
+          { iso: 'pt', code: '+351', name: 'Portugal' },
+          { iso: 'ie', code: '+353', name: 'Ireland' },
+          { iso: 'fi', code: '+358', name: 'Finland' },
+          { iso: 'ua', code: '+380', name: 'Ukraine' },
+          { iso: 'cz', code: '+420', name: 'Czechia' },
+          { iso: 'bz', code: '+501', name: 'Belize' },
+          { iso: 'gt', code: '+502', name: 'Guatemala' },
+          { iso: 'sv', code: '+503', name: 'El Salvador' },
+          { iso: 'hn', code: '+504', name: 'Honduras' },
+          { iso: 'ni', code: '+505', name: 'Nicaragua' },
+          { iso: 'cr', code: '+506', name: 'Costa Rica' },
+          { iso: 'pa', code: '+507', name: 'Panama' },
+          { iso: 'ht', code: '+509', name: 'Haiti' },
+          { iso: 'bo', code: '+591', name: 'Bolivia' },
+          { iso: 'gy', code: '+592', name: 'Guyana' },
+          { iso: 'ec', code: '+593', name: 'Ecuador' },
+          { iso: 'py', code: '+595', name: 'Paraguay' },
+          { iso: 'sr', code: '+597', name: 'Suriname' },
+          { iso: 'uy', code: '+598', name: 'Uruguay' },
+          { iso: 'hk', code: '+852', name: 'Hong Kong' },
+          { iso: 'tw', code: '+886', name: 'Taiwan' },
+          { iso: 'sa', code: '+966', name: 'Saudi Arabia' },
+          { iso: 'ae', code: '+971', name: 'United Arab Emirates' },
+          { iso: 'il', code: '+972', name: 'Israel' }
+        ];
+
+        function flagSvg(iso, cls) {
+          return '<svg class="' + cls + '" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + (flags[iso] || '') + '</svg>';
+        }
+
+        var wrap = document.getElementById('phone-field');
+        var btn = document.getElementById('phone-country-btn');
+        var list = document.getElementById('phone-country-list');
+        var current = document.getElementById('phone-country-current');
+        var hiddenInput = document.getElementById('phone-country-value');
+        if (!wrap) return;
+
+        COUNTRIES.forEach(function (c, i) {
+          var li = document.createElement('li');
+          li.setAttribute('role', 'option');
+          li.id = 'phone-opt-' + i;
+          li.dataset.code = c.code;
+          li.dataset.iso = c.iso;
+          li.innerHTML = flagSvg(c.iso, 'flag-icon') + '<span>' + c.name + ' ' + c.code + '</span>';
+          list.appendChild(li);
+        });
+
+        var focusedIndex = -1;
+        function setOpen(open) {
+          list.hidden = !open;
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          if (open) {
+            focusedIndex = COUNTRIES.findIndex(function (c) { return c.code === hiddenInput.value; });
+            if (focusedIndex < 0) focusedIndex = 0;
+            highlight(focusedIndex);
+            list.focus();
+          }
+        }
+        function highlight(i) {
+          var items = list.querySelectorAll('li');
+          items.forEach(function (el) { el.classList.remove('is-focused'); });
+          if (items[i]) { items[i].classList.add('is-focused'); items[i].scrollIntoView({ block: 'nearest' }); list.setAttribute('aria-activedescendant', items[i].id); }
+        }
+        function select(i) {
+          var c = COUNTRIES[i];
+          if (!c) return;
+          hiddenInput.value = c.code;
+          current.className = 'cc-selected';
+          current.innerHTML = flagSvg(c.iso, 'flag-icon') + '<span class="cc-code">' + c.code + '</span>';
+          setOpen(false);
+          btn.focus();
+        }
+
+        btn.addEventListener('click', function () { setOpen(list.hidden); });
+        list.addEventListener('click', function (e) {
+          var li = e.target.closest('li');
+          if (!li) return;
+          select(COUNTRIES.findIndex(function (c) { return c.iso === li.dataset.iso && c.code === li.dataset.code; }));
+        });
+        list.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown') { e.preventDefault(); focusedIndex = Math.min(focusedIndex + 1, COUNTRIES.length - 1); highlight(focusedIndex); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); focusedIndex = Math.max(focusedIndex - 1, 0); highlight(focusedIndex); }
+          else if (e.key === 'Home') { e.preventDefault(); focusedIndex = 0; highlight(focusedIndex); }
+          else if (e.key === 'End') { e.preventDefault(); focusedIndex = COUNTRIES.length - 1; highlight(focusedIndex); }
+          else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(focusedIndex); }
+          else if (e.key === 'Escape') { e.preventDefault(); setOpen(false); btn.focus(); }
+        });
+        document.addEventListener('click', function (e) {
+          if (!wrap.contains(e.target)) setOpen(false);
+        });
+      })();
+
       /* ===== CONTACT FORM ===== */
       var FREE_EMAIL_DOMAINS = ['gmail.com','googlemail.com','hotmail.com','hotmail.es','hotmail.co.uk','outlook.com','outlook.es','live.com','live.com.mx','msn.com','yahoo.com','yahoo.es','yahoo.com.mx','ymail.com','icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com','gmx.com','gmx.net','mail.com','mail.ru','yandex.com','yandex.ru','zoho.com','tutanota.com','hushmail.com','inbox.com','fastmail.com','pm.me','qq.com','163.com','126.com','naver.com','hotmail.fr','yahoo.fr','free.fr','terra.com','prodigy.net.mx','uol.com.br','bol.com.br'];
       var FORM_ENDPOINT = ''; // Formspree ID, e.g. 'https://formspree.io/f/xxxxxxx' — falls back to mailto when empty
@@ -839,11 +1156,11 @@
             (es ? 'Nombre' : 'Name') + ': ' + (data.get('name') || '') + '\n' +
             'Email: ' + (data.get('email') || '') + '\n' +
             (es ? 'Empresa' : 'Company') + ': ' + (data.get('company') || '') + '\n' +
-            (es ? 'Teléfono' : 'Phone') + ': ' + (data.get('phone') || '') + '\n' +
+            (es ? 'Teléfono' : 'Phone') + ': ' + ((data.get('phone_country') || '') + ' ' + (data.get('phone') || '')).trim() + '\n' +
             (es ? 'Producto' : 'Product') + ': ' + (data.get('product') || '') + '\n\n' +
             (data.get('message') || '')
           );
-          window.location.href = 'mailto:hola@zignalnexora.com?subject=' + subject + '&body=' + body;
+          window.location.href = 'mailto:contact@zignalnexora.com?subject=' + subject + '&body=' + body;
           statusEl.textContent = es ? 'Abrimos tu cliente de correo para enviar la solicitud.' : 'Opening your email client to send the request.';
           statusEl.className = 'form-status ok';
         }
