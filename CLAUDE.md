@@ -99,6 +99,13 @@ which the mailto/Formspree payload joins back together. Two things to know befor
   fine emblem detail.
 - Native `<select>` can't hold this markup for the same reason `<option>` can't hold lang
   spans (see the i18n note above) — options render raw text only.
+- The preselected country **follows the site language** (Spanish → Ecuador, English → US) and
+  re-applies whenever the language toggles, via the `zn:lang` CustomEvent that `applyLang()`
+  dispatches. Once the visitor picks a country themselves, a `userPicked` flag freezes it so
+  a later language switch won't overwrite their choice. `setCountry()` updates the field
+  without moving focus (safe on load); only `select()` closes the list and refocuses.
+- `COUNTRIES` is written in dial-code order for easy editing but sorted A–Z by name at
+  runtime; all lookups key off `iso`/`code`, never array position, so the sort is safe.
 - The picker markup deliberately sits in a `<div class="field">` with an explicit
   `<label for="phone-number">`, **not** wrapped in a bare `<label>` like the other fields.
   Wrapping it re-introduces a fixed bug: an implicit label forwards every click inside it to

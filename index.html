@@ -762,6 +762,7 @@
         });
         langButtons.forEach(function (btn) { btn.textContent = lang === 'es' ? 'EN' : 'ES'; });
         localStorage.setItem('zn-lang', lang);
+        document.dispatchEvent(new CustomEvent('zn:lang', { detail: lang }));
       }
       applyLang(currentLang);
       langButtons.forEach(function (btn) {
@@ -1041,6 +1042,9 @@
           { iso: 'il', code: '+972', name: 'Israel' }
         ];
 
+        // Listed above by dial code for easy maintenance; shown to visitors A–Z by name.
+        COUNTRIES.sort(function (a, b) { return a.name.localeCompare(b.name); });
+
         function flagSvg(iso, cls) {
           return '<svg class="' + cls + '" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + (flags[iso] || '') + '</svg>';
         }
@@ -1063,11 +1067,14 @@
         });
 
         var focusedIndex = -1;
+        var selectedIso = null;
+        var userPicked = false;
+
         function setOpen(open) {
           list.hidden = !open;
           btn.setAttribute('aria-expanded', open ? 'true' : 'false');
           if (open) {
-            focusedIndex = COUNTRIES.findIndex(function (c) { return c.code === hiddenInput.value; });
+            focusedIndex = COUNTRIES.findIndex(function (c) { return c.iso === selectedIso; });
             if (focusedIndex < 0) focusedIndex = 0;
             highlight(focusedIndex);
             list.focus();
@@ -1078,15 +1085,30 @@
           items.forEach(function (el) { el.classList.remove('is-focused'); });
           if (items[i]) { items[i].classList.add('is-focused'); items[i].scrollIntoView({ block: 'nearest' }); list.setAttribute('aria-activedescendant', items[i].id); }
         }
-        function select(i) {
+        // Update the shown country without touching focus — safe to call on load / lang change.
+        function setCountry(i) {
           var c = COUNTRIES[i];
           if (!c) return;
+          selectedIso = c.iso;
           hiddenInput.value = c.code;
           current.className = 'cc-selected';
           current.innerHTML = flagSvg(c.iso, 'flag-icon') + '<span class="cc-code">' + c.code + '</span>';
+        }
+        function select(i) {
+          if (!COUNTRIES[i]) return;
+          setCountry(i);
+          userPicked = true;
           setOpen(false);
           btn.focus();
         }
+        // Default country follows the site language, until the visitor picks one themselves.
+        function applyLangDefault(lang) {
+          if (userPicked) return;
+          var iso = lang === 'en' ? 'us' : 'ec';
+          setCountry(COUNTRIES.findIndex(function (c) { return c.iso === iso; }));
+        }
+        applyLangDefault(currentLang);
+        document.addEventListener('zn:lang', function (e) { applyLangDefault(e.detail); });
 
         btn.addEventListener('click', function () { setOpen(list.hidden); });
         list.addEventListener('click', function (e) {
