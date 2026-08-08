@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Zignal Nexora — Integración de sistemas, automatización y datos. Elegimos, conectamos y orquestamos las herramientas que tu operación necesita, sobre tu propia infraestructura.">
+<meta name="theme-color" content="#070a0f">
+<title>Zignal Nexora — Integración de sistemas & automatización</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M14 1.2 26.8 14 14 26.8 1.2 14Z' fill='%23070a0f'/%3E%3Cpath d='M9 9.2h10L9 18.8h10' stroke='%2338bdf8' stroke-width='2.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ========== RESET ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ========== VARIABLES ========== */
+  :root {
+    --bg:      #070a0f;
+    --panel:   #0c1017;
+    --elev:    #12161e;
+    --hover:   #1a1f29;
+    --tx:      #eef2f7;
+    --tx2:     #c3ccd8;
+    --mut:     #7c8798;
+    --sub:     #5b6472;
+    --accent:      oklch(0.72 0.13 215);
+    --accent-2:    oklch(0.62 0.13 285);
+    --accent-soft: oklch(0.72 0.13 215 / 0.12);
+    --accent-line: oklch(0.72 0.13 215 / 0.35);
+    --ok:      oklch(0.72 0.14 152);
+    --on-accent: #061018;
+    --bad:     oklch(0.66 0.18 25);
+    --bd:      rgba(255,255,255,0.09);
+    --bd2:     rgba(255,255,255,0.05);
+    --fill:    rgba(255,255,255,0.02);
+  }
+  [data-theme="light"] {
+    --bg:      #f6f8fa;
+    --panel:   #ffffff;
+    --elev:    #f0f3f6;
+    --hover:   #e7ebf0;
+    --tx:      #0a0e14;
+    --tx2:     #33404f;
+    --mut:     #5f6b7a;
+    --sub:     #8a94a1;
+    --accent:      oklch(0.55 0.13 235);
+    --on-accent: #ffffff;
+    --accent-2:    oklch(0.52 0.13 285);
+    --accent-soft: oklch(0.55 0.13 235 / 0.09);
+    --accent-line: oklch(0.55 0.13 235 / 0.3);
+    --bd:      rgba(10,14,20,0.12);
+    --bd2:     rgba(10,14,20,0.07);
+    --fill:    rgba(10,14,20,0.02);
+  }
+
+  /* ========== BASE ========== */
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "cv01", "ss03";
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--tx); }
+  ::selection { background: var(--accent-soft); }
+  input, textarea, select, button { font-family: inherit; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* ========== i18n ========== */
+  html[data-lang="en"] [lang="es"] { display: none; }
+  html:not([data-lang="en"]) [lang="en"] { display: none; }
+
+  /* ========== REVEAL / MOTION ========== */
+  @keyframes zn-pulse { 0%,100% { opacity: 1; transform: rotate(45deg) scale(1); } 50% { opacity: .45; transform: rotate(45deg) scale(.7); } }
+  @keyframes zn-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  [data-reveal].zn-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    html { scroll-behavior: auto; }
+    [data-reveal] { opacity: 1; transform: none; }
+  }
+
+  /* ========== LAYOUT ========== */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  section { position: relative; }
+  @media (max-width: 768px) { .container { padding: 0 24px; } }
+  @media (max-width: 480px) { .container { padding: 0 20px; } }
+
+  /* ========== NAVBAR ========== */
+  .navbar { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--bd2); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; gap: 32px; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; color: var(--tx); }
+  .nav-brand span { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+  .nav-brand:hover { color: var(--tx); }
+  .nav-links { display: flex; gap: 24px; margin-left: 8px; flex: 1; }
+  .nav-links a { font-size: 14px; color: var(--mut); transition: color .18s ease; }
+  .nav-links a:hover { color: var(--tx); }
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+  .menu-toggle { display: none; }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 64px; left: 0; right: 0;
+      background: var(--panel);
+      border-bottom: 1px solid var(--bd);
+      padding: 12px 24px 20px;
+      gap: 4px;
+    }
+    .nav-links.open a { padding: 10px 0; font-size: 15px; }
+    .nav-actions .nav-cta { display: none; }
+    .menu-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--fill); border: 1px solid var(--bd2); border-radius: 6px;
+      color: var(--mut); cursor: pointer; transition: all .18s ease;
+    }
+    .menu-toggle:hover { color: var(--tx); border-color: var(--accent-line); }
+  }
+
+  /* ========== TOGGLES ========== */
+  .theme-switch {
+    position: relative; display: inline-flex; align-items: center; justify-content: space-between;
+    width: 46px; height: 26px; padding: 0 5px;
+    background: var(--fill); border: 1px solid var(--bd); border-radius: 100px;
+    cursor: pointer; transition: background .25s ease, border-color .25s ease;
+  }
+  .theme-switch:hover { border-color: var(--accent-line); }
+  .theme-switch svg { transition: opacity .25s ease; }
+  .theme-switch .icon-moon { opacity: .3; }
+  [data-theme="light"] .theme-switch .icon-moon { opacity: 1; }
+  [data-theme="light"] .theme-switch .icon-sun { opacity: .3; }
+  .theme-switch .knob {
+    position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    transition: transform .28s cubic-bezier(.16,1,.3,1);
+  }
+  [data-theme="light"] .theme-switch .knob { transform: translateX(20px); }
+  [data-theme="light"] .theme-switch { background: var(--accent-soft); border-color: var(--accent-line); }
+
+  .theme-switch-sm { width: 40px; height: 22px; padding: 0; background: transparent; border: 1px solid var(--bd2); }
+  .theme-switch-sm .knob { width: 16px; height: 16px; }
+  [data-theme="light"] .theme-switch-sm .knob { transform: translateX(18px); }
+  [data-theme="light"] .theme-switch-sm { background: transparent; }
+
+  .lang-btn {
+    background: var(--fill); border: 1px solid var(--bd); color: var(--mut);
+    border-radius: 6px; padding: 6px 10px; font-size: 11px; letter-spacing: 0.04em;
+    cursor: pointer; transition: color .2s ease, border-color .2s ease;
+  }
+  .lang-btn:hover { color: var(--tx); border-color: var(--accent-line); }
+  .lang-btn-sm { background: transparent; border-color: var(--bd2); color: var(--sub); border-radius: 5px; padding: 5px 9px; font-size: 10px; }
+  .lang-btn-sm:hover { color: var(--tx); }
+
+  /* ========== BUTTONS ========== */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
+    border-radius: 8px; padding: 12px 22px; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: transform .2s cubic-bezier(.16,1,.3,1), filter .2s ease, border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { color: var(--on-accent); filter: brightness(1.08); transform: translateY(-2px); }
+  .btn-ghost { background: var(--fill); color: var(--tx2); border: 1px solid var(--bd); }
+  .btn-ghost:hover { color: var(--tx); border-color: var(--accent-line); transform: translateY(-2px); }
+  .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 8px; }
+
+  /* ========== HERO ========== */
+  .hero { overflow: hidden; border-bottom: 1px solid var(--bd2); }
+  .hero-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center right; background-repeat: no-repeat;
+    pointer-events: none; transition: opacity .3s ease;
+  }
+  .hero-bg-dark { background-image: url('assets/hero-bg.webp'); }
+  .hero-bg-light { background-image: url('assets/hero-bg-light.webp'); opacity: 0; }
+  [data-theme="light"] .hero-bg-dark { opacity: 0; }
+  [data-theme="light"] .hero-bg-light { opacity: 1; }
+  .hero-fade {
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg, var(--bg) 6%, rgba(0,0,0,0) 78%), linear-gradient(0deg, var(--bg) 2%, rgba(0,0,0,0) 40%);
+  }
+  .hero-glow {
+    position: absolute; top: -140px; left: 4%; width: 720px; height: 520px; pointer-events: none;
+    background: radial-gradient(closest-side, var(--accent-soft), transparent 70%);
+  }
+  .hero-content { position: relative; max-width: 1200px; margin: 0 auto; padding: 112px 32px 96px; }
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--mut); text-transform: uppercase; margin-bottom: 28px;
+  }
+  .eyebrow-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 2px; transform: rotate(45deg); animation: zn-pulse 2.6s ease-in-out infinite; }
+  .hero h1 {
+    max-width: 900px; font-size: clamp(32px, 4.6vw, 58px); font-weight: 600;
+    letter-spacing: -0.045em; line-height: 1.08;
+  }
+  .hero h1 [lang] .dim, .hero h1 .dim { color: var(--mut); }
+  .hero p.lede { max-width: 560px; margin-top: 26px; font-size: 18px; color: var(--mut); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }
+  .tag {
+    border: 1px solid var(--bd2); background: var(--fill); color: var(--sub);
+    border-radius: 100px; padding: 5px 12px; font-size: 11px; white-space: nowrap;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .tag:hover { color: var(--tx); border-color: var(--accent-line); }
+
+  .marquee-wrap {
+    position: relative; border-top: 1px solid var(--bd2); overflow: hidden; padding: 16px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee {
+    display: flex; gap: 48px; width: max-content;
+    animation: zn-marquee 32s linear infinite;
+    font-size: 12px; color: var(--sub); letter-spacing: 0.06em; white-space: nowrap;
+  }
+
+  @media (max-width: 480px) {
+    .hero-content { padding: 88px 20px 64px; }
+    .hero-ctas { flex-direction: column; align-items: stretch; }
+    .hero-ctas .btn { width: 100%; }
+  }
+
+  /* ========== PRODUCTS ========== */
+  .products { overflow: hidden; border-bottom: 1px solid var(--bd2); }
+  .product-bg-layer { position: absolute; inset: 0; pointer-events: none; }
+  .product-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity .9s ease, transform 6s ease; }
+  .product-bg[data-bg="0"] { background-image: url('assets/bg-1.webp'); }
+  .product-bg[data-bg="1"] { background-image: url('assets/bg-2.webp'); }
+  .product-bg[data-bg="2"] { background-image: url('assets/bg-3.webp'); }
+  .product-bg[data-bg="3"] { background-image: url('assets/bg-4.webp'); }
+  .product-bg[data-bg="4"] { background-image: url('assets/bg-5.webp'); }
+  .product-bg.is-active { opacity: .5; transform: scale(1.02); }
+  [data-theme="light"] .product-bg { filter: invert(1) hue-rotate(180deg) saturate(.7); }
+  [data-theme="light"] .product-bg.is-active { opacity: .28; }
+  .product-bg-fade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 8%, transparent 55%, var(--bg) 96%); }
+
+  .products-grid { position: relative; max-width: 1200px; margin: 0 auto; padding: 88px 32px; display: grid; grid-template-columns: minmax(280px,38fr) minmax(320px,62fr); gap: 64px; }
+  .eyebrow-num { font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
+  .products-intro h2 { margin-top: 18px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
+  .products-intro p { margin-top: 20px; font-size: 15px; color: var(--mut); max-width: 380px; }
+  .products-meta { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--bd2); font-size: 12px; color: var(--sub); line-height: 2; }
+
+  .products-list { display: flex; flex-direction: column; }
+  .product-card {
+    position: relative; cursor: pointer; display: grid; grid-template-columns: 36px 1fr; gap: 20px;
+    padding: 24px 26px; border-bottom: 1px solid var(--bd2); border-radius: 8px; opacity: .72;
+    transition: background .2s ease, transform .25s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+  }
+  .product-card:last-child { border-bottom: none; }
+  .product-card:hover, .product-card.is-active { background: var(--fill); transform: translateX(6px); opacity: 1; }
+  .product-rail {
+    position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
+    background: var(--accent); opacity: 0; transform: scaleY(.3); transform-origin: top;
+    transition: opacity .3s ease, transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .product-card:hover .product-rail, .product-card.is-active .product-rail { opacity: 1; transform: scaleY(1); }
+  .product-card svg { stroke: var(--accent); }
+  .product-card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .product-card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+  .product-tag { font-size: 10px; color: var(--sub); border: 1px solid var(--bd2); border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
+  .product-card p { margin-top: 7px; font-size: 15px; color: var(--mut); }
+
+  @media (max-width: 1024px) {
+    .products-grid { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px; }
+    .products-intro p { max-width: none; }
+  }
+  @media (max-width: 480px) {
+    .products-grid { padding: 56px 20px; }
+    .product-card { padding: 20px 8px; gap: 14px; }
+  }
+
+  /* ========== PROCESS ========== */
+  .process { border-bottom: 1px solid var(--bd2); }
+  .process .container { padding: 88px 32px; }
+  .process-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+  .process-head h2 { margin-top: 18px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
+  .process-head p { max-width: 340px; font-size: 15px; color: var(--mut); }
+  .steps { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 40px; border-top: 1px solid var(--bd); }
+  .step { padding-top: 24px; margin-top: -1px; border-top: 2px solid transparent; }
+  .step:first-child { border-top-color: var(--accent); }
+  .step-num { font-size: 12px; color: var(--sub); }
+  .step h3 { margin-top: 14px; font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+  .step p { margin-top: 8px; font-size: 15px; color: var(--mut); }
+  @media (max-width: 768px) { .process .container { padding: 56px 24px; } }
+
+  /* ========== CTA MID ========== */
+  .cta-mid { background: var(--accent-soft); border-bottom: 1px solid var(--bd2); }
+  .cta-mid .container { padding: 44px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .cta-mid h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+
+  /* ========== CONTACT ========== */
+  .contact { border-bottom: 1px solid var(--bd2); }
+  .contact .container { padding: 88px 32px; display: grid; grid-template-columns: minmax(260px,34fr) minmax(340px,66fr); gap: 64px; }
+  .contact-info h2 { margin-top: 18px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
+  .contact-info p { margin-top: 18px; font-size: 15px; color: var(--mut); max-width: 320px; }
+  .contact-meta { margin-top: 28px; font-size: 12px; color: var(--sub); line-height: 2.1; }
+
+  form.contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: var(--tx2); }
+  .field-full { grid-column: 1 / -1; }
+  .field-label-row { display: flex; justify-content: space-between; gap: 8px; }
+  .field-error { color: var(--bad); font-size: 12px; opacity: 0; transition: opacity .2s ease; }
+  .field input, .field textarea, .field select {
+    background: var(--fill); border: 1px solid var(--bd); border-radius: 8px; padding: 11px 13px;
+    color: var(--tx); font-size: 15px;
+  }
+  .field select {
+    background-color: var(--elev); appearance: none; cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--mut) 50%), linear-gradient(135deg, var(--mut) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px; background-repeat: no-repeat;
+  }
+  .field select option { background: var(--elev); color: var(--tx); }
+  .field textarea { resize: vertical; }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .field input[data-invalid="true"] { border-color: var(--bad); }
+  .form-actions { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .form-status { font-size: 14px; color: var(--mut); }
+  .form-status.ok { color: var(--ok); }
+  .form-status.error { color: var(--bad); }
+
+  @media (max-width: 900px) {
+    .contact .container { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px; }
+    .contact-info p { max-width: none; }
+  }
+  @media (max-width: 480px) {
+    .contact .container { padding: 56px 20px; }
+    form.contact-form { grid-template-columns: 1fr; }
+  }
+
+  /* ========== FOOTER ========== */
+  footer { background: var(--panel); }
+  .footer-grid { max-width: 1200px; margin: 0 auto; padding: 64px 32px 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 40px; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--tx); }
+  .footer-brand span { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+  .footer-tagline { margin-top: 14px; font-size: 13px; color: var(--sub); max-width: 220px; line-height: 1.6; }
+  .footer-col-title { font-size: 11px; letter-spacing: 0.08em; color: var(--sub); text-transform: uppercase; }
+  .footer-col { display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a, .footer-col span.static { font-size: 13px; color: var(--mut); }
+  .footer-col a:hover { color: var(--tx); }
+  .footer-bottom {
+    max-width: 1200px; margin: 0 auto; padding: 20px 32px 40px; border-top: 1px solid var(--bd2);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .footer-copy { font-size: 12px; color: var(--sub); }
+  .footer-toggles { display: flex; gap: 8px; }
+  @media (max-width: 768px) { .footer-grid { padding: 48px 24px 24px; } .footer-bottom { padding: 20px 24px 32px; } }
+</style>
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand" aria-label="Zignal Nexora — Inicio">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path d="M14 1.2 26.8 14 14 26.8 1.2 14Z" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1"/>
+          <path d="M9 9.2h10L9 18.8h10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+          <circle cx="19" cy="9.2" r="1.9" fill="var(--accent-2)"/>
+        </svg>
+        <span>Zignal Nexora</span>
+      </a>
+      <nav class="nav-links" id="mobile-nav">
+        <a href="#productos"><span lang="es">Productos</span><span lang="en">Products</span></a>
+        <a href="#proceso"><span lang="es">Cómo funciona</span><span lang="en">How it works</span></a>
+        <a href="#contacto"><span lang="es">Contacto</span><span lang="en">Contact</span></a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-switch" id="theme-toggle" role="switch" aria-label="Cambiar tema">
+          <svg class="icon-moon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--tx2)" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+          <svg class="icon-sun" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--tx2)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
+          <span class="knob"></span>
+        </button>
+        <button class="lang-btn mono" id="lang-toggle" aria-label="Cambiar idioma">EN</button>
+        <a href="#contacto" class="btn btn-primary btn-sm nav-cta"><span lang="es">Agendar demo</span><span lang="en">Book a demo</span></a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menú" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="15" x2="17" y2="15"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====== HERO ====== -->
+    <section class="hero" id="top">
+      <div class="hero-bg hero-bg-dark" aria-hidden="true"></div>
+      <div class="hero-bg hero-bg-light" aria-hidden="true"></div>
+      <div class="hero-fade" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="eyebrow mono">
+          <span class="eyebrow-dot"></span>
+          <span lang="es">Integración de sistemas · Datos · Automatización</span><span lang="en">Systems integration · Data · Automation</span>
+        </div>
+        <h1 data-reveal>
+          <span lang="es">No reinventamos software. <span class="dim">Integramos los productos que tu operación ya necesita.</span></span>
+          <span lang="en">We don't reinvent software. <span class="dim">We integrate the products your operation actually needs.</span></span>
+        </h1>
+        <p class="lede" data-reveal>
+          <span lang="es">Elegimos, conectamos y orquestamos las herramientas que tú decides —automatización, analítica y atención omnicanal— sobre tu propia infraestructura. Tus datos se quedan donde deben.</span>
+          <span lang="en">We select, connect, and orchestrate the tools you choose — automation, analytics, and omnichannel support — on your own infrastructure. Your data stays where it belongs.</span>
+        </p>
+        <div class="hero-ctas" data-reveal>
+          <a href="#contacto" class="btn btn-primary"><span lang="es">Agendar demo</span><span lang="en">Book a demo</span></a>
+          <a href="#productos" class="btn btn-ghost"><span lang="es">Ver productos</span><span lang="en">See products</span></a>
+        </div>
+        <div class="hero-tags" data-reveal>
+          <span class="tag mono">On-premises</span>
+          <span class="tag mono">API-first</span>
+          <span class="tag mono">WhatsApp Business</span>
+          <span class="tag mono">24/7</span>
+        </div>
+      </div>
+      <div class="marquee-wrap">
+        <div class="marquee mono">
+          <span>ERP</span><span>CRM</span><span>WhatsApp Business API</span><span>PostgreSQL</span><span>Power BI</span><span>Google Workspace</span><span>SAP</span><span>Zapier / n8n</span><span>Twilio</span><span>Metabase</span><span>REST · SOAP · SQL</span>
+          <span>ERP</span><span>CRM</span><span>WhatsApp Business API</span><span>PostgreSQL</span><span>Power BI</span><span>Google Workspace</span><span>SAP</span><span>Zapier / n8n</span><span>Twilio</span><span>Metabase</span><span>REST · SOAP · SQL</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== PRODUCTOS ====== -->
+    <section class="products" id="productos">
+      <div class="product-bg-layer" aria-hidden="true">
+        <div class="product-bg" data-bg="0"></div>
+        <div class="product-bg" data-bg="1"></div>
+        <div class="product-bg" data-bg="2"></div>
+        <div class="product-bg" data-bg="3"></div>
+        <div class="product-bg" data-bg="4"></div>
+        <div class="product-bg-fade"></div>
+      </div>
+      <div class="products-grid">
+        <div class="products-intro">
+          <div class="eyebrow-num mono">01 — <span lang="es">Qué hacemos</span><span lang="en">What we do</span></div>
+          <h2 data-reveal>
+            <span lang="es">Cinco frentes que integramos en tu operación.</span>
+            <span lang="en">Five fronts we integrate into your operation.</span>
+          </h2>
+          <p>
+            <span lang="es">No te amarramos a un producto. Evaluamos las herramientas del mercado, elegimos contigo las que encajan y las integramos sobre los sistemas que ya usas, desplegadas donde tú decidas.</span>
+            <span lang="en">We don't lock you into one product. We evaluate what's on the market, pick the right fit with you, and integrate it with the systems you already run — deployed wherever you decide.</span>
+          </p>
+          <div class="products-meta mono">
+            <div><span lang="es">Integración</span><span lang="en">Integration</span> · REST / SOAP / SQL</div>
+            <div><span lang="es">Despliegue</span><span lang="en">Deployment</span> · <span lang="es">on-prem o nube privada</span><span lang="en">on-prem or private cloud</span></div>
+          </div>
+        </div>
+
+        <div class="products-list" id="product-cards">
+          <article class="product-card" data-card="0" data-reveal>
+            <span class="product-rail"></span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
+              <rect x="2.5" y="4" width="7" height="6" rx="1.5"/><rect x="14.5" y="14" width="7" height="6" rx="1.5"/>
+              <path d="M9.5 7h4.5a3 3 0 0 1 3 3v4"/><path d="M14.6 12.4 17 14.8l2.4-2.4"/>
+            </svg>
+            <div>
+              <div class="product-card-head">
+                <h3><span lang="es">Automatización de procesos</span><span lang="en">Process Automation</span></h3>
+                <span class="product-tag mono">API</span>
+              </div>
+              <p><span lang="es">Orquesta workflows de principio a fin. Elimina tareas manuales repetitivas y reduce errores operativos.</span><span lang="en">Orchestrate workflows end-to-end. Eliminate repetitive manual tasks and reduce operational errors.</span></p>
+            </div>
+          </article>
+
+          <article class="product-card" data-card="1" data-reveal>
+            <span class="product-rail"></span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
+              <path d="M3 20h18"/><rect x="4" y="12" width="3.5" height="5"/><rect x="10.2" y="7" width="3.5" height="10"/><rect x="16.4" y="10" width="3.5" height="7"/>
+            </svg>
+            <div>
+              <div class="product-card-head">
+                <h3><span lang="es">Dashboards de métricas</span><span lang="en">Metrics Dashboards</span></h3>
+                <span class="product-tag mono">Realtime</span>
+              </div>
+              <p><span lang="es">Visualiza KPIs en tiempo real. Monitoreo de operaciones con datos densos y accionables.</span><span lang="en">Visualize KPIs in real time. Operational monitoring with dense, actionable data.</span></p>
+            </div>
+          </article>
+
+          <article class="product-card" data-card="2" data-reveal>
+            <span class="product-rail"></span>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
+              <path d="M12 3.2c4.7 0 8.5 3.4 8.5 7.6s-3.8 7.6-8.5 7.6c-1.2 0-2.4-.2-3.4-.6L4 19.6l1.3-3.4A7.3 7.3 0 0 1 3.5 10.8C3.5 6.6 7.3 3.2 12 3.2Z"/>
+              <path d="M8.6 10.9h6.8"/><path d="M8.6 13.6h4"/>
+            </svg>
+            <div>
+              <div class="product-card-head">
+                <h3><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp Bots</span></h3>
+                <span class="product-tag mono">Cloud API</span>
+              </div>
+              <p><span lang="es">Atención conversacional 24/7. Responde, deriva y transacciona directamente en WhatsApp Business.</span><span lang="en">24/7 conversational support. Respond, route, and transact directly on WhatsApp Business.</span></p>
+            </div>
+          </article>
+
+          <article class="product-card" data-card="3" data-reveal>
+            <span class="product-rail"></span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
+              <rect x="3" y="13" width="18" height="8" rx="2"/>
+              <path d="M7 13V9.5a5 5 0 0 1 5-5"/><path d="M12 4.5a5 5 0 0 1 5 5V13"/><path d="M12 4.5V13"/>
+            </svg>
+            <div>
+              <div class="product-card-head">
+                <h3><span lang="es">Plataforma omnicanal</span><span lang="en">Omnichannel Platform</span></h3>
+                <span class="product-tag mono">Unified inbox</span>
+              </div>
+              <p><span lang="es">Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar.</span><span lang="en">One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place.</span></p>
+            </div>
+          </article>
+
+          <article class="product-card" data-card="4" data-reveal>
+            <span class="product-rail"></span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
+              <ellipse cx="12" cy="6" rx="7.5" ry="3"/>
+              <path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/>
+              <path d="M4.5 12v5c0 1.7 3.4 3 7.5 3"/><path d="M15.5 20.5 19 17l2.2 2.2"/>
+            </svg>
+            <div>
+              <div class="product-card-head">
+                <h3><span lang="es">Analítica on-premises</span><span lang="en">On-premises Analytics</span></h3>
+                <span class="product-tag mono">On-prem</span>
+              </div>
+              <p><span lang="es">Business intelligence en tu infraestructura. Tus datos nunca salen de tu red. Privacidad por diseño.</span><span lang="en">Business intelligence on your infrastructure. Your data never leaves your network. Privacy by design.</span></p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CÓMO FUNCIONA ====== -->
+    <section class="process" id="proceso">
+      <div class="container">
+        <div class="process-head">
+          <div>
+            <div class="eyebrow-num mono">02 — <span lang="es">Cómo funciona</span><span lang="en">How it works</span></div>
+            <h2><span lang="es">Tres etapas, sin sorpresas.</span><span lang="en">Three stages, no surprises.</span></h2>
+          </div>
+          <p><span lang="es">Del diagnóstico al monitoreo continuo, con entregables definidos en cada etapa.</span><span lang="en">From diagnosis to continuous monitoring, with defined deliverables at every stage.</span></p>
+        </div>
+        <div class="steps">
+          <div class="step" data-reveal>
+            <div class="step-num mono">01</div>
+            <h3><span lang="es">Diagnosticamos</span><span lang="en">We diagnose</span></h3>
+            <p><span lang="es">Mapeamos tus procesos manuales, los cuellos de botella y las fuentes de datos disponibles.</span><span lang="en">We map your manual processes, bottlenecks, and available data sources.</span></p>
+          </div>
+          <div class="step" data-reveal>
+            <div class="step-num mono">02</div>
+            <h3><span lang="es">Diseñamos e integramos</span><span lang="en">We design and integrate</span></h3>
+            <p><span lang="es">Seleccionamos las herramientas y las conectamos a tu infraestructura actual, sin migraciones forzadas.</span><span lang="en">We select the tools and wire them into your current infrastructure, with no forced migrations.</span></p>
+          </div>
+          <div class="step" data-reveal>
+            <div class="step-num mono">03</div>
+            <h3><span lang="es">Automatizamos y medimos</span><span lang="en">We automate and measure</span></h3>
+            <p><span lang="es">Despliegue, monitoreo y optimización continua con métricas visibles para tu equipo.</span><span lang="en">Deployment, monitoring, and continuous optimization with metrics your team can see.</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== CTA MID ====== -->
+    <section class="cta-mid">
+      <div class="container">
+        <h2><span lang="es">¿Listo para automatizar tu operación?</span><span lang="en">Ready to automate your operations?</span></h2>
+        <a href="#contacto" class="btn btn-primary"><span lang="es">Hablar con un experto</span><span lang="en">Talk to an expert</span></a>
+      </div>
+    </section>
+
+    <!-- ====== CONTACTO ====== -->
+    <section class="contact" id="contacto">
+      <div class="container">
+        <div class="contact-info">
+          <div class="eyebrow-num mono">03 — <span lang="es">Contacto</span><span lang="en">Contact</span></div>
+          <h2><span lang="es">Agenda una demo</span><span lang="en">Book a demo</span></h2>
+          <p><span lang="es">Cuéntanos qué proceso quieres automatizar. Respondemos en menos de 24 horas hábiles.</span><span lang="en">Tell us which process you want to automate. We reply within one business day.</span></p>
+          <div class="contact-meta mono">
+            <div>hola@zignalnexora.com</div>
+            <div>+00 000 000 000</div>
+          </div>
+        </div>
+
+        <form class="contact-form" id="lead-form" novalidate>
+          <label class="field">
+            <span><span lang="es">Nombre</span><span lang="en">Name</span></span>
+            <input name="name" required autocomplete="name" data-es-ph="Nombre y apellido" data-en-ph="Full name" placeholder="Nombre y apellido">
+          </label>
+          <label class="field">
+            <span class="field-label-row">
+              <span><span lang="es">Email corporativo</span><span lang="en">Work email</span></span>
+              <span class="field-error" id="email-error"></span>
+            </span>
+            <input name="email" type="email" required autocomplete="email" id="email-input" data-es-ph="tu@empresa.com" data-en-ph="you@company.com" placeholder="tu@empresa.com">
+          </label>
+          <label class="field">
+            <span><span lang="es">Empresa</span><span lang="en">Company</span></span>
+            <input name="company" required autocomplete="organization" data-es-ph="Nombre de la empresa" data-en-ph="Company name" placeholder="Nombre de la empresa">
+          </label>
+          <label class="field">
+            <span><span lang="es">Teléfono (opcional)</span><span lang="en">Phone (optional)</span></span>
+            <input name="phone" autocomplete="tel" data-es-ph="+00 000 000 000" data-en-ph="+00 000 000 000" placeholder="+00 000 000 000">
+          </label>
+          <label class="field field-full">
+            <span><span lang="es">¿Qué producto te interesa?</span><span lang="en">Which product are you interested in?</span></span>
+            <select name="product">
+              <option>Automatización de procesos / Process Automation</option>
+              <option>Dashboards de métricas / Metrics Dashboards</option>
+              <option>Bots de WhatsApp / WhatsApp Bots</option>
+              <option>Plataforma omnicanal / Omnichannel Platform</option>
+              <option>Analítica on-premises / On-premises Analytics</option>
+              <option>Todos / All of them</option>
+            </select>
+          </label>
+          <label class="field field-full">
+            <span><span lang="es">¿Qué proceso quieres automatizar?</span><span lang="en">Which process do you want to automate?</span></span>
+            <textarea name="message" rows="4" data-es-ph="Describe brevemente el flujo actual…" data-en-ph="Briefly describe your current flow…" placeholder="Describe brevemente el flujo actual…"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn"><span lang="es">Enviar solicitud</span><span lang="en">Send request</span></button>
+            <span class="form-status" id="form-status"></span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <a href="#top" class="footer-brand">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M14 1.2 26.8 14 14 26.8 1.2 14Z" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1"/>
+            <path d="M9 9.2h10L9 18.8h10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+            <circle cx="19" cy="9.2" r="1.9" fill="var(--accent-2)"/>
+          </svg>
+          <span>Zignal Nexora</span>
+        </a>
+        <p class="footer-tagline"><span lang="es">Integración de sistemas, automatización y datos para operaciones que no pueden fallar.</span><span lang="en">Systems integration, automation, and data for operations that cannot fail.</span></p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono"><span lang="es">Productos</span><span lang="en">Products</span></div>
+        <a href="#productos"><span lang="es">Automatización</span><span lang="en">Automation</span></a>
+        <a href="#productos">Dashboards</a>
+        <a href="#productos"><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp bots</span></a>
+        <a href="#productos"><span lang="es">Omnicanal</span><span lang="en">Omnichannel</span></a>
+        <a href="#productos"><span lang="es">Analítica on-prem</span><span lang="en">On-prem analytics</span></a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono"><span lang="es">Empresa</span><span lang="en">Company</span></div>
+        <a href="#"><span lang="es">Sobre nosotros</span><span lang="en">About us</span></a>
+        <a href="#"><span lang="es">Casos de éxito</span><span lang="en">Case studies</span></a>
+        <a href="#proceso"><span lang="es">Cómo trabajamos</span><span lang="en">How we work</span></a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title mono"><span lang="es">Contacto</span><span lang="en">Contact</span></div>
+        <a href="mailto:hola@zignalnexora.com">hola@zignalnexora.com</a>
+        <span class="static">+00 000 000 000</span>
+        <span class="static">LATAM · <span lang="es">Remoto</span><span lang="en">Remote</span></span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Zignal Nexora. <span lang="es">Todos los derechos reservados.</span><span lang="en">All rights reserved.</span></div>
+      <div class="footer-toggles">
+        <button class="theme-switch theme-switch-sm" id="theme-toggle-footer" role="switch" aria-label="Cambiar tema">
+          <span class="knob"></span>
+        </button>
+        <button class="lang-btn lang-btn-sm mono" id="lang-toggle-footer" aria-label="Cambiar idioma">EN</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+    (function () {
+      var html = document.documentElement;
+
+      /* ===== THEME ===== */
+      var savedTheme = localStorage.getItem('zn-theme') || 'dark';
+      html.setAttribute('data-theme', savedTheme);
+      document.querySelectorAll('#theme-toggle, #theme-toggle-footer').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('zn-theme', next);
+        });
+      });
+
+      /* ===== LANGUAGE ===== */
+      var currentLang = localStorage.getItem('zn-lang') || 'es';
+      var langButtons = document.querySelectorAll('#lang-toggle, #lang-toggle-footer');
+
+      function applyLang(lang) {
+        currentLang = lang;
+        html.setAttribute('data-lang', lang);
+        html.lang = lang;
+        document.querySelectorAll('[data-es-ph]').forEach(function (el) {
+          var ph = lang === 'es' ? el.getAttribute('data-es-ph') : el.getAttribute('data-en-ph');
+          if (ph) el.placeholder = ph;
+        });
+        langButtons.forEach(function (btn) { btn.textContent = lang === 'es' ? 'EN' : 'ES'; });
+        localStorage.setItem('zn-lang', lang);
+      }
+      applyLang(currentLang);
+      langButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () { applyLang(currentLang === 'es' ? 'en' : 'es'); });
+      });
+
+      /* ===== MOBILE MENU ===== */
+      var menuToggle = document.getElementById('menu-toggle');
+      var mobileNav = document.getElementById('mobile-nav');
+      if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', function () {
+          var isOpen = mobileNav.classList.toggle('open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+        });
+        mobileNav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            mobileNav.classList.remove('open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+
+      /* ===== SMOOTH SCROLL (offset for sticky header) ===== */
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          var href = this.getAttribute('href');
+          var target = href === '#top' ? document.body : document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          if (href === '#top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+          var headerH = document.querySelector('.navbar').offsetHeight;
+          var top = target.getBoundingClientRect().top + window.pageYOffset - headerH - 16;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+      });
+
+      /* ===== REVEAL ON SCROLL ===== */
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('zn-in'); io.unobserve(entry.target); }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      document.querySelectorAll('[data-reveal]').forEach(function (el, i) {
+        el.style.transitionDelay = (Math.min(i % 6, 5) * 55) + 'ms';
+        io.observe(el);
+      });
+
+      /* ===== PRODUCT CARD CYCLE ===== */
+      var cards = document.querySelectorAll('[data-card]');
+      var bgs = document.querySelectorAll('[data-bg]');
+      var active = 0;
+      var cycleTimer;
+
+      function setActive(i) {
+        active = i;
+        cards.forEach(function (el) { el.classList.toggle('is-active', +el.dataset.card === i); });
+        bgs.forEach(function (el) { el.classList.toggle('is-active', +el.dataset.bg === i); });
+      }
+      function restartTimer() {
+        clearInterval(cycleTimer);
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        cycleTimer = setInterval(function () { setActive((active + 1) % cards.length); }, 5200);
+      }
+      if (cards.length) {
+        var cardWrap = document.getElementById('product-cards');
+        cardWrap.addEventListener('mouseover', function (e) {
+          var card = e.target.closest('[data-card]');
+          if (card) { setActive(+card.dataset.card); restartTimer(); }
+        });
+        cardWrap.addEventListener('click', function (e) {
+          var card = e.target.closest('[data-card]');
+          if (card) { setActive(+card.dataset.card); restartTimer(); }
+        });
+        setActive(0);
+        restartTimer();
+      }
+
+      /* ===== CONTACT FORM ===== */
+      var FREE_EMAIL_DOMAINS = ['gmail.com','googlemail.com','hotmail.com','hotmail.es','hotmail.co.uk','outlook.com','outlook.es','live.com','live.com.mx','msn.com','yahoo.com','yahoo.es','yahoo.com.mx','ymail.com','icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com','gmx.com','gmx.net','mail.com','mail.ru','yandex.com','yandex.ru','zoho.com','tutanota.com','hushmail.com','inbox.com','fastmail.com','pm.me','qq.com','163.com','126.com','naver.com','hotmail.fr','yahoo.fr','free.fr','terra.com','prodigy.net.mx','uol.com.br','bol.com.br'];
+      var FORM_ENDPOINT = ''; // Formspree ID, e.g. 'https://formspree.io/f/xxxxxxx' — falls back to mailto when empty
+
+      var form = document.getElementById('lead-form');
+      var emailInput = document.getElementById('email-input');
+      var emailError = document.getElementById('email-error');
+      var statusEl = document.getElementById('form-status');
+
+      function emailIssue(value) {
+        var es = currentLang === 'es';
+        var v = (value || '').trim().toLowerCase();
+        if (!v) return null;
+        if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(v)) return es ? 'Email no válido' : 'Invalid email';
+        var domain = v.split('@')[1];
+        if (FREE_EMAIL_DOMAINS.indexOf(domain) !== -1) return es ? 'Usa tu email corporativo' : 'Use your work email';
+        return null;
+      }
+      function checkEmail() {
+        var issue = emailIssue(emailInput.value);
+        emailError.textContent = issue || '';
+        emailError.style.opacity = issue ? '1' : '0';
+        emailInput.dataset.invalid = issue ? 'true' : 'false';
+        return issue;
+      }
+      emailInput.addEventListener('blur', checkEmail);
+      emailInput.addEventListener('input', function () { if (emailInput.dataset.invalid === 'true') checkEmail(); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var es = currentLang === 'es';
+        var data = new FormData(form);
+        statusEl.className = 'form-status';
+        statusEl.textContent = '';
+
+        var issue = checkEmail();
+        if (issue) {
+          emailInput.focus();
+          statusEl.textContent = es ? 'Necesitamos un correo corporativo (no Gmail, Outlook, Yahoo…).' : 'We need a work email address (no Gmail, Outlook, Yahoo…).';
+          statusEl.className = 'form-status error';
+          return;
+        }
+
+        function fallbackMailto() {
+          var subject = encodeURIComponent(es ? 'Solicitud de demo — Zignal Nexora' : 'Demo request — Zignal Nexora');
+          var body = encodeURIComponent(
+            (es ? 'Nombre' : 'Name') + ': ' + (data.get('name') || '') + '\n' +
+            'Email: ' + (data.get('email') || '') + '\n' +
+            (es ? 'Empresa' : 'Company') + ': ' + (data.get('company') || '') + '\n' +
+            (es ? 'Teléfono' : 'Phone') + ': ' + (data.get('phone') || '') + '\n' +
+            (es ? 'Producto' : 'Product') + ': ' + (data.get('product') || '') + '\n\n' +
+            (data.get('message') || '')
+          );
+          window.location.href = 'mailto:hola@zignalnexora.com?subject=' + subject + '&body=' + body;
+          statusEl.textContent = es ? 'Abrimos tu cliente de correo para enviar la solicitud.' : 'Opening your email client to send the request.';
+          statusEl.className = 'form-status ok';
+        }
+
+        if (FORM_ENDPOINT) {
+          fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+            .then(function (res) {
+              if (!res.ok) throw new Error('bad response');
+              form.reset();
+              statusEl.textContent = es ? '✓ Gracias. Te contactamos en menos de 24 h.' : '✓ Thank you. We reply within one business day.';
+              statusEl.className = 'form-status ok';
+            })
+            .catch(fallbackMailto);
+        } else {
+          fallbackMailto();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

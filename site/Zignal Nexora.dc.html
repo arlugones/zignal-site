@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#070a0f; --panel:#0c1017; --elev:#12161e; --hover:#1a1f29;
+  --tx:#eef2f7; --tx2:#c3ccd8; --mut:#7c8798; --sub:#5b6472;
+  --accent:oklch(0.72 0.13 215); --accent-2:oklch(0.62 0.13 285);
+  --accent-soft:oklch(0.72 0.13 215 / 0.12); --accent-line:oklch(0.72 0.13 215 / 0.35);
+  --ok:oklch(0.72 0.14 152); --on-accent:#061018; --bad:oklch(0.66 0.18 25);
+  --bd:rgba(255,255,255,0.09); --bd2:rgba(255,255,255,0.05); --fill:rgba(255,255,255,0.02);
+}
+html[data-theme="light"]{
+  --bg:#f6f8fa; --panel:#ffffff; --elev:#f0f3f6; --hover:#e7ebf0;
+  --tx:#0a0e14; --tx2:#33404f; --mut:#5f6b7a; --sub:#8a94a1;
+  --accent:oklch(0.55 0.13 235); --on-accent:#ffffff; --accent-2:oklch(0.52 0.13 285);
+  --accent-soft:oklch(0.55 0.13 235 / 0.09); --accent-line:oklch(0.55 0.13 235 / 0.3);
+  --bd:rgba(10,14,20,0.12); --bd2:rgba(10,14,20,0.07); --fill:rgba(10,14,20,0.02);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,system-ui,sans-serif;font-feature-settings:"cv01","ss03";line-height:1.5;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--tx)}
+html[data-lang="en"] [lang="es"]{display:none}
+html:not([data-lang="en"]) [lang="en"]{display:none}
+::selection{background:var(--accent-soft)}
+input,textarea,select,button{font-family:inherit}
+@keyframes zn-rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes zn-pulse{0%,100%{opacity:1;transform:rotate(45deg) scale(1)}50%{opacity:.45;transform:rotate(45deg) scale(.7)}}
+@keyframes zn-drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-14px,0)}}
+@keyframes zn-sweep{from{background-position:0% 50%}to{background-position:200% 50%}}
+@keyframes zn-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+[data-reveal]{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+[data-reveal].zn-in{opacity:1;transform:none}
+html[data-theme="light"] [data-heroimg="dark"]{opacity:0 !important}
+html[data-theme="light"] [data-heroimg="light"]{opacity:1 !important}
+html[data-theme="light"] [data-knob]{transform:translateX(20px)}
+html[data-theme="light"] footer [data-knob]{transform:translateX(18px)}
+html[data-theme="light"] [data-track]{background:var(--accent-soft) !important;border-color:var(--accent-line) !important}
+html[data-theme="light"] [data-icon-moon]{opacity:.3}
+html:not([data-theme="light"]) [data-icon-sun]{opacity:.3}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}html{scroll-behavior:auto}[data-reveal]{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="background:var(--bg);color:var(--tx);min-height:100vh">
+
+  <header style="position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--bd2)">
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;gap:32px">
+      <a href="#top" style="display:flex;align-items:center;gap:10px;color:var(--tx)">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path d="M14 1.2 26.8 14 14 26.8 1.2 14Z" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1"></path>
+          <path d="M9 9.2h10L9 18.8h10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" fill="none"></path>
+          <circle cx="19" cy="9.2" r="1.9" fill="var(--accent-2)"></circle>
+        </svg>
+        <span style="font-size:15px;font-weight:600;letter-spacing:-0.02em">Zignal Nexora</span>
+      </a>
+      <nav style="display:flex;gap:24px;margin-left:8px;flex:1">
+        <a href="#productos" style="font-size:14px;color:var(--mut);transition:color .18s ease"><span lang="es">Productos</span><span lang="en">Products</span></a>
+        <a href="#proceso" style="font-size:14px;color:var(--mut);transition:color .18s ease"><span lang="es">Cómo funciona</span><span lang="en">How it works</span></a>
+        <a href="#contacto" style="font-size:14px;color:var(--mut);transition:color .18s ease"><span lang="es">Contacto</span><span lang="en">Contact</span></a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button onClick="{{ toggleTheme }}" role="switch" aria-label="Theme" data-track="" style="position:relative;display:inline-flex;align-items:center;gap:0;width:46px;height:26px;padding:0 5px;background:var(--fill);border:1px solid var(--bd);border-radius:100px;cursor:pointer;justify-content:space-between;transition:background .25s ease,border-color .25s ease" style-hover="border-color:var(--accent-line)">
+          <svg data-icon-moon="" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--tx2)" stroke-width="2" style="transition:opacity .25s ease" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"></path></svg>
+          <svg data-icon-sun="" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--tx2)" stroke-width="2" style="transition:opacity .25s ease" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"></path></svg>
+          <span data-knob="" style="position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--accent);box-shadow:0 2px 6px rgba(0,0,0,0.35);transition:transform .28s cubic-bezier(.16,1,.3,1)"></span>
+        </button>
+        <button onClick="{{ toggleLang }}" style="background:var(--fill);border:1px solid var(--bd);color:var(--mut);border-radius:6px;padding:6px 10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.04em;cursor:pointer" style-hover="color:var(--tx);border-color:var(--accent-line)">{{ langLabel }}</button>
+        <a href="#contacto" style="background:var(--accent);color:var(--on-accent);border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;flex:0 0 auto" style-hover="color:var(--on-accent);filter:brightness(1.08);transform:translateY(-2px)"><span lang="es">Agendar demo</span><span lang="en">Book a demo</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section id="top" style="position:relative;overflow:hidden;border-bottom:1px solid var(--bd2)">
+    <div aria-hidden="true" data-heroimg="dark" style="position:absolute;inset:0;background:url('assets/hero-bg.png') center right/cover no-repeat;pointer-events:none;transition:opacity .3s ease"></div>
+    <div aria-hidden="true" data-heroimg="light" style="position:absolute;inset:0;background:url('assets/hero-bg-light.png') center right/cover no-repeat;pointer-events:none;opacity:0;transition:opacity .3s ease"></div>
+    <div aria-hidden="true" data-herofade="" style="position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 6%,rgba(0,0,0,0) 78%),linear-gradient(0deg,var(--bg) 2%,rgba(0,0,0,0) 40%);pointer-events:none"></div>
+    <div aria-hidden="true" style="position:absolute;top:-140px;left:4%;width:720px;height:520px;background:radial-gradient(closest-side, var(--accent-soft), transparent 70%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:112px 32px 96px;max-width:1200px">
+      <div>
+      <div data-reveal="" style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--mut);text-transform:uppercase;margin-bottom:28px">
+        <span style="width:6px;height:6px;background:var(--accent);border-radius:2px;transform:rotate(45deg);animation:zn-pulse 2.6s ease-in-out infinite"></span>
+        <span lang="es">Integración de sistemas · Datos · Automatización</span><span lang="en">Systems integration · Data · Automation</span>
+      </div>
+      <h1 data-reveal="" style="max-width:900px;margin:0;font-size:clamp(38px,4.6vw,58px);font-weight:600;letter-spacing:-0.045em;line-height:1.04">
+        <span lang="es">No reinventamos software. <span style="color:var(--mut)">Integramos los productos que tu operación ya necesita.</span></span>
+        <span lang="en">We don't reinvent software. <span style="color:var(--mut)">We integrate the products your operation actually needs.</span></span>
+      </h1>
+      <p data-reveal="" style="max-width:560px;margin:26px 0 0;font-size:18px;color:var(--mut)">
+        <span lang="es">Elegimos, conectamos y orquestamos las herramientas que tú decides —automatización, analítica y atención omnicanal— sobre tu propia infraestructura. Tus datos se quedan donde deben.</span>
+        <span lang="en">We select, connect, and orchestrate the tools you choose — automation, analytics, and omnichannel support — on your own infrastructure. Your data stays where it belongs.</span>
+      </p>
+      <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:36px">
+        <a href="#contacto" style="background:var(--accent);color:var(--on-accent);border-radius:8px;padding:12px 22px;font-size:14px;font-weight:600;white-space:nowrap;flex:0 0 auto;transition:transform .2s cubic-bezier(.16,1,.3,1),filter .2s ease,border-color .2s ease,color .2s ease" style-hover="color:var(--on-accent);filter:brightness(1.08);transform:translateY(-2px)"><span lang="es">Agendar demo</span><span lang="en">Book a demo</span></a>
+        <a href="#productos" style="background:var(--fill);color:var(--tx2);border:1px solid var(--bd);border-radius:8px;padding:12px 22px;font-size:14px;font-weight:600;white-space:nowrap;flex:0 0 auto;transition:transform .2s cubic-bezier(.16,1,.3,1),filter .2s ease,border-color .2s ease,color .2s ease" style-hover="color:var(--tx);border-color:var(--accent-line);transform:translateY(-2px)"><span lang="es">Ver productos</span><span lang="en">See products</span></a>
+      </div>
+      <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:48px">
+        <span style="border:1px solid var(--bd2);background:var(--fill);color:var(--sub);border-radius:100px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap;flex:0 0 auto;transition:color .2s ease,border-color .2s ease" style-hover="color:var(--tx);border-color:var(--accent-line)">On-premises</span>
+        <span style="border:1px solid var(--bd2);background:var(--fill);color:var(--sub);border-radius:100px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap;flex:0 0 auto;transition:color .2s ease,border-color .2s ease" style-hover="color:var(--tx);border-color:var(--accent-line)">API-first</span>
+        <span style="border:1px solid var(--bd2);background:var(--fill);color:var(--sub);border-radius:100px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap;flex:0 0 auto;transition:color .2s ease,border-color .2s ease" style-hover="color:var(--tx);border-color:var(--accent-line)">WhatsApp Business</span>
+        <span style="border:1px solid var(--bd2);background:var(--fill);color:var(--sub);border-radius:100px;padding:5px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap;flex:0 0 auto;transition:color .2s ease,border-color .2s ease" style-hover="color:var(--tx);border-color:var(--accent-line)">24/7</span>
+      </div>
+      </div>
+
+    </div>
+
+    <div style="position:relative;border-top:1px solid var(--bd2);overflow:hidden;padding:16px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)">
+      <div style="display:flex;gap:48px;width:max-content;animation:zn-marquee 32s linear infinite;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub);letter-spacing:0.06em;white-space:nowrap">
+        <span>ERP</span><span>CRM</span><span>WhatsApp Business API</span><span>PostgreSQL</span><span>Power BI</span><span>Google Workspace</span><span>SAP</span><span>Zapier / n8n</span><span>Twilio</span><span>Metabase</span><span>REST · SOAP · SQL</span>
+        <span>ERP</span><span>CRM</span><span>WhatsApp Business API</span><span>PostgreSQL</span><span>Power BI</span><span>Google Workspace</span><span>SAP</span><span>Zapier / n8n</span><span>Twilio</span><span>Metabase</span><span>REST · SOAP · SQL</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="productos" style="position:relative;overflow:hidden;border-bottom:1px solid var(--bd2)">
+    <div data-bglayer="" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none">
+      <div data-bg="0" style="position:absolute;inset:0;background:url('assets/bg-1.png') center/cover no-repeat;opacity:0;transition:opacity .9s ease"></div>
+      <div data-bg="1" style="position:absolute;inset:0;background:url('assets/bg-2.png') center/cover no-repeat;opacity:0;transition:opacity .9s ease"></div>
+      <div data-bg="2" style="position:absolute;inset:0;background:url('assets/bg-3.png') center/cover no-repeat;opacity:0;transition:opacity .9s ease"></div>
+      <div data-bg="3" style="position:absolute;inset:0;background:url('assets/bg-4.png') center/cover no-repeat;opacity:0;transition:opacity .9s ease"></div>
+      <div data-bg="4" style="position:absolute;inset:0;background:url('assets/bg-5.png') center/cover no-repeat;opacity:0;transition:opacity .9s ease"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 8%,transparent 55%,var(--bg) 96%)"></div>
+    </div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:minmax(280px,38fr) minmax(320px,62fr);gap:64px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase">01 — <span lang="es">Qué hacemos</span><span lang="en">What we do</span></div>
+        <h2 data-reveal="" style="margin:18px 0 0;font-size:34px;font-weight:600;letter-spacing:-0.03em;line-height:1.12">
+          <span lang="es">Cinco frentes que integramos en tu operación.</span>
+          <span lang="en">Five fronts we integrate into your operation.</span>
+        </h2>
+        <p style="margin:20px 0 0;font-size:15px;color:var(--mut);max-width:380px">
+          <span lang="es">No te amarramos a un producto. Evaluamos las herramientas del mercado, elegimos contigo las que encajan y las integramos sobre los sistemas que ya usas, desplegadas donde tú decidas.</span>
+          <span lang="en">We don't lock you into one product. We evaluate what's on the market, pick the right fit with you, and integrate it with the systems you already run — deployed wherever you decide.</span>
+        </p>
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--bd2);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub);line-height:2">
+          <div><span lang="es">Integración</span><span lang="en">Integration</span> · REST / SOAP / SQL</div>
+          <div><span lang="es">Despliegue</span><span lang="en">Deployment</span> · <span lang="es">on-prem o nube privada</span><span lang="en">on-prem or private cloud</span></div>
+        </div>
+      </div>
+
+      <div data-cards="" style="display:flex;flex-direction:column">
+        <article data-card="0" data-reveal="" style="position:relative;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:20px;padding:24px 26px;border-bottom:1px solid var(--bd2);border-radius:8px;transition:background .2s ease,transform .25s cubic-bezier(.16,1,.3,1)" style-hover="background:var(--fill);transform:translateX(6px)">
+          <span data-rail="" style="position:absolute;left:0;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleY(.3);transform-origin:top;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)"></span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true">
+            <rect x="2.5" y="4" width="7" height="6" rx="1.5"></rect>
+            <rect x="14.5" y="14" width="7" height="6" rx="1.5"></rect>
+            <path d="M9.5 7h4.5a3 3 0 0 1 3 3v4"></path>
+            <path d="M14.6 12.4 17 14.8l2.4-2.4"></path>
+          </svg>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Automatización de procesos</span><span lang="en">Process Automation</span></h3>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);border:1px solid var(--bd2);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:0 0 auto">API</span>
+            </div>
+            <p style="margin:7px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Orquesta workflows de principio a fin. Elimina tareas manuales repetitivas y reduce errores operativos.</span><span lang="en">Orchestrate workflows end-to-end. Eliminate repetitive manual tasks and reduce operational errors.</span></p>
+          </div>
+        </article>
+
+        <article data-card="1" data-reveal="" style="position:relative;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:20px;padding:24px 26px;border-bottom:1px solid var(--bd2);border-radius:8px;transition:background .2s ease,transform .25s cubic-bezier(.16,1,.3,1)" style-hover="background:var(--fill);transform:translateX(6px)">
+          <span data-rail="" style="position:absolute;left:0;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleY(.3);transform-origin:top;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)"></span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true">
+            <path d="M3 20h18"></path><rect x="4" y="12" width="3.5" height="5"></rect><rect x="10.2" y="7" width="3.5" height="10"></rect><rect x="16.4" y="10" width="3.5" height="7"></rect>
+          </svg>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Dashboards de métricas</span><span lang="en">Metrics Dashboards</span></h3>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);border:1px solid var(--bd2);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:0 0 auto">Realtime</span>
+            </div>
+            <p style="margin:7px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Visualiza KPIs en tiempo real. Monitoreo de operaciones con datos densos y accionables.</span><span lang="en">Visualize KPIs in real time. Operational monitoring with dense, actionable data.</span></p>
+          </div>
+        </article>
+
+        <article data-card="2" data-reveal="" style="position:relative;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:20px;padding:24px 26px;border-bottom:1px solid var(--bd2);border-radius:8px;transition:background .2s ease,transform .25s cubic-bezier(.16,1,.3,1)" style-hover="background:var(--fill);transform:translateX(6px)">
+          <span data-rail="" style="position:absolute;left:0;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleY(.3);transform-origin:top;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)"></span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true">
+            <path d="M12 3.2c4.7 0 8.5 3.4 8.5 7.6s-3.8 7.6-8.5 7.6c-1.2 0-2.4-.2-3.4-.6L4 19.6l1.3-3.4A7.3 7.3 0 0 1 3.5 10.8C3.5 6.6 7.3 3.2 12 3.2Z"></path>
+            <path d="M8.6 10.9h6.8"></path><path d="M8.6 13.6h4"></path>
+          </svg>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:19px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp Bots</span></h3>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);border:1px solid var(--bd2);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:0 0 auto">Cloud API</span>
+            </div>
+            <p style="margin:7px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Atención conversacional 24/7. Responde, deriva y transacciona directamente en WhatsApp Business.</span><span lang="en">24/7 conversational support. Respond, route, and transact directly on WhatsApp Business.</span></p>
+          </div>
+        </article>
+
+        <article data-card="3" data-reveal="" style="position:relative;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:20px;padding:24px 26px;border-bottom:1px solid var(--bd2);border-radius:8px;transition:background .2s ease,transform .25s cubic-bezier(.16,1,.3,1)" style-hover="background:var(--fill);transform:translateX(6px)">
+          <span data-rail="" style="position:absolute;left:0;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleY(.3);transform-origin:top;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)"></span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="13" width="18" height="8" rx="2"></rect>
+            <path d="M7 13V9.5a5 5 0 0 1 5-5"></path><path d="M12 4.5a5 5 0 0 1 5 5V13"></path><path d="M12 4.5V13"></path>
+          </svg>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:18px;font-weight:600;letter-spacing:-0.01em"><span lang="es">Plataforma omnicanal</span><span lang="en">Omnichannel Platform</span></h3>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);border:1px solid var(--bd2);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:0 0 auto">Unified inbox</span>
+            </div>
+            <p style="margin:7px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar.</span><span lang="en">One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place.</span></p>
+          </div>
+        </article>
+
+        <article data-card="4" data-reveal="" style="position:relative;cursor:pointer;display:grid;grid-template-columns:36px 1fr;gap:20px;padding:24px 26px;border-radius:8px;transition:background .2s ease,transform .25s cubic-bezier(.16,1,.3,1)" style-hover="background:var(--fill);transform:translateX(6px)">
+          <span data-rail="" style="position:absolute;left:0;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleY(.3);transform-origin:top;transition:opacity .3s ease,transform .5s cubic-bezier(.16,1,.3,1)"></span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" aria-hidden="true">
+            <ellipse cx="12" cy="6" rx="7.5" ry="3"></ellipse>
+            <path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"></path>
+            <path d="M4.5 12v5c0 1.7 3.4 3 7.5 3"></path><path d="M15.5 20.5 19 17l2.2 2.2"></path>
+          </svg>
+          <div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+              <h3 style="margin:0;font-size:18px;font-weight:600;letter-spacing:-0.01em"><span lang="es">Analítica on-premises</span><span lang="en">On-premises Analytics</span></h3>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sub);border:1px solid var(--bd2);border-radius:4px;padding:2px 6px;white-space:nowrap;flex:0 0 auto">On-prem</span>
+            </div>
+            <p style="margin:7px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Business intelligence en tu infraestructura. Tus datos nunca salen de tu red. Privacidad por diseño.</span><span lang="en">Business intelligence on your infrastructure. Your data never leaves your network. Privacy by design.</span></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="proceso" style="border-bottom:1px solid var(--bd2)">
+    <div style="max-width:1200px;margin:0 auto;padding:88px 32px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase">02 — <span lang="es">Cómo funciona</span><span lang="en">How it works</span></div>
+          <h2 style="margin:18px 0 0;font-size:34px;font-weight:600;letter-spacing:-0.03em"><span lang="es">Tres etapas, sin sorpresas.</span><span lang="en">Three stages, no surprises.</span></h2>
+        </div>
+        <p style="margin:0;max-width:340px;font-size:15px;color:var(--mut)"><span lang="es">Del diagnóstico al monitoreo continuo, con entregables definidos en cada etapa.</span><span lang="en">From diagnosis to continuous monitoring, with defined deliverables at every stage.</span></p>
+      </div>
+      <div style="margin-top:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:40px;border-top:1px solid var(--bd)">
+        <div data-reveal="" style="padding-top:24px;border-top:2px solid var(--accent);margin-top:-1px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub)">01</div>
+          <h3 style="margin:14px 0 0;font-size:20px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Diagnosticamos</span><span lang="en">We diagnose</span></h3>
+          <p style="margin:8px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Mapeamos tus procesos manuales, los cuellos de botella y las fuentes de datos disponibles.</span><span lang="en">We map your manual processes, bottlenecks, and available data sources.</span></p>
+        </div>
+        <div data-reveal="" style="padding-top:24px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub)">02</div>
+          <h3 style="margin:14px 0 0;font-size:20px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Diseñamos e integramos</span><span lang="en">We design and integrate</span></h3>
+          <p style="margin:8px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Seleccionamos las herramientas y las conectamos a tu infraestructura actual, sin migraciones forzadas.</span><span lang="en">We select the tools and wire them into your current infrastructure, with no forced migrations.</span></p>
+        </div>
+        <div data-reveal="" style="padding-top:24px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub)">03</div>
+          <h3 style="margin:14px 0 0;font-size:20px;font-weight:600;letter-spacing:-0.015em"><span lang="es">Automatizamos y medimos</span><span lang="en">We automate and measure</span></h3>
+          <p style="margin:8px 0 0;font-size:15px;color:var(--mut)"><span lang="es">Despliegue, monitoreo y optimización continua con métricas visibles para tu equipo.</span><span lang="en">Deployment, monitoring, and continuous optimization with metrics your team can see.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--accent-soft);border-bottom:1px solid var(--bd2)">
+    <div style="max-width:1200px;margin:0 auto;padding:44px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <h2 style="margin:0;font-size:24px;font-weight:600;letter-spacing:-0.02em"><span lang="es">¿Listo para automatizar tu operación?</span><span lang="en">Ready to automate your operations?</span></h2>
+      <a href="#contacto" style="background:var(--accent);color:var(--on-accent);border-radius:8px;padding:12px 22px;font-size:14px;font-weight:600;white-space:nowrap;flex:0 0 auto;transition:transform .2s cubic-bezier(.16,1,.3,1),filter .2s ease,border-color .2s ease,color .2s ease" style-hover="color:var(--on-accent);filter:brightness(1.08);transform:translateY(-2px)"><span lang="es">Hablar con un experto</span><span lang="en">Talk to an expert</span></a>
+    </div>
+  </section>
+
+  <section id="contacto" style="border-bottom:1px solid var(--bd2)">
+    <div style="max-width:1200px;margin:0 auto;padding:88px 32px;display:grid;grid-template-columns:minmax(260px,34fr) minmax(340px,66fr);gap:64px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase">03 — <span lang="es">Contacto</span><span lang="en">Contact</span></div>
+        <h2 style="margin:18px 0 0;font-size:34px;font-weight:600;letter-spacing:-0.03em"><span lang="es">Agenda una demo</span><span lang="en">Book a demo</span></h2>
+        <p style="margin:18px 0 0;font-size:15px;color:var(--mut);max-width:320px"><span lang="es">Cuéntanos qué proceso quieres automatizar. Respondemos en menos de 24 horas hábiles.</span><span lang="en">Tell us which process you want to automate. We reply within one business day.</span></p>
+        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--sub);line-height:2.1">
+          <div>hola@zignalnexora.com</div>
+          <div>+00 000 000 000</div>
+        </div>
+      </div>
+      <form onSubmit="{{ onSubmit }}" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span><span lang="es">Nombre</span><span lang="en">Name</span></span>
+          <input name="name" required="" data-es-ph="Nombre y apellido" data-en-ph="Full name" placeholder="Nombre y apellido" style="background:var(--fill);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span style="display:flex;justify-content:space-between;gap:8px"><span><span lang="es">Email corporativo</span><span lang="en">Work email</span></span><span data-email-error="" style="color:var(--bad);font-size:12px;opacity:0;transition:opacity .2s ease"></span></span>
+          <input name="email" type="email" required="" data-email="" data-es-ph="tu@empresa.com" data-en-ph="you@company.com" placeholder="tu@empresa.com" style="background:var(--fill);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span><span lang="es">Empresa</span><span lang="en">Company</span></span>
+          <input name="company" required="" data-es-ph="Nombre de la empresa" data-en-ph="Company name" placeholder="Nombre de la empresa" style="background:var(--fill);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span><span lang="es">Teléfono (opcional)</span><span lang="en">Phone (optional)</span></span>
+          <input name="phone" data-es-ph="+00 000 000 000" data-en-ph="+00 000 000 000" placeholder="+00 000 000 000" style="background:var(--fill);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)" />
+        </label>
+        <label style="grid-column:1 / -1;display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span><span lang="es">¿Qué producto te interesa?</span><span lang="en">Which product are you interested in?</span></span>
+          <select name="product" style="background:var(--elev);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;cursor:pointer" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)">
+            <option style="background:var(--elev);color:var(--tx)">Automatización de procesos / Process Automation</option>
+            <option style="background:var(--elev);color:var(--tx)">Dashboards de métricas / Metrics Dashboards</option>
+            <option style="background:var(--elev);color:var(--tx)">Bots de WhatsApp / WhatsApp Bots</option>
+            <option style="background:var(--elev);color:var(--tx)">Plataforma omnicanal / Omnichannel Platform</option>
+            <option style="background:var(--elev);color:var(--tx)">Analítica on-premises / On-premises Analytics</option>
+            <option style="background:var(--elev);color:var(--tx)">Todos / All of them</option>
+          </select>
+        </label>
+        <label style="grid-column:1 / -1;display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--tx2)">
+          <span><span lang="es">¿Qué proceso quieres automatizar?</span><span lang="en">Which process do you want to automate?</span></span>
+          <textarea name="message" rows="4" data-es-ph="Describe brevemente el flujo actual…" data-en-ph="Briefly describe your current flow…" placeholder="Describe brevemente el flujo actual…" style="background:var(--fill);border:1px solid var(--bd);border-radius:8px;padding:11px 13px;color:var(--tx);font-size:15px;resize:vertical" style-focus="outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)"></textarea>
+        </label>
+        <div style="grid-column:1 / -1;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <button type="submit" style="background:var(--accent);color:var(--on-accent);border:none;border-radius:8px;padding:12px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),filter .2s ease" style-hover="filter:brightness(1.12);transform:translateY(-2px)">{{ submitLabel }}</button>
+          <span style="font-size:14px;color:{{ statusColor }}">{{ statusMsg }}</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 32px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;color:var(--tx)">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M14 1.2 26.8 14 14 26.8 1.2 14Z" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1"></path>
+            <path d="M9 9.2h10L9 18.8h10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" fill="none"></path>
+            <circle cx="19" cy="9.2" r="1.9" fill="var(--accent-2)"></circle>
+          </svg>
+          <span style="font-size:14px;font-weight:600;letter-spacing:-0.02em">Zignal Nexora</span>
+        </div>
+        <p style="margin:14px 0 0;font-size:13px;color:var(--sub);max-width:220px"><span lang="es">Integración de sistemas, automatización y datos para operaciones que no pueden fallar.</span><span lang="en">Systems integration, automation, and data for operations that cannot fail.</span></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--sub);text-transform:uppercase"><span lang="es">Productos</span><span lang="en">Products</span></div>
+        <a href="#productos" style="font-size:13px;color:var(--mut)"><span lang="es">Automatización</span><span lang="en">Automation</span></a>
+        <a href="#productos" style="font-size:13px;color:var(--mut)">Dashboards</a>
+        <a href="#productos" style="font-size:13px;color:var(--mut)"><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp bots</span></a>
+        <a href="#productos" style="font-size:13px;color:var(--mut)"><span lang="es">Omnicanal</span><span lang="en">Omnichannel</span></a>
+        <a href="#productos" style="font-size:13px;color:var(--mut)"><span lang="es">Analítica on-prem</span><span lang="en">On-prem analytics</span></a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--sub);text-transform:uppercase"><span lang="es">Empresa</span><span lang="en">Company</span></div>
+        <a href="#" style="font-size:13px;color:var(--mut)"><span lang="es">Sobre nosotros</span><span lang="en">About us</span></a>
+        <a href="#" style="font-size:13px;color:var(--mut)"><span lang="es">Casos de éxito</span><span lang="en">Case studies</span></a>
+        <a href="#proceso" style="font-size:13px;color:var(--mut)"><span lang="es">Cómo trabajamos</span><span lang="en">How we work</span></a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--sub);text-transform:uppercase"><span lang="es">Contacto</span><span lang="en">Contact</span></div>
+        <a href="mailto:hola@zignalnexora.com" style="font-size:13px;color:var(--mut)">hola@zignalnexora.com</a>
+        <span style="font-size:13px;color:var(--mut)">+00 000 000 000</span>
+        <span style="font-size:13px;color:var(--mut)">LATAM · <span lang="es">Remoto</span><span lang="en">Remote</span></span>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:20px 32px 40px;border-top:1px solid var(--bd2);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="font-size:12px;color:var(--sub)">© 2026 Zignal Nexora. <span lang="es">Todos los derechos reservados.</span><span lang="en">All rights reserved.</span></div>
+      <div style="display:flex;gap:8px">
+        <button onClick="{{ toggleTheme }}" role="switch" aria-label="Theme" data-track="" style="position:relative;display:inline-flex;align-items:center;width:40px;height:22px;padding:0;background:transparent;border:1px solid var(--bd2);border-radius:100px;cursor:pointer;transition:background .25s ease,border-color .25s ease" style-hover="border-color:var(--accent-line)">
+          <span data-knob="" style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--accent);transition:transform .28s cubic-bezier(.16,1,.3,1)"></span>
+        </button>
+        <button onClick="{{ toggleLang }}" style="background:transparent;border:1px solid var(--bd2);color:var(--sub);border-radius:5px;padding:5px 9px;font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer" style-hover="color:var(--tx)">{{ langLabel }}</button>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;es&quot;,&quot;en&quot;],&quot;default&quot;:&quot;es&quot;,&quot;tsType&quot;:&quot;'es'|'en'&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;oklch(0.72 0.13 215)&quot;,&quot;options&quot;:[&quot;oklch(0.72 0.13 215)&quot;,&quot;oklch(0.62 0.13 285)&quot;,&quot;oklch(0.7 0.13 195)&quot;,&quot;oklch(0.6 0.15 255)&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Form&quot;}}">
+class Component extends DCLogic {
+  state = { theme: null, lang: null, status: null };
+
+  componentDidMount() {
+    const theme = localStorage.getItem('zn-theme') || this.props.defaultTheme || 'dark';
+    const lang = localStorage.getItem('zn-lang') || this.props.defaultLang || 'es';
+    this.setState({ theme, lang });
+    this.applyTheme(theme);
+    this.applyLang(lang);
+    this.observe();
+    this.initCycle();
+    setTimeout(() => {
+      const input = document.querySelector('[data-email]');
+      if (input) {
+        input.addEventListener('blur', this.checkEmail);
+        input.addEventListener('input', () => { if (input.style.borderColor === 'var(--bad)') this.checkEmail(); });
+      }
+    }, 300);
+  }
+
+  initCycle() {
+    this.active = 0;
+    const wrap = document.querySelector('[data-cards]');
+    if (!wrap) { this._cardRetry = setTimeout(() => this.initCycle(), 400); return; }
+    wrap.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-card]');
+      if (!card) return;
+      this.setActive(+card.dataset.card);
+      this.restartTimer();
+    });
+    wrap.addEventListener('mouseover', (e) => {
+      const card = e.target.closest('[data-card]');
+      if (card) { this.setActive(+card.dataset.card); this.restartTimer(); }
+    });
+    this.setActive(0);
+    this.restartTimer();
+  }
+
+  restartTimer() {
+    clearInterval(this._cycle);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this._cycle = setInterval(() => this.setActive((this.active + 1) % 5), 5200);
+  }
+
+  setActive(i) {
+    this.active = i;
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    document.querySelectorAll('[data-card]').forEach(el => {
+      const on = +el.dataset.card === i;
+      el.style.background = on ? 'var(--fill)' : 'transparent';
+      el.style.transform = on ? 'translateX(6px)' : 'none';
+      el.style.opacity = on ? '1' : '0.72';
+      const rail = el.querySelector('[data-rail]');
+      if (rail) { rail.style.opacity = on ? '1' : '0'; rail.style.transform = on ? 'scaleY(1)' : 'scaleY(.3)'; }
+    });
+    document.querySelectorAll('[data-bg]').forEach(el => {
+      const on = +el.dataset.bg === i;
+      el.style.opacity = on ? (light ? '0.28' : '0.5') : '0';
+      el.style.filter = light ? 'invert(1) hue-rotate(180deg) saturate(0.7)' : 'none';
+      el.style.transform = on ? 'scale(1.02)' : 'scale(1)';
+      el.style.transition = 'opacity .9s ease, transform 6s ease';
+    });
+  }
+
+  observe() {
+    if (this._io) this._io.disconnect();
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('zn-in'); this._io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    const attach = () => document.querySelectorAll('[data-reveal]:not(.zn-in)').forEach((el, i) => {
+      el.style.transitionDelay = Math.min(i % 6, 5) * 55 + 'ms';
+      this._io.observe(el);
+    });
+    attach();
+    this._retry = setTimeout(attach, 400);
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    clearTimeout(this._retry);
+    clearTimeout(this._cardRetry);
+    clearInterval(this._cycle);
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.accent !== this.props.accent) this.applyTheme(this.state.theme || 'dark');
+  }
+
+  applyTheme(theme) {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    const a = this.props.accent;
+    if (a && a !== 'oklch(0.72 0.13 215)') {
+      root.style.setProperty('--accent', a);
+      root.style.setProperty('--accent-soft', `color-mix(in oklch, ${a} 12%, transparent)`);
+      root.style.setProperty('--accent-line', `color-mix(in oklch, ${a} 38%, transparent)`);
+    }
+  }
+
+  applyLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es-ph]').forEach(el => {
+      const v = lang === 'es' ? el.getAttribute('data-es-ph') : el.getAttribute('data-en-ph');
+      if (v) el.placeholder = v;
+    });
+  }
+
+  toggleTheme = () => {
+    const next = (this.state.theme || 'dark') === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('zn-theme', next);
+    this.setState({ theme: next });
+    this.applyTheme(next);
+    if (this.active != null) this.setActive(this.active);
+  };
+
+  toggleLang = () => {
+    const next = (this.state.lang || 'es') === 'es' ? 'en' : 'es';
+    localStorage.setItem('zn-lang', next);
+    this.setState({ lang: next });
+    this.applyLang(next);
+  };
+
+  static FREE = ['gmail.com','googlemail.com','hotmail.com','hotmail.es','hotmail.co.uk','outlook.com','outlook.es','live.com','live.com.mx','msn.com','yahoo.com','yahoo.es','yahoo.com.mx','ymail.com','icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com','gmx.com','gmx.net','mail.com','mail.ru','yandex.com','yandex.ru','zoho.com','tutanota.com','hushmail.com','inbox.com','fastmail.com','pm.me','qq.com','163.com','126.com','naver.com','hotmail.fr','yahoo.fr','free.fr','terra.com','prodigy.net.mx','uol.com.br','bol.com.br'];
+
+  emailIssue(value) {
+    const es = (this.state.lang || 'es') === 'es';
+    const v = (value || '').trim().toLowerCase();
+    if (!v) return null;
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(v)) return es ? 'Email no válido' : 'Invalid email';
+    const domain = v.split('@')[1];
+    if (Component.FREE.includes(domain)) return es ? 'Usa tu email corporativo' : 'Use your work email';
+    return null;
+  }
+
+  checkEmail = () => {
+    const input = document.querySelector('[data-email]');
+    const label = document.querySelector('[data-email-error]');
+    if (!input) return null;
+    const issue = this.emailIssue(input.value);
+    if (label) { label.textContent = issue || ''; label.style.opacity = issue ? '1' : '0'; }
+    input.style.borderColor = issue ? 'var(--bad)' : 'var(--bd)';
+    return issue;
+  };
+
+  onSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const es = (this.state.lang || 'es') === 'es';
+    const issue = this.checkEmail();
+    if (issue) {
+      const input = document.querySelector('[data-email]');
+      if (input) input.focus();
+      this.setState({ status: { ok: false, msg: es ? 'Necesitamos un correo corporativo (no Gmail, Outlook, Yahoo…).' : 'We need a work email address (no Gmail, Outlook, Yahoo…).' } });
+      return;
+    }
+    const endpoint = this.props.formEndpoint || '';
+    if (endpoint && !/TU-FORM-ID/.test(endpoint)) {
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error('bad');
+        form.reset();
+        this.applyLang(this.state.lang || 'es');
+        this.setState({ status: { ok: true, msg: es ? '✓ Gracias. Te contactamos en menos de 24 h.' : '✓ Thank you. We reply within one business day.' } });
+        return;
+      } catch (err) { /* fall through to mailto */ }
+    }
+    const subject = encodeURIComponent(es ? 'Solicitud de demo — Zignal Nexora' : 'Demo request — Zignal Nexora');
+    const body = encodeURIComponent(
+      `${es ? 'Nombre' : 'Name'}: ${data.get('name') || ''}\nEmail: ${data.get('email') || ''}\n${es ? 'Empresa' : 'Company'}: ${data.get('company') || ''}\n${es ? 'Teléfono' : 'Phone'}: ${data.get('phone') || ''}\n${es ? 'Producto' : 'Product'}: ${data.get('product') || ''}\n\n${data.get('message') || ''}`
+    );
+    window.location.href = `mailto:hola@zignalnexora.com?subject=${subject}&body=${body}`;
+    this.setState({ status: { ok: true, msg: es ? 'Abrimos tu cliente de correo para enviar la solicitud.' : 'Opening your email client to send the request.' } });
+  };
+
+  renderVals() {
+    const theme = this.state.theme || this.props.defaultTheme || 'dark';
+    const lang = this.state.lang || this.props.defaultLang || 'es';
+    const s = this.state.status;
+    return {
+      toggleTheme: this.toggleTheme,
+      toggleLang: this.toggleLang,
+      onSubmit: this.onSubmit,
+      themeLabel: theme === 'dark' ? 'LIGHT' : 'DARK',
+      langLabel: lang === 'es' ? 'EN' : 'ES',
+      submitLabel: lang === 'es' ? 'Enviar solicitud' : 'Send request',
+      statusMsg: s ? s.msg : '',
+      statusColor: s ? (s.ok ? 'var(--ok)' : 'var(--bad)') : 'var(--mut)'
+    };
+  }
+}
+</script>
+</body>
+</html>
