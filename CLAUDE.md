@@ -176,8 +176,10 @@ applicable jurisdiction) and links to its counterpart via a language button plus
 - Section 8/9 draw the controller-vs-processor line: Zignal Nexora is the *controller* for its own
   leads and a *processor* for client data flowing through WhatsApp bots, the omnichannel inbox, and
   on-prem analytics. Preserve that distinction when editing.
-- The registered legal name and RUC are still `TODO` placeholders (marked with HTML comments in
-  section 1 of both files).
+- Section 1 identifies the controller as **Zignal Nexora S. A.**, RUC `1793230170001`. That is the
+  registered entity; elsewhere the documents use the bare trade name "Zignal Nexora" conversationally,
+  which each page defines as referring to the S. A. Keep the legal name and RUC in section 1 of both
+  files in sync if either ever changes.
 
 ## `site/` — design-tool source, not part of the shipped site
 
