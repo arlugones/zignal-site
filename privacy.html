@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Zignal Nexora</title>
+<meta name="description" content="Zignal Nexora's Privacy Policy: what personal data we process, why, who we share it with, and how to exercise your rights — including data deletion.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#070a0f">
+<link rel="canonical" href="https://zignalnexora.com/privacy.html">
+<link rel="alternate" hreflang="es" href="https://zignalnexora.com/privacidad.html">
+<link rel="alternate" hreflang="en" href="https://zignalnexora.com/privacy.html">
+<link rel="alternate" hreflang="x-default" href="https://zignalnexora.com/privacidad.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M14 1.2 26.8 14 14 26.8 1.2 14Z' fill='%23070a0f'/%3E%3Cpath d='M9 9.2h10L9 18.8h10' stroke='%2338bdf8' stroke-width='2.6' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Tokens mirrored from index.html — keep both in sync when the palette changes. */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #070a0f; --panel: #0c1017; --elev: #12161e;
+    --tx: #eef2f7; --tx2: #c3ccd8; --mut: #7c8798; --sub: #5b6472;
+    --accent: oklch(0.72 0.13 215); --accent-2: oklch(0.62 0.13 285);
+    --accent-soft: oklch(0.72 0.13 215 / 0.12); --accent-line: oklch(0.72 0.13 215 / 0.35);
+    --on-accent: #061018;
+    --bd: rgba(255,255,255,0.09); --bd2: rgba(255,255,255,0.05); --fill: rgba(255,255,255,0.02);
+  }
+  [data-theme="light"] {
+    --bg: #f6f8fa; --panel: #ffffff; --elev: #f0f3f6;
+    --tx: #0a0e14; --tx2: #33404f; --mut: #5f6b7a; --sub: #8a94a1;
+    --accent: oklch(0.55 0.13 235); --accent-2: oklch(0.52 0.13 285);
+    --accent-soft: oklch(0.55 0.13 235 / 0.09); --accent-line: oklch(0.55 0.13 235 / 0.3);
+    --on-accent: #ffffff;
+    --bd: rgba(10,14,20,0.12); --bd2: rgba(10,14,20,0.07); --fill: rgba(10,14,20,0.02);
+  }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg); color: var(--tx);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "cv01", "ss03"; line-height: 1.65;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  svg { display: block; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  .bar { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--bd2); }
+  .bar-inner { max-width: 940px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 9px; color: var(--tx); font-weight: 600; font-size: 15px; letter-spacing: -0.02em; }
+  .brand:hover { text-decoration: none; }
+  .spacer { flex: 1; }
+  .bar-btn {
+    font-size: 12px; color: var(--mut); border: 1px solid var(--bd); border-radius: 6px;
+    padding: 6px 10px; background: var(--fill); cursor: pointer; font-family: inherit; line-height: 1.4;
+  }
+  .bar-btn:hover { color: var(--tx); border-color: var(--accent-line); text-decoration: none; }
+
+  main { padding: 52px 0 76px; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+  .kicker { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  h1 { margin-top: 14px; font-size: clamp(29px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.14; }
+  .updated { margin-top: 14px; font-size: 12px; color: var(--sub); }
+  .lede { margin-top: 22px; font-size: 17px; color: var(--tx2); }
+  h2 { margin-top: 42px; padding-top: 24px; border-top: 1px solid var(--bd2); font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
+  h3 { margin-top: 26px; font-size: 15px; font-weight: 600; color: var(--tx2); }
+  p { margin-top: 14px; color: var(--mut); }
+  ul { margin: 12px 0 0 20px; color: var(--mut); }
+  li { margin-top: 7px; }
+  li::marker { color: var(--sub); }
+  strong { color: var(--tx2); font-weight: 600; }
+  .callout {
+    margin-top: 24px; padding: 20px 22px; border: 1px solid var(--accent-line);
+    background: var(--accent-soft); border-radius: 10px;
+  }
+  .callout h3 { margin-top: 0; color: var(--tx); font-size: 16px; }
+  .callout p { color: var(--tx2); }
+  .toc { margin-top: 28px; padding: 18px 20px; border: 1px solid var(--bd2); border-radius: 10px; background: var(--fill); }
+  .toc ol { margin: 10px 0 0 18px; color: var(--mut); font-size: 14px; }
+  .toc li { margin-top: 5px; }
+
+  .foot { border-top: 1px solid var(--bd2); background: var(--panel); padding: 26px 0; }
+  .foot-inner {
+    max-width: 940px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--sub);
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-inner">
+    <a class="brand" href="index.html" aria-label="Zignal Nexora — Home">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <path d="M14 1.2 26.8 14 14 26.8 1.2 14Z" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.1"/>
+        <path d="M9 9.2h10L9 18.8h10" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="square" fill="none"/>
+        <circle cx="19" cy="9.2" r="1.9" fill="var(--accent-2)"/>
+      </svg>
+      Zignal Nexora
+    </a>
+    <span class="spacer"></span>
+    <a class="bar-btn mono" href="privacidad.html" hreflang="es" lang="es">ES</a>
+    <button class="bar-btn mono" id="theme-toggle" type="button" aria-label="Toggle theme">THEME</button>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="kicker mono">Legal</div>
+    <h1>Privacy Policy</h1>
+    <p class="updated mono">Last updated: 8 August 2026 · Version 1.0</p>
+
+    <p class="lede">
+      This policy explains what personal data Zignal Nexora processes, why, who we share it with, how
+      long we keep it, and how you can exercise your rights — including having your data deleted.
+    </p>
+
+    <div class="toc">
+      <strong>Contents</strong>
+      <ol>
+        <li><a href="#controller">Who is responsible</a></li>
+        <li><a href="#scope">Scope of this policy</a></li>
+        <li><a href="#data">What data we process</a></li>
+        <li><a href="#purposes">Why we use it and on what legal basis</a></li>
+        <li><a href="#third-parties">Who we share it with</a></li>
+        <li><a href="#transfers">International transfers</a></li>
+        <li><a href="#retention">How long we keep it</a></li>
+        <li><a href="#clients">Data we process on behalf of our clients</a></li>
+        <li><a href="#whatsapp">WhatsApp and Meta platforms</a></li>
+        <li><a href="#rights">Your rights</a></li>
+        <li><a href="#deletion">How to request deletion of your data</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#minors">Minors</a></li>
+        <li><a href="#changes">Changes to this policy</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <h2 id="controller">1. Who is responsible</h2>
+    <!-- TODO: replace with the registered legal name and RUC (tax ID) before final publication. -->
+    <p>
+      The controller of the personal data described in this policy is <strong>Zignal Nexora</strong>, a
+      systems integration, automation and data analytics company operating in Ecuador.
+    </p>
+    <ul>
+      <li>Privacy contact: <a href="mailto:privacy@zignalnexora.com">privacy@zignalnexora.com</a></li>
+      <li>General contact: <a href="mailto:contact@zignalnexora.com">contact@zignalnexora.com</a></li>
+      <li>Website: <a href="https://zignalnexora.com/">zignalnexora.com</a></li>
+    </ul>
+
+    <h2 id="scope">2. Scope of this policy</h2>
+    <p>
+      This policy covers the <strong>zignalnexora.com</strong> website and our commercial relationship
+      with clients and people who contact us. We distinguish two situations, because our role and your
+      rights differ in each:
+    </p>
+    <ul>
+      <li>
+        <strong>We act as a controller</strong> when we decide why and how data is processed — for
+        example, the data you send us through the contact form on this site.
+      </li>
+      <li>
+        <strong>We act as a processor</strong> when we handle data on a client's behalf and on their
+        instructions — for example, the messages handled by a WhatsApp bot or an omnichannel inbox we
+        built for that client. In that case our client is the controller and their own privacy policy
+        governs the relationship with end users (see section <a href="#clients">8</a>).
+      </li>
+    </ul>
+
+    <h2 id="data">3. What data we process</h2>
+
+    <h3>3.1 Data you give us directly</h3>
+    <p>Through the contact form on this site we collect only:</p>
+    <ul>
+      <li><strong>Full name</strong> (required)</li>
+      <li><strong>Work email address</strong> (required)</li>
+      <li><strong>Company</strong> (required)</li>
+      <li><strong>Phone number</strong>, including country code (optional)</li>
+      <li><strong>Product of interest</strong>, selected from a list</li>
+      <li><strong>Free-text message</strong> describing the process you want to automate (optional)</li>
+    </ul>
+    <p>
+      Please <strong>do not include sensitive data or confidential third-party information</strong> in
+      the message field. For that, we prefer a channel agreed with you.
+    </p>
+
+    <h3>3.2 Data collected automatically</h3>
+    <ul>
+      <li>
+        <strong>Technical server logs.</strong> The site is hosted on GitHub Pages and its DNS is managed
+        through Cloudflare. These providers automatically record data such as IP address, browser type,
+        request date and time, and the page requested, for content delivery, security and abuse
+        prevention.
+      </li>
+      <li>
+        <strong>Local storage in your browser.</strong> We store two of your preferences using
+        <span class="mono">localStorage</span>: the visual theme (<span class="mono">zn-theme</span>) and
+        the language (<span class="mono">zn-lang</span>). These are not cookies, are never sent to any
+        server, do not identify you, and you can clear them from your browser at any time.
+      </li>
+    </ul>
+    <p>
+      <strong>This site uses no tracking cookies, no analytics and no advertising pixels</strong> —
+      including the Meta pixel. We do not build profiles and we do not make automated decisions that
+      produce legal effects concerning you.
+    </p>
+
+    <h3>3.3 Data reaching third parties</h3>
+    <p>
+      The site's typefaces are loaded from Google Fonts. When this happens, your browser connects to
+      Google's servers and discloses your IP address and basic request data to them. We have no control
+      over that processing, which is governed by Google's own policies.
+    </p>
+
+    <h2 id="purposes">4. Why we use it and on what legal basis</h2>
+    <ul>
+      <li>
+        <strong>To answer your enquiry and prepare a proposal.</strong> Legal basis: pre-contractual
+        steps taken at your request, and your consent when submitting the form.
+      </li>
+      <li>
+        <strong>To maintain the commercial relationship</strong> and follow up on contracted projects.
+        Legal basis: performance of a contract.
+      </li>
+      <li>
+        <strong>To operate and protect the site</strong> against abuse, spam and attacks. Legal basis:
+        our legitimate interest in keeping the service available and secure.
+      </li>
+      <li>
+        <strong>To comply with legal, accounting and tax obligations</strong> that apply to us.
+        Legal basis: compliance with a legal obligation.
+      </li>
+    </ul>
+    <p>
+      <strong>We do not sell personal data</strong>, we do not share it with third parties for
+      advertising purposes, and we do not use it to send you marketing unrelated to your enquiry.
+    </p>
+
+    <h2 id="third-parties">5. Who we share it with</h2>
+    <p>
+      We only share data with providers whose services we need in order to operate, under confidentiality
+      obligations and processing data solely according to our instructions:
+    </p>
+    <ul>
+      <li><strong>GitHub, Inc.</strong> — website hosting (GitHub Pages).</li>
+      <li><strong>Cloudflare, Inc.</strong> — DNS management and domain protection.</li>
+      <li><strong>Hostinger</strong> — corporate email service.</li>
+      <li><strong>Google LLC</strong> — web font delivery (Google Fonts).</li>
+    </ul>
+    <p>
+      We may also disclose information where there is a legal obligation, a request from a competent
+      authority, or to defend our rights. If we add an email delivery provider or any other service that
+      processes personal data in the future, we will update this list.
+    </p>
+
+    <h2 id="transfers">6. International transfers</h2>
+    <p>
+      Some of the providers listed above are located outside Ecuador, mainly in the United States and the
+      European Union. Where this happens, we seek to ensure appropriate safeguards — such as contractual
+      data protection clauses — in line with Ecuador's Organic Law on Personal Data Protection (LOPDP).
+    </p>
+
+    <h2 id="retention">7. How long we keep it</h2>
+    <ul>
+      <li>
+        <strong>Enquiries that do not lead to a commercial relationship:</strong> up to 24 months from
+        the last contact, unless you ask us to delete them sooner.
+      </li>
+      <li>
+        <strong>Client data:</strong> for the duration of the contractual relationship and, afterwards,
+        for the applicable legal, accounting and tax limitation periods.
+      </li>
+      <li>
+        <strong>Technical logs:</strong> according to each infrastructure provider's retention periods.
+      </li>
+    </ul>
+    <p>Once those periods expire, data is deleted or irreversibly anonymised.</p>
+
+    <h2 id="clients">8. Data we process on behalf of our clients</h2>
+    <p>
+      Our services — process automation, metrics dashboards, WhatsApp bots, omnichannel platform and
+      on-premises analytics — involve processing personal data that belongs to our clients and relates to
+      their own end users. In those cases:
+    </p>
+    <ul>
+      <li>We act as a <strong>processor</strong>, following the client's documented instructions.</li>
+      <li>We do not use that data for our own purposes, we do not sell it, and we do not disclose it to unauthorised third parties.</li>
+      <li>We apply confidentiality and the security measures contractually agreed with the client.</li>
+      <li>
+        In <strong>on-premises</strong> deployments, the data stays within the client's own
+        infrastructure and is not transferred to our systems.
+      </li>
+      <li>When the service ends, we return or delete the data as agreed with the client.</li>
+    </ul>
+    <p>
+      If you are an end user of a company that works with us and you want to exercise your rights, you
+      should contact that company, which is the controller. If you write to us instead, we will forward
+      your request to the relevant client and let you know.
+    </p>
+
+    <h2 id="whatsapp">9. WhatsApp and Meta platforms</h2>
+    <p>
+      When we implement solutions on the <strong>WhatsApp Business Platform</strong> or other Meta
+      platforms for a client, processing is limited to what is necessary to operate that support channel
+      on the client's behalf. This may include the end user's phone number, profile name and the content
+      of the messages they exchange with the business.
+    </p>
+    <ul>
+      <li>That processing is carried out <strong>on the client's instructions</strong>; the client is the controller towards the end user.</li>
+      <li>We use that data <strong>solely</strong> to provide the contracted messaging and support service.</li>
+      <li>
+        <strong>We do not use data obtained from Meta platforms for advertising purposes</strong>, we do
+        not sell it, we do not transfer it to data brokers, and we do not use it to build profiles
+        unrelated to the purpose of the service.
+      </li>
+      <li>We comply with the Meta Platform Terms and the applicable WhatsApp Business policies.</li>
+      <li>
+        Anyone may request deletion of their data through the route described in section
+        <a href="#deletion">11</a>.
+      </li>
+    </ul>
+
+    <h2 id="rights">10. Your rights</h2>
+    <p>
+      Under Ecuador's Organic Law on Personal Data Protection, as a data subject you may exercise the
+      following rights <strong>free of charge</strong>:
+    </p>
+    <ul>
+      <li><strong>Access</strong> — find out what data of yours we process and obtain a copy.</li>
+      <li><strong>Rectification and updating</strong> — correct inaccurate or incomplete data.</li>
+      <li><strong>Deletion</strong> — ask us to erase your data when it is no longer necessary or you withdraw consent.</li>
+      <li><strong>Objection</strong> — object to our processing in certain circumstances.</li>
+      <li><strong>Suspension</strong> of processing.</li>
+      <li><strong>Portability</strong> — receive your data in a structured, commonly used format.</li>
+      <li><strong>Not to be subject to automated decisions</strong> that significantly affect you.</li>
+    </ul>
+    <p>
+      To exercise them, write to <a href="mailto:privacy@zignalnexora.com">privacy@zignalnexora.com</a>.
+      We may ask you to verify your identity before acting on the request. We will respond within the
+      periods set by the LOPDP and, in practice, we aim to do so within
+      <strong>15 business days</strong>.
+    </p>
+    <p>
+      If you believe we have not handled your request properly, you may lodge a complaint with Ecuador's
+      <strong>Superintendency for Personal Data Protection</strong>
+      (<em>Superintendencia de Protección de Datos Personales</em>).
+    </p>
+
+    <h2 id="deletion">11. How to request deletion of your data</h2>
+    <div class="callout">
+      <h3>Data deletion request</h3>
+      <p>
+        Send an email to <a href="mailto:privacy@zignalnexora.com?subject=Data%20deletion%20request"><strong>privacy@zignalnexora.com</strong></a>
+        with the subject <em>"Data deletion request"</em> and include:
+      </p>
+      <ul>
+        <li>The name and email address you used to contact us.</li>
+        <li>If applicable, the phone number or channel (for example, WhatsApp) you used.</li>
+        <li>A short description of what you want deleted.</li>
+      </ul>
+      <p>
+        We will confirm receipt and tell you the outcome. We will delete the data unless we are required
+        to keep it under a legal obligation, in which case we will explain which one and for how long. If
+        the data was processed on behalf of one of our clients, we will forward your request to that
+        controller and let you know.
+      </p>
+    </div>
+
+    <h2 id="security">12. Security</h2>
+    <p>
+      We apply reasonable technical and organisational measures to protect personal data: encryption in
+      transit via HTTPS across the whole site, role-based access control following the principle of least
+      privilege, environment segregation, and credential management using secrets. No system is entirely
+      infallible; if a breach affecting your data occurred and posed a risk, we would notify it as
+      required by the applicable rules.
+    </p>
+
+    <h2 id="minors">13. Minors</h2>
+    <p>
+      Our services are aimed at businesses and at adults. We do not knowingly collect data from minors.
+      If we find that we have received a minor's data without the appropriate authorisation, we will
+      delete it.
+    </p>
+
+    <h2 id="changes">14. Changes to this policy</h2>
+    <p>
+      We may update this policy to reflect changes in our services or in applicable law. The version in
+      force will always be published at this same address, with its update date. If a change is
+      substantial, we will communicate it through an appropriate channel.
+    </p>
+
+    <h2 id="contact">15. Contact</h2>
+    <p>For any question about this policy or about how we process your personal data:</p>
+    <ul>
+      <li>Privacy and exercising your rights: <a href="mailto:privacy@zignalnexora.com">privacy@zignalnexora.com</a></li>
+      <li>General enquiries: <a href="mailto:contact@zignalnexora.com">contact@zignalnexora.com</a></li>
+    </ul>
+    <p>
+      This policy is published in Spanish and English. In the event of any discrepancy between the two
+      versions, <strong>the Spanish version prevails</strong>, as it corresponds to the applicable legal
+      system. The Spanish version is available at
+      <a href="privacidad.html" hreflang="es">Política de Privacidad</a>.
+    </p>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <span>© 2026 Zignal Nexora. All rights reserved.</span>
+    <span><a href="index.html">Back to home</a> · <a href="privacidad.html" hreflang="es" lang="es">Español</a></span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var html = document.documentElement;
+    html.setAttribute('data-theme', localStorage.getItem('zn-theme') || 'dark');
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('zn-theme', next);
+    });
+  })();
+</script>
+</body>
+</html>

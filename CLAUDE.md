@@ -142,6 +142,43 @@ rule appearing later in the stylesheet), `480px` (padding/spacing reductions, co
 fields stack). `prefers-reduced-motion: reduce` disables all transitions/animations
 globally, including the reveal-on-scroll and product-card auto-cycle.
 
+## Legal pages: `privacidad.html` (ES) and `privacy.html` (EN)
+
+The privacy policy ships as **two standalone single-language pages**, deliberately *not* using the
+landing page's `<span lang="es">`/`<span lang="en">` toggle. Long legal prose duplicated inline
+would leave both languages in the DOM for crawlers and screen readers, and would make it ambiguous
+which version governs. Each page states that the **Spanish version prevails** (Ecuador is the
+applicable jurisdiction) and links to its counterpart via a language button plus `hreflang` tags.
+
+- **Footer links need no JS.** `index.html`'s footer holds two anchors, `<a href="privacidad.html"
+  lang="es">` and `<a href="privacy.html" lang="en">`; the existing i18n CSS shows only the one
+  matching the active language. Follow that pattern rather than rewriting an `href` in script.
+- **The design tokens are mirrored, not shared.** Both pages carry their own copy of the
+  `:root`/`[data-theme="light"]` block so they stay self-contained like `index.html`. If the palette
+  changes, update all three files. Theme choice carries across pages through the shared `zn-theme`
+  localStorage key.
+- **These pages exist to satisfy Meta's app-review requirements**, so some properties are load-bearing
+  and must not regress:
+  - The URLs must stay **live, publicly reachable, crawlable, non-geoblocked and return HTTP 200** —
+    not a redirect. Give Meta the `https://` URL directly (`http://` 301-redirects under GitHub Pages'
+    HTTPS enforcement). Don't move these behind a redirect or a "pretty" extensionless path unless the
+    new path also returns 200.
+  - The policy must keep disclosing what data is collected, the purposes, and **a specific, working
+    path to request deletion** — that is section 11, the highlighted callout pointing at
+    `privacy@zignalnexora.com`. Meta treats a dead privacy contact or broken link as a violation, so
+    that mailbox must exist and be monitored.
+  - `<meta name="robots" content="index, follow">` is intentional; don't noindex these.
+- **Keep the content true to the code.** The policy enumerates exactly what the site collects (the
+  seven form fields, the two `localStorage` keys, Google Fonts disclosing visitor IPs, and the absence
+  of cookies/analytics/Meta pixel). If you add analytics, a tracking pixel, or a new processor, the
+  disclosure and sub-processor list in **both** language files must be updated to match — an
+  inaccurate policy is worse than none.
+- Section 8/9 draw the controller-vs-processor line: Zignal Nexora is the *controller* for its own
+  leads and a *processor* for client data flowing through WhatsApp bots, the omnichannel inbox, and
+  on-prem analytics. Preserve that distinction when editing.
+- The registered legal name and RUC are still `TODO` placeholders (marked with HTML comments in
+  section 1 of both files).
+
 ## `site/` — design-tool source, not part of the shipped site
 
 `site/Zignal Nexora.dc.html` (plus its `support.js` runtime and the original uncompressed
