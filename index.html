@@ -372,6 +372,9 @@
   form.contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .field { display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: var(--tx2); }
   .field-full { grid-column: 1 / -1; }
+  /* Honeypot. Positioned off-screen rather than display:none — some bots skip hidden fields,
+     and being absolute keeps it from creating a cell in the form grid. */
+  .gotcha { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .field-label-row { display: flex; justify-content: space-between; gap: 8px; }
   .field-error { color: var(--bad); font-size: 12px; opacity: 0; transition: opacity .2s ease; }
   .field input, .field textarea, .field select {
@@ -717,6 +720,9 @@
         </div>
 
         <form class="contact-form" id="lead-form" novalidate>
+          <!-- Formspree honeypot: hidden from people, tempting to bots. A filled value gets the
+               submission silently dropped. Kept out of the tab order and off screen readers. -->
+          <input class="gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label class="field">
             <span><span lang="es">Nombre</span><span lang="en">Name</span></span>
             <input name="name" required autocomplete="name" data-es-ph="Nombre y apellido" data-en-ph="Full name" placeholder="Nombre y apellido">
@@ -1215,7 +1221,7 @@
 
       /* ===== CONTACT FORM ===== */
       var FREE_EMAIL_DOMAINS = ['gmail.com','googlemail.com','hotmail.com','hotmail.es','hotmail.co.uk','outlook.com','outlook.es','live.com','live.com.mx','msn.com','yahoo.com','yahoo.es','yahoo.com.mx','ymail.com','icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com','gmx.com','gmx.net','mail.com','mail.ru','yandex.com','yandex.ru','zoho.com','tutanota.com','hushmail.com','inbox.com','fastmail.com','pm.me','qq.com','163.com','126.com','naver.com','hotmail.fr','yahoo.fr','free.fr','terra.com','prodigy.net.mx','uol.com.br','bol.com.br'];
-      var FORM_ENDPOINT = ''; // Formspree ID, e.g. 'https://formspree.io/f/xxxxxxx' — falls back to mailto when empty
+      var FORM_ENDPOINT = 'https://formspree.io/f/mvkpzypv'; // Formspree — falls back to mailto when empty or unreachable
 
       var form = document.getElementById('lead-form');
       var emailInput = document.getElementById('email-input');
@@ -1272,6 +1278,9 @@
         }
 
         if (FORM_ENDPOINT) {
+          // Formspree reads `email` as Reply-To automatically, and `subject` as the notification
+          // subject line. Set it here rather than as a {{ }} template so the value is deterministic.
+          data.set('subject', 'Solicitud de demo — ' + (data.get('company') || '').trim());
           fetch(FORM_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
             .then(function (res) {
               if (!res.ok) throw new Error('bad response');

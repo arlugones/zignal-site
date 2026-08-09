@@ -103,10 +103,21 @@ makes this read as designed rather than generated.
 **Lead form**: `#lead-form`'s submit handler validates a work email — free consumer
 providers (Gmail, Outlook, Yahoo, iCloud, etc., see the `FREE_EMAIL_DOMAINS` list in the
 script) are rejected inline before submission is attempted, which is deliberate business
-logic (this is a B2B lead form), not a bug to relax. On a valid submission it POSTs to
-`FORM_ENDPOINT` (currently empty — fill in a Formspree endpoint URL to enable it) and falls
-back to opening a pre-filled `mailto:` link if the endpoint is unset or the request fails.
-Status is shown inline via `#form-status`.
+logic (this is a B2B lead form), not a bug to relax. On a valid submission it POSTs the
+`FormData` to `FORM_ENDPOINT` — a **Formspree** form — and falls back to opening a pre-filled
+`mailto:` link if the endpoint is empty or the request fails, so leads are never silently lost
+(worth keeping: Formspree's plans cap monthly submissions). Status is shown inline via
+`#form-status`. Formspree specifics that the markup depends on:
+- The email input is `name="email"`, which Formspree automatically uses as the **Reply-To**, so
+  replies go straight to the lead. Renaming that field breaks it.
+- `subject` is set on the `FormData` at submit time rather than as a `{{ }}` template, so the
+  notification subject is deterministic regardless of Formspree's templating behaviour.
+- `input[name="_gotcha"]` is Formspree's **honeypot**: a filled value makes Formspree silently drop
+  the submission. It is positioned off-screen via `.gotcha` rather than `display: none` (some bots
+  skip hidden fields) and is absolutely positioned so it doesn't occupy a cell in the form grid.
+  Keep it out of the tab order and `aria-hidden`.
+- Formspree receives personal data, so it is listed as a sub-processor in section 5 of both privacy
+  policy pages — see the legal pages section below before changing form plumbing.
 
 **Phone country picker**: the phone field is a custom listbox (`#phone-field`), not a native
 `<select>`, built from the `COUNTRIES` table in the script. It submits two fields —
