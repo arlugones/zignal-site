@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -425,7 +425,7 @@
 <script>
   (function () {
     var html = document.documentElement;
-    html.setAttribute('data-theme', localStorage.getItem('zn-theme') || 'dark');
+    html.setAttribute('data-theme', localStorage.getItem('zn-theme') || 'light');
     document.getElementById('theme-toggle').addEventListener('click', function () {
       var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);

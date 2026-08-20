@@ -26,7 +26,7 @@ Hosted on GitHub Pages, serving directly from the repo root on the default branc
 
 ## Architecture inside `index.html`
 
-**Theming**: All colors are CSS custom properties on `:root` (dark, the default) and
+**Theming**: All colors are CSS custom properties on `:root` (light, the default) and
 re-declared under `[data-theme="light"]`, using `oklch()` for the accent colors. Never
 hardcode a color in a new component — add both a dark and light value to the variable block
 instead. Theme state persists to `localStorage` under `zn-theme` and is toggled via

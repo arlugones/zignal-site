@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" data-lang="es">
+<html lang="es" data-theme="light" data-lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1059,7 +1059,7 @@
       var html = document.documentElement;
 
       /* ===== THEME ===== */
-      var savedTheme = localStorage.getItem('zn-theme') || 'dark';
+      var savedTheme = localStorage.getItem('zn-theme') || 'light';
       html.setAttribute('data-theme', savedTheme);
       document.querySelectorAll('#theme-toggle, #theme-toggle-footer').forEach(function (btn) {
         btn.addEventListener('click', function () {
