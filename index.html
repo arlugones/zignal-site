@@ -291,53 +291,150 @@
     .hero-ctas .btn { width: 100%; }
   }
 
-  /* ========== PRODUCTS ========== */
-  .products { overflow: hidden; border-bottom: 1px solid var(--bd2); }
-  .product-bg-layer { position: absolute; inset: 0; pointer-events: none; }
-  .product-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity .9s ease, transform 6s ease; }
-  .product-bg[data-bg="0"] { background-image: url('assets/bg-1.webp'); }
-  .product-bg[data-bg="1"] { background-image: url('assets/bg-2.webp'); }
-  .product-bg[data-bg="2"] { background-image: url('assets/bg-3.webp'); }
-  .product-bg[data-bg="3"] { background-image: url('assets/bg-4.webp'); }
-  .product-bg[data-bg="4"] { background-image: url('assets/bg-5.webp'); }
-  .product-bg.is-active { opacity: .5; transform: scale(1.02); }
-  [data-theme="light"] .product-bg { filter: invert(1) hue-rotate(180deg) saturate(.7); }
-  [data-theme="light"] .product-bg.is-active { opacity: .28; }
-  .product-bg-fade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 8%, transparent 55%, var(--bg) 96%); }
+  /* ========== PRODUCTS & 3D FLIP CARDS ========== */
+  .products { overflow: hidden; border-bottom: 1px solid var(--bd2); position: relative; }
 
-  .products-grid { position: relative; max-width: 1200px; margin: 0 auto; padding: 88px 32px; display: grid; grid-template-columns: minmax(280px,38fr) minmax(320px,62fr); gap: 64px; }
+  .products-grid {
+    position: relative; max-width: 1200px; margin: 0 auto; padding: 88px 32px;
+    display: grid; grid-template-columns: minmax(260px,32fr) minmax(320px,68fr); gap: 48px;
+    align-items: start;
+  }
   .eyebrow-num { font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
   .products-intro h2 { margin-top: 18px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; }
-  .products-intro p { margin-top: 20px; font-size: 15px; color: var(--mut); max-width: 380px; }
+  .products-intro p { margin-top: 20px; font-size: 15px; color: var(--mut); max-width: 360px; line-height: 1.6; }
   .products-meta { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--bd2); font-size: 12px; color: var(--sub); line-height: 2; }
 
-  .products-list { display: flex; flex-direction: column; }
-  .product-card {
-    position: relative; cursor: pointer; display: grid; grid-template-columns: 36px 1fr; gap: 20px;
-    padding: 24px 26px; border-bottom: 1px solid var(--bd2); border-radius: 8px; opacity: .72;
-    transition: background .2s ease, transform .25s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-  }
-  .product-card:last-child { border-bottom: none; }
-  .product-card:hover, .product-card.is-active { background: var(--fill); transform: translateX(6px); opacity: 1; }
-  .product-rail {
-    position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
-    background: var(--accent); opacity: 0; transform: scaleY(.3); transform-origin: top;
-    transition: opacity .3s ease, transform .5s cubic-bezier(.16,1,.3,1);
-  }
-  .product-card:hover .product-rail, .product-card.is-active .product-rail { opacity: 1; transform: scaleY(1); }
-  .product-card svg { stroke: var(--accent); }
-  .product-card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-  .product-card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
   .product-tag { font-size: 10px; color: var(--sub); border: 1px solid var(--bd2); border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
-  .product-card p { margin-top: 7px; font-size: 15px; color: var(--mut); }
+
+  /* 3D Flip Card Grid */
+  .flip-cards-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  }
+
+  /* 3D Flip Card Structure */
+  .flip-card {
+    perspective: 1000px;
+    height: 280px;
+    cursor: pointer;
+    outline: none;
+  }
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  .flip-card:hover .flip-card-inner,
+  .flip-card:focus-within .flip-card-inner,
+  .flip-card.is-flipped .flip-card-inner {
+    transform: rotateY(180deg);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Front Face */
+  .flip-card-front {
+    border: 1px solid var(--bd);
+    background: var(--panel);
+  }
+  .flip-front-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0.45;
+    transition: transform 0.6s ease, opacity 0.3s ease;
+  }
+  .flip-card:hover .flip-front-bg {
+    transform: scale(1.05);
+    opacity: 0.6;
+  }
+  [data-theme="light"] .flip-front-bg {
+    filter: invert(1) hue-rotate(180deg) saturate(.7);
+    opacity: 0.3;
+  }
+  .flip-front-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(8,9,10,0.3) 0%, rgba(8,9,10,0.85) 100%);
+    pointer-events: none;
+  }
+  [data-theme="light"] .flip-front-overlay {
+    background: linear-gradient(180deg, rgba(247,248,248,0.4) 0%, rgba(247,248,248,0.92) 100%);
+  }
+  .flip-front-top {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .flip-icon-wrap {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--fill); border: 1px solid var(--bd);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+  }
+  .flip-front-bottom {
+    position: relative; z-index: 2;
+  }
+  .flip-front-bottom h3 {
+    font-size: 19px; font-weight: 600; letter-spacing: -0.015em; color: var(--tx);
+    margin-bottom: 12px;
+  }
+  .flip-hint {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; letter-spacing: 0.05em; color: var(--accent-2);
+    font-weight: 500; text-transform: uppercase;
+    transition: gap 0.2s ease;
+  }
+  .flip-card:hover .flip-hint {
+    gap: 10px;
+  }
+
+  /* Back Face */
+  .flip-card-back {
+    background: var(--elev);
+    border: 1px solid var(--bd);
+    transform: rotateY(180deg);
+  }
+  .flip-back-top {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .flip-back-tag-row {
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .flip-back-top h3 {
+    font-size: 18px; font-weight: 600; color: var(--tx); letter-spacing: -0.015em;
+  }
+  .flip-back-desc {
+    font-size: 13.5px; color: var(--mut); line-height: 1.55; margin-top: 4px;
+  }
+  .flip-back-bottom {
+    margin-top: 16px;
+  }
+  .flip-cta {
+    width: 100%; justify-content: center;
+  }
 
   @media (max-width: 1024px) {
     .products-grid { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px; }
     .products-intro p { max-width: none; }
   }
+  @media (max-width: 640px) {
+    .flip-cards-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 480px) {
     .products-grid { padding: 56px 20px; }
-    .product-card { padding: 20px 8px; gap: 14px; }
   }
 
   /* ========== PROCESS ========== */
@@ -564,14 +661,6 @@
 
     <!-- ====== PRODUCTOS ====== -->
     <section class="products" id="productos">
-      <div class="product-bg-layer" aria-hidden="true">
-        <div class="product-bg" data-bg="0"></div>
-        <div class="product-bg" data-bg="1"></div>
-        <div class="product-bg" data-bg="2"></div>
-        <div class="product-bg" data-bg="3"></div>
-        <div class="product-bg" data-bg="4"></div>
-        <div class="product-bg-fade"></div>
-      </div>
       <div class="products-grid">
         <div class="products-intro">
           <div class="eyebrow-num mono">01 — <span lang="es">Qué hacemos</span><span lang="en">What we do</span></div>
@@ -589,81 +678,223 @@
           </div>
         </div>
 
-        <div class="products-list" id="product-cards">
-          <article class="product-card" data-card="0" data-reveal>
-            <span class="product-rail"></span>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-              <rect x="2.5" y="4" width="7" height="6" rx="1.5"/><rect x="14.5" y="14" width="7" height="6" rx="1.5"/>
-              <path d="M9.5 7h4.5a3 3 0 0 1 3 3v4"/><path d="M14.6 12.4 17 14.8l2.4-2.4"/>
-            </svg>
-            <div>
-              <div class="product-card-head">
-                <h3><span lang="es">Automatización de procesos</span><span lang="en">Process Automation</span></h3>
-                <span class="product-tag mono">API</span>
+        <div class="flip-cards-grid" id="product-cards">
+          
+          <!-- Card 0: Automatización de procesos -->
+          <article class="flip-card" tabindex="0" data-card="0" data-reveal>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="flip-front-bg" style="background-image: url('assets/bg-1.webp');"></div>
+                <div class="flip-front-overlay"></div>
+                <div class="flip-front-top">
+                  <div class="flip-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <rect x="2.5" y="4" width="7" height="6" rx="1.5"/><rect x="14.5" y="14" width="7" height="6" rx="1.5"/>
+                      <path d="M9.5 7h4.5a3 3 0 0 1 3 3v4"/><path d="M14.6 12.4 17 14.8l2.4-2.4"/>
+                    </svg>
+                  </div>
+                  <span class="product-tag mono">API</span>
+                </div>
+                <div class="flip-front-bottom">
+                  <h3><span lang="es">Automatización de procesos</span><span lang="en">Process Automation</span></h3>
+                  <div class="flip-hint mono">
+                    <span lang="es">Conocer más</span><span lang="en">Learn more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
               </div>
-              <p><span lang="es">Orquesta workflows de principio a fin. Elimina tareas manuales repetitivas y reduce errores operativos.</span><span lang="en">Orchestrate workflows end-to-end. Eliminate repetitive manual tasks and reduce operational errors.</span></p>
+              <div class="flip-card-back">
+                <div class="flip-back-top">
+                  <div class="flip-back-tag-row">
+                    <span class="product-tag mono">API</span>
+                  </div>
+                  <h3><span lang="es">Automatización de procesos</span><span lang="en">Process Automation</span></h3>
+                  <p class="flip-back-desc">
+                    <span lang="es">Orquesta workflows de principio a fin. Elimina tareas manuales repetitivas y reduce errores operativos.</span>
+                    <span lang="en">Orchestrate workflows end-to-end. Eliminate repetitive manual tasks and reduce operational errors.</span>
+                  </p>
+                </div>
+                <div class="flip-back-bottom">
+                  <a href="#contacto" class="btn btn-primary btn-sm flip-cta" data-product-select="0">
+                    <span lang="es">Agendar demo</span><span lang="en">Book a demo</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-card="1" data-reveal>
-            <span class="product-rail"></span>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-              <path d="M3 20h18"/><rect x="4" y="12" width="3.5" height="5"/><rect x="10.2" y="7" width="3.5" height="10"/><rect x="16.4" y="10" width="3.5" height="7"/>
-            </svg>
-            <div>
-              <div class="product-card-head">
-                <h3><span lang="es">Dashboards de métricas</span><span lang="en">Metrics Dashboards</span></h3>
-                <span class="product-tag mono">Realtime</span>
+          <!-- Card 1: Dashboards de métricas -->
+          <article class="flip-card" tabindex="0" data-card="1" data-reveal>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="flip-front-bg" style="background-image: url('assets/bg-2.webp');"></div>
+                <div class="flip-front-overlay"></div>
+                <div class="flip-front-top">
+                  <div class="flip-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M3 20h18"/><rect x="4" y="12" width="3.5" height="5"/><rect x="10.2" y="7" width="3.5" height="10"/><rect x="16.4" y="10" width="3.5" height="7"/>
+                    </svg>
+                  </div>
+                  <span class="product-tag mono">Realtime</span>
+                </div>
+                <div class="flip-front-bottom">
+                  <h3><span lang="es">Dashboards de métricas</span><span lang="en">Metrics Dashboards</span></h3>
+                  <div class="flip-hint mono">
+                    <span lang="es">Conocer más</span><span lang="en">Learn more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
               </div>
-              <p><span lang="es">Visualiza KPIs en tiempo real. Monitoreo de operaciones con datos densos y accionables.</span><span lang="en">Visualize KPIs in real time. Operational monitoring with dense, actionable data.</span></p>
+              <div class="flip-card-back">
+                <div class="flip-back-top">
+                  <div class="flip-back-tag-row">
+                    <span class="product-tag mono">Realtime</span>
+                  </div>
+                  <h3><span lang="es">Dashboards de métricas</span><span lang="en">Metrics Dashboards</span></h3>
+                  <p class="flip-back-desc">
+                    <span lang="es">Visualiza KPIs en tiempo real. Monitoreo de operaciones con datos densos y accionables.</span>
+                    <span lang="en">Visualize KPIs in real time. Operational monitoring with dense, actionable data.</span>
+                  </p>
+                </div>
+                <div class="flip-back-bottom">
+                  <a href="#contacto" class="btn btn-primary btn-sm flip-cta" data-product-select="1">
+                    <span lang="es">Agendar demo</span><span lang="en">Book a demo</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-card="2" data-reveal>
-            <span class="product-rail"></span>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-              <path d="M12 3.2c4.7 0 8.5 3.4 8.5 7.6s-3.8 7.6-8.5 7.6c-1.2 0-2.4-.2-3.4-.6L4 19.6l1.3-3.4A7.3 7.3 0 0 1 3.5 10.8C3.5 6.6 7.3 3.2 12 3.2Z"/>
-              <path d="M8.6 10.9h6.8"/><path d="M8.6 13.6h4"/>
-            </svg>
-            <div>
-              <div class="product-card-head">
-                <h3><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp Bots</span></h3>
-                <span class="product-tag mono">Cloud API</span>
+          <!-- Card 2: Bots de WhatsApp -->
+          <article class="flip-card" tabindex="0" data-card="2" data-reveal>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="flip-front-bg" style="background-image: url('assets/bg-3.webp');"></div>
+                <div class="flip-front-overlay"></div>
+                <div class="flip-front-top">
+                  <div class="flip-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <path d="M12 3.2c4.7 0 8.5 3.4 8.5 7.6s-3.8 7.6-8.5 7.6c-1.2 0-2.4-.2-3.4-.6L4 19.6l1.3-3.4A7.3 7.3 0 0 1 3.5 10.8C3.5 6.6 7.3 3.2 12 3.2Z"/>
+                      <path d="M8.6 10.9h6.8"/><path d="M8.6 13.6h4"/>
+                    </svg>
+                  </div>
+                  <span class="product-tag mono">Cloud API</span>
+                </div>
+                <div class="flip-front-bottom">
+                  <h3><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp Bots</span></h3>
+                  <div class="flip-hint mono">
+                    <span lang="es">Conocer más</span><span lang="en">Learn more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
               </div>
-              <p><span lang="es">Atención conversacional 24/7. Responde, deriva y transacciona directamente en WhatsApp Business.</span><span lang="en">24/7 conversational support. Respond, route, and transact directly on WhatsApp Business.</span></p>
+              <div class="flip-card-back">
+                <div class="flip-back-top">
+                  <div class="flip-back-tag-row">
+                    <span class="product-tag mono">Cloud API</span>
+                  </div>
+                  <h3><span lang="es">Bots de WhatsApp</span><span lang="en">WhatsApp Bots</span></h3>
+                  <p class="flip-back-desc">
+                    <span lang="es">Atención conversacional 24/7. Responde, deriva y transacciona directamente en WhatsApp Business.</span>
+                    <span lang="en">24/7 conversational support. Respond, route, and transact directly on WhatsApp Business.</span>
+                  </p>
+                </div>
+                <div class="flip-back-bottom">
+                  <a href="#contacto" class="btn btn-primary btn-sm flip-cta" data-product-select="2">
+                    <span lang="es">Agendar demo</span><span lang="en">Book a demo</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-card="3" data-reveal>
-            <span class="product-rail"></span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-              <rect x="3" y="13" width="18" height="8" rx="2"/>
-              <path d="M7 13V9.5a5 5 0 0 1 5-5"/><path d="M12 4.5a5 5 0 0 1 5 5V13"/><path d="M12 4.5V13"/>
-            </svg>
-            <div>
-              <div class="product-card-head">
-                <h3><span lang="es">Plataforma omnicanal</span><span lang="en">Omnichannel Platform</span></h3>
-                <span class="product-tag mono">Unified inbox</span>
+          <!-- Card 3: Plataforma omnicanal -->
+          <article class="flip-card" tabindex="0" data-card="3" data-reveal>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="flip-front-bg" style="background-image: url('assets/bg-4.webp');"></div>
+                <div class="flip-front-overlay"></div>
+                <div class="flip-front-top">
+                  <div class="flip-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <rect x="3" y="13" width="18" height="8" rx="2"/>
+                      <path d="M7 13V9.5a5 5 0 0 1 5-5"/><path d="M12 4.5a5 5 0 0 1 5 5V13"/><path d="M12 4.5V13"/>
+                    </svg>
+                  </div>
+                  <span class="product-tag mono">Unified inbox</span>
+                </div>
+                <div class="flip-front-bottom">
+                  <h3><span lang="es">Plataforma omnicanal</span><span lang="en">Omnichannel Platform</span></h3>
+                  <div class="flip-hint mono">
+                    <span lang="es">Conocer más</span><span lang="en">Learn more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
               </div>
-              <p><span lang="es">Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar.</span><span lang="en">One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place.</span></p>
+              <div class="flip-card-back">
+                <div class="flip-back-top">
+                  <div class="flip-back-tag-row">
+                    <span class="product-tag mono">Unified inbox</span>
+                  </div>
+                  <h3><span lang="es">Plataforma omnicanal</span><span lang="en">Omnichannel Platform</span></h3>
+                  <p class="flip-back-desc">
+                    <span lang="es">Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar.</span>
+                    <span lang="en">One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place.</span>
+                  </p>
+                </div>
+                <div class="flip-back-bottom">
+                  <a href="#contacto" class="btn btn-primary btn-sm flip-cta" data-product-select="3">
+                    <span lang="es">Agendar demo</span><span lang="en">Book a demo</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </article>
 
-          <article class="product-card" data-card="4" data-reveal>
-            <span class="product-rail"></span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.5" aria-hidden="true">
-              <ellipse cx="12" cy="6" rx="7.5" ry="3"/>
-              <path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/>
-              <path d="M4.5 12v5c0 1.7 3.4 3 7.5 3"/><path d="M15.5 20.5 19 17l2.2 2.2"/>
-            </svg>
-            <div>
-              <div class="product-card-head">
-                <h3><span lang="es">Analítica on-premises</span><span lang="en">On-premises Analytics</span></h3>
-                <span class="product-tag mono">On-prem</span>
+          <!-- Card 4: Analítica on-premises -->
+          <article class="flip-card" tabindex="0" data-card="4" data-reveal>
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <div class="flip-front-bg" style="background-image: url('assets/bg-5.webp');"></div>
+                <div class="flip-front-overlay"></div>
+                <div class="flip-front-top">
+                  <div class="flip-icon-wrap">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                      <ellipse cx="12" cy="6" rx="7.5" ry="3"/>
+                      <path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/>
+                      <path d="M4.5 12v5c0 1.7 3.4 3 7.5 3"/><path d="M15.5 20.5 19 17l2.2 2.2"/>
+                    </svg>
+                  </div>
+                  <span class="product-tag mono">On-prem</span>
+                </div>
+                <div class="flip-front-bottom">
+                  <h3><span lang="es">Analítica on-premises</span><span lang="en">On-premises Analytics</span></h3>
+                  <div class="flip-hint mono">
+                    <span lang="es">Conocer más</span><span lang="en">Learn more</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </div>
+                </div>
               </div>
-              <p><span lang="es">Business intelligence en tu infraestructura. Tus datos nunca salen de tu red. Privacidad por diseño.</span><span lang="en">Business intelligence on your infrastructure. Your data never leaves your network. Privacy by design.</span></p>
+              <div class="flip-card-back">
+                <div class="flip-back-top">
+                  <div class="flip-back-tag-row">
+                    <span class="product-tag mono">On-prem</span>
+                  </div>
+                  <h3><span lang="es">Analítica on-premises</span><span lang="en">On-premises Analytics</span></h3>
+                  <p class="flip-back-desc">
+                    <span lang="es">Business intelligence en tu infraestructura. Tus datos nunca salen de tu red. Privacidad por diseño.</span>
+                    <span lang="en">Business intelligence on your infrastructure. Your data never leaves your network. Privacy by design.</span>
+                  </p>
+                </div>
+                <div class="flip-back-bottom">
+                  <a href="#contacto" class="btn btn-primary btn-sm flip-cta" data-product-select="4">
+                    <span lang="es">Agendar demo</span><span lang="en">Book a demo</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </article>
+
         </div>
       </div>
     </section>
@@ -900,35 +1131,24 @@
         io.observe(el);
       });
 
-      /* ===== PRODUCT CARD CYCLE ===== */
-      var cards = document.querySelectorAll('[data-card]');
-      var bgs = document.querySelectorAll('[data-bg]');
-      var active = 0;
-      var cycleTimer;
-
-      function setActive(i) {
-        active = i;
-        cards.forEach(function (el) { el.classList.toggle('is-active', +el.dataset.card === i); });
-        bgs.forEach(function (el) { el.classList.toggle('is-active', +el.dataset.bg === i); });
-      }
-      function restartTimer() {
-        clearInterval(cycleTimer);
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        cycleTimer = setInterval(function () { setActive((active + 1) % cards.length); }, 5200);
-      }
-      if (cards.length) {
-        var cardWrap = document.getElementById('product-cards');
-        cardWrap.addEventListener('mouseover', function (e) {
-          var card = e.target.closest('[data-card]');
-          if (card) { setActive(+card.dataset.card); restartTimer(); }
+      /* ===== 3D FLIP CARDS INTERACTION ===== */
+      var flipCards = document.querySelectorAll('.flip-card');
+      flipCards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a, button')) return;
+          card.classList.toggle('is-flipped');
         });
-        cardWrap.addEventListener('click', function (e) {
-          var card = e.target.closest('[data-card]');
-          if (card) { setActive(+card.dataset.card); restartTimer(); }
+      });
+      var ctaButtons = document.querySelectorAll('.flip-cta');
+      ctaButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var idx = btn.getAttribute('data-product-select');
+          if (idx !== null) {
+            var select = document.querySelector('select[name="product"]');
+            if (select) { select.selectedIndex = parseInt(idx, 10); }
+          }
         });
-        setActive(0);
-        restartTimer();
-      }
+      });
 
       /* ===== PHONE COUNTRY PICKER ===== */
       (function () {
