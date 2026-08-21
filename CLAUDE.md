@@ -26,8 +26,12 @@ Hosted on GitHub Pages, serving directly from the repo root on the default branc
 
 ## Architecture inside `index.html`
 
-**Theming**: All colors are CSS custom properties on `:root` (light, the default) and
-re-declared under `[data-theme="light"]`, using `oklch()` for the accent colors. Never
+**Theming**: All colors are CSS custom properties. `:root` holds the **dark** palette and
+`[data-theme="light"]` overrides it with the light one, using `oklch()` for the accent colors.
+Note the indirection: the *stylesheet's* base is dark, but the *site's default* is light —
+`<html>` ships with `data-theme="light"` on all three pages and `'light'` is the localStorage
+fallback, so a first-time visitor sees the light palette. Keep `<meta name="theme-color">` in
+sync with the light `--bg`, since that is what a first-time visitor renders. Never
 hardcode a color in a new component — add both a dark and light value to the variable block
 instead. Theme state persists to `localStorage` under `zn-theme` and is toggled via
 `#theme-toggle` (navbar) / `#theme-toggle-footer` (footer), both styled as a sliding
@@ -56,22 +60,48 @@ than a plain data-attribute text swap:
   contain markup, `data-es-ph`/`data-en-ph` for placeholders, and remember the `<option>`
   caveat above.
 
-**Hero & product imagery**: `assets/` holds 7 WebP images — `hero-bg.webp` /
-`hero-bg-light.webp` (theme-swapped hero background, toggled by the same `[data-theme]` CSS
-attribute selectors as the theme switch, no JS) and `bg-1.webp`…`bg-5.webp` (one per product
-card in `#productos`, cross-faded behind the product list). These are abstract dark
-line/graph art, not photos — that's why they compress to a few KB each as WebP despite
-starting as multi-MB PNGs; if regenerating them, `ffmpeg -i in.png -vf scale=W:-1 -quality
-80 out.webp` reproduces the pipeline used to shrink the originals from ~12MB to ~80KB total.
-In light theme the product-card backgrounds are inverted via CSS filter
-(`invert(1) hue-rotate(180deg) saturate(.7)`) rather than using a second set of light-mode
-images.
+**Hero & product imagery**: everything in `assets/` is WebP, and it must stay that way — the
+whole page is ~210KB over the wire and the images are most of it.
+- `hero-bg.webp` / `hero-bg-light.webp` — theme-swapped hero background, toggled by the same
+  `[data-theme]` CSS attribute selectors as the theme switch, no JS.
+- `card-automation.webp`, `card-dashboards.webp`, `card-whatsapp.webp`,
+  `card-omnichannel.webp`, `card-analytics.webp` — one behind each flip card's front face,
+  set as an inline `background-image` on `.flip-front-bg`. These are 3D allegorical renders
+  (not the abstract line art the earlier `bg-N.webp` set used).
+- `bg-1.webp`…`bg-5.webp` are **orphaned** — leftovers from the removed product-card cycle.
+  Nothing references them; delete them if you're tidying.
 
-**Product card cycle**: `#product-cards` auto-advances through the 5 `.product-card`
-articles every 5.2s (paused/reset on hover or click), toggling an `.is-active` class that
-both highlights the card (CSS) and cross-fades the matching `.product-bg[data-bg="N"]` layer
-behind the section. Respects `prefers-reduced-motion` (no auto-advance, no reveal-on-scroll
-animation, no transitions).
+The renders arrived as ~500–800KB JPEGs (2.9MB total, which dominated page load). They are
+now 1100px-wide WebP, 106KB for all five. Re-encode anything new the same way:
+
+```
+ffmpeg -i in.jpg -vf scale=1100:-1 -c:v libwebp -quality 75 -compression_level 6 out.webp
+```
+
+1100px covers a 2× desktop card and a 3× phone card; the art is smooth-gradient so quality 75
+is visually lossless here, and the front-face overlay hides any residual artefacts anyway.
+**Don't commit source JPEGs/PNGs** — convert first.
+
+In light theme `.flip-front-bg` is inverted via CSS filter
+(`invert(1) hue-rotate(180deg) saturate(.7)`) at `opacity: .3`. That filter was written for the
+old line art; on the current photographic renders it washes them out to near-white, and light is
+now the default theme, so this is a known open design question rather than a settled choice.
+
+**3D flip cards** (replaced the old auto-advancing product-card cycle — that machinery is gone):
+`.flip-cards-grid` holds 5 `.flip-card` articles, each a `perspective` container around a
+`.flip-card-inner` that `rotateY(180deg)`s on `:hover`, `:focus-within`, or a toggled
+`.is-flipped` class (the JS click handler, for touch). Front and back are absolutely stacked
+with `backface-visibility: hidden`. The back's `.flip-cta` sets the contact form's `<select>`
+by `data-product-select` index (0–4, matching option order) and smooth-scrolls to `#contacto`,
+offsetting by the navbar height.
+- **The front face must be `pointer-events: none` while flipped.** `backface-visibility`
+  hides the front face *visually*, but its `z-index: 2` children (`.flip-front-top` /
+  `.flip-front-bottom`) still win hit-testing over the back face, so a mouse click aimed at
+  the CTA lands on `.flip-front-bottom` and the button never fires. Keyboard is unaffected
+  (Tab reaches the `<a>`, Enter dispatches on the element with no hit-testing), which is why
+  this reads as working when tested by keyboard. Verify with
+  `document.elementsFromPoint(x, y)` at the CTA's centre — `.flip-cta` must be on top.
+- `id="product-cards"` survives on the grid from the old cycle and is unreferenced.
 
 **Reveal-on-scroll**: elements marked `[data-reveal]` start hidden/offset and animate in via
 an `IntersectionObserver` that adds `.zn-in` on first intersection, staggered by list
@@ -146,12 +176,13 @@ which the mailto/Formspree payload joins back together. Two things to know befor
   button and the dropdown reopened instantly after each selection.
 
 **Responsive breakpoints**: `1024px` (products grid collapses to 1 column), `900px` (contact
-grid collapses to 1 column), `768px` (nav collapses to a hamburger dropdown via
-`.nav-links.open`, and the nav's primary CTA button is hidden to make room — see the
-`.nav-actions .nav-cta` selector, which needs that specificity to win over the base `.btn`
-rule appearing later in the stylesheet), `480px` (padding/spacing reductions, contact form
-fields stack). `prefers-reduced-motion: reduce` disables all transitions/animations
-globally, including the reveal-on-scroll and product-card auto-cycle.
+grid collapses to 1 column; `.signal-net` is hidden), `768px` (nav collapses to a hamburger
+dropdown via `.nav-links.open`, and the nav's primary CTA button is hidden to make room — see
+the `.nav-actions .nav-cta` selector, which needs that specificity to win over the base `.btn`
+rule appearing later in the stylesheet), `640px` (`.flip-cards-grid` goes to 1 column), `480px`
+(padding/spacing reductions, contact form fields stack). `prefers-reduced-motion: reduce`
+disables all transitions/animations globally, including the reveal-on-scroll and the card flip
+(which becomes an instant swap — the CTA still works).
 
 ## Legal pages: `privacidad.html` (ES) and `privacy.html` (EN)
 
