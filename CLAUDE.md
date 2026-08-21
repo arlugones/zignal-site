@@ -89,18 +89,24 @@ now the default theme, so this is a known open design question rather than a set
 
 **3D flip cards** (replaced the old auto-advancing product-card cycle — that machinery is gone):
 `.flip-cards-grid` holds 5 `.flip-card` articles, each a `perspective` container around a
-`.flip-card-inner` that `rotateY(180deg)`s on `:hover`, `:focus-within`, or a toggled
-`.is-flipped` class (the JS click handler, for touch). Front and back are absolutely stacked
-with `backface-visibility: hidden`. The back's `.flip-cta` sets the contact form's `<select>`
-by `data-product-select` index (0–4, matching option order) and smooth-scrolls to `#contacto`,
-offsetting by the navbar height.
+`.flip-card-inner` that `rotateY(180deg)`s. Front and back are absolutely stacked with
+`backface-visibility: hidden`. The back's `.flip-cta` sets the contact form's `<select>` by
+`data-product-select` index (0–4, matching option order) and smooth-scrolls to `#contacto`,
+offsetting by the navbar height; it is bound to both `click` and `touchend`.
+- **`:hover` is the only thing that turns the card.** `499c954` removed the `:focus-within`
+  trigger and the `.is-flipped` class toggle, so there is no class hook any more — don't write
+  rules against `.is-flipped`. Touch works because mobile browsers apply sticky `:hover` on
+  first tap (verified on emulated iPhone 13 and Pixel 7: tap turns the card, second tap fires
+  the CTA). Known gap: a keyboard user tabbing to `.flip-cta` focuses a button on a face that
+  never turns toward them — the button works, but nothing visible indicates it. Restoring
+  `.flip-card:focus-within .flip-card-inner { transform: rotateY(180deg); }` would fix that.
 - **The front face must be `pointer-events: none` while flipped.** `backface-visibility`
   hides the front face *visually*, but its `z-index: 2` children (`.flip-front-top` /
   `.flip-front-bottom`) still win hit-testing over the back face, so a mouse click aimed at
   the CTA lands on `.flip-front-bottom` and the button never fires. Keyboard is unaffected
   (Tab reaches the `<a>`, Enter dispatches on the element with no hit-testing), which is why
   this reads as working when tested by keyboard. Verify with
-  `document.elementsFromPoint(x, y)` at the CTA's centre — `.flip-cta` must be on top.
+  `document.elementsFromPoint(x, y)` at the CTA’s centre — `.flip-cta` must be on top.
 - `id="product-cards"` survives on the grid from the old cycle and is unreferenced.
 
 **Reveal-on-scroll**: elements marked `[data-reveal]` start hidden/offset and animate in via

@@ -335,8 +335,7 @@
      z-indexed children (.flip-front-top / .flip-front-bottom) still win hit-testing over the
      back face, which left the CTA on the back unclickable by mouse. Take the whole front face
      out of hit-testing while it is turned away. The card keeps its own box, so :hover holds. */
-  .flip-card:hover .flip-card-front,
-  .flip-card.is-flipped .flip-card-front { pointer-events: none; }
+  .flip-card:hover .flip-card-front { pointer-events: none; }
 
   .flip-card-front, .flip-card-back {
     position: absolute;
