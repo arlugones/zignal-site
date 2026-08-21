@@ -1141,11 +1141,20 @@
       });
       var ctaButtons = document.querySelectorAll('.flip-cta');
       ctaButtons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
           var idx = btn.getAttribute('data-product-select');
           if (idx !== null) {
             var select = document.querySelector('select[name="product"]');
             if (select) { select.selectedIndex = parseInt(idx, 10); }
+          }
+          var target = document.querySelector('#contacto');
+          if (target) {
+            var navbar = document.querySelector('.navbar');
+            var headerH = navbar ? navbar.offsetHeight : 0;
+            var top = target.getBoundingClientRect().top + window.pageYOffset - headerH - 16;
+            window.scrollTo({ top: top, behavior: 'smooth' });
           }
         });
       });
