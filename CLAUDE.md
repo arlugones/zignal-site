@@ -60,8 +60,37 @@ than a plain data-attribute text swap:
   contain markup, `data-es-ph`/`data-en-ph` for placeholders, and remember the `<option>`
   caveat above.
 
+**Brand mark**: the head-and-circuit glyph in the navbar and footer is the real logo, extracted
+from the Fiverr kit's `SVG Vector Files/Transparent Logo.svg` (the kit also ships a stacked
+lockup with a wordmark and the tagline "NO REINVENTAMOS SOFTWARE" — the site deliberately does
+not use it; the wordmark stays HTML text in Inter 600 so it is selectable, translatable, and
+crisp at any size, and the kit's thin wide-tracked wordmark does not sit in a 64px bar).
+- **The kit's artwork is white-on-black; that is the whole reason a naive drop-in disappears.**
+  Every path in the source carries `style="fill: #ffffff"`, and the site's default theme is
+  light. Those inline fills are stripped so the mark inherits `currentColor` from `.nav-brand`
+  / `.footer-brand` / `.brand` and tracks the theme with no JS and no second asset. The one
+  exception is the pupil at the centre of the concentric "eye" (`circle cx="1042.4"
+  cy="842.4"`), which takes `var(--accent)` — it is the mark's focal point and it echoes the
+  convergence node in `.signal-net`. **Don't reintroduce a hardcoded fill.**
+- `index.html` defines the paths once as `<symbol id="zn-mark">` just inside `<body>` and
+  `<use href="#zn-mark">`s it in both places. The legal pages each carry their **own inline
+  copy** — cross-document `<use href="file.svg#id">` is blocked in browsers and an `<img>`
+  cannot inherit `currentColor`, so the mark is mirrored across all three files the same way
+  the palette is. Update all three together.
+- The `viewBox` `492.3 472.81 1015.3 1054.66` is already the tight bounding box, so the art
+  touches all four edges and the aspect is **0.963, not 1** — size it `31×32` / `27×28`, never
+  square, or it letterboxes. Below ~30px this mark turns to mush (the old diamond-and-Z glyph
+  it replaced was legible at 22px; this one is not), which is why the footer went 22px → 28px
+  and the navbar 26px → 32px.
+- **The favicon is a different glyph on purpose.** At 16px the head is unreadable, and an SVG
+  favicon renders as an isolated document where `currentColor` resolves to black rather than
+  `--tx`. So the favicon is a hand-drawn concentric node — ring plus dot, the one part of the
+  mark that survives 16px — with **explicit** colors (`#070a0f` disc, `#00b8d7` ring, the
+  resolved value of the dark `--accent`). Same data-URI in all three files. Don't point it at
+  the kit's `.ico`: that file is 285KB.
+
 **Hero & product imagery**: everything in `assets/` is WebP, and it must stay that way — the
-whole page is ~210KB over the wire and the images are most of it.
+whole page is ~220KB over the wire and the images are most of it.
 - `hero-bg.webp` / `hero-bg-light.webp` — theme-swapped hero background, toggled by the same
   `[data-theme]` CSS attribute selectors as the theme switch, no JS.
 - `card-automation.webp`, `card-dashboards.webp`, `card-whatsapp.webp`,
@@ -204,7 +233,8 @@ applicable jurisdiction) and links to its counterpart via a language button plus
 - **The design tokens are mirrored, not shared.** Both pages carry their own copy of the
   `:root`/`[data-theme="light"]` block so they stay self-contained like `index.html`. If the palette
   changes, update all three files. Theme choice carries across pages through the shared `zn-theme`
-  localStorage key.
+  localStorage key. The **brand mark** is mirrored the same way — see the brand-mark
+  notes above for why it can't be a shared file.
 - **These pages exist to satisfy Meta's app-review requirements**, so some properties are load-bearing
   and must not regress:
   - The URLs must stay **live, publicly reachable, crawlable, non-geoblocked and return HTTP 200** —
