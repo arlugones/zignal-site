@@ -127,7 +127,9 @@ crisp at any size, and the kit's thin wide-tracked wordmark does not sit in a 64
   update all three files together, same as the brand mark.
 
 **Hero & product imagery**: everything in `assets/` is WebP, and it must stay that way — the
-whole page is ~187KB over the wire (gzipped `index.html` + the card images actually loaded)
+whole page is ~194KB over the wire (gzipped `index.html` + the card images actually loaded;
+`index.html` itself grew ~7KB gzipped when the marquee's 11 inline logo SVGs replaced its
+plain-text tool names)
 and the images are most of it. There is no hero background photo any more: the original
 `hero-bg.webp`/`hero-bg-light.webp` pair (deleted) baked in a cyan-toned "converging lines"
 render — the same idea as `.signal-net` below, pre-rendered as a flat image — which became
@@ -222,6 +224,19 @@ makes this read as designed rather than generated.
   `var(--bg)` over the middle to leave only a 1px rim. The wrapper's `background: var(--bd)`
   is the fallback rim when the spinner is disabled.
 - `.hero-glow` drifts on an 18s loop; the marquee pauses on hover via `animation-play-state`.
+- **The marquee shows real logos, not tool names.** `.marquee` holds 11 `.marquee-logo`
+  spans, each an inline SVG at `fill="currentColor"` (so they inherit `var(--sub)` /
+  `var(--tx2)` on hover like the old text did) — the list is written out twice back-to-back
+  in the DOM, which is what makes the `zn-marquee` `translateX(-50%)` loop seamless; if you
+  add or remove a logo, do it in **both** copies or the loop jumps. Paths for WhatsApp,
+  PostgreSQL, Google, SAP, Zapier, n8n, Metabase, and Google Sheets came from the `simple-icons`
+  npm package (`npx -y simple-icons`, or install and read `node_modules/simple-icons/icons/`).
+  **Twilio, Power BI, and Microsoft Excel are not in Simple Icons** — Microsoft's whole
+  product family and Twilio appear to have been removed at trademark request — so those three
+  are plain hand-drawn generic glyphs (a phone handset, ascending bars, a spreadsheet grid)
+  rather than an attempt to redraw their actual marks. Before adding a new tool: check Simple
+  Icons first; if it's missing, draw a generic (non-trademark) glyph in the same style rather
+  than hand-copying a logo.
 - **Reduced motion**: the global block already kills `animation`/`transition` everywhere, but
   anything that would be left frozen mid-flight is additionally hidden (`.signal-pulse`,
   `.signal-ping`, `.eyebrow-wrap::before`) — a pulse stranded mid-curve reads as a bug, not
