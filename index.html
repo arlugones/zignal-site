@@ -357,9 +357,17 @@
   }
 
   /* 3D Flip Card Structure */
+  /* Height is shorter than the original 280px on purpose: the card renders range from
+     roughly square (card-whatsapp/card-analytics, ~1.18:1) to wide panoramas
+     (card-automation, ~2.66:1), and background-size:contain (see .flip-front-bg below)
+     never crops them, so a taller/more-square card box just means more empty
+     letterbox above/below the wide renders. Shortening the box narrows that gap across
+     the board without touching the assets. If you resize this, re-check the back face
+     (.flip-back-desc runs 2-3 lines) still fits without its CTA button getting pushed
+     past the card's bottom edge. */
   .flip-card {
     perspective: 1000px;
-    height: 280px;
+    height: 250px;
     cursor: pointer;
     outline: none;
   }
