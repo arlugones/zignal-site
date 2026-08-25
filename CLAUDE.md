@@ -78,10 +78,14 @@ crisp at any size, and the kit's thin wide-tracked wordmark does not sit in a 64
   cannot inherit `currentColor`, so the mark is mirrored across all three files the same way
   the palette is. Update all three together.
 - The `viewBox` `492.3 472.81 1015.3 1054.66` is already the tight bounding box, so the art
-  touches all four edges and the aspect is **0.963, not 1** — size it `31×32` / `27×28`, never
-  square, or it letterboxes. Below ~30px this mark turns to mush (the old diamond-and-Z glyph
-  it replaced was legible at 22px; this one is not), which is why the footer went 22px → 28px
-  and the navbar 26px → 32px.
+  touches all four edges and the aspect is **0.963, not 1** — size it `36×37` (navbar) /
+  `31×32` (footer) / `34×35` (legal-page header bar), never square, or it letterboxes. Below
+  ~30px this mark turns to mush (the old diamond-and-Z glyph it replaced was legible at 22px;
+  this one is not), which is why these sizes only ever grow, never shrink toward that floor.
+  The navbar and footer sizes were bumped up a second time from `31×32`/`27×28` — the original
+  post-replacement sizes — because at those sizes the mark read as too small relative to the
+  wordmark to carry its weight as the primary brand element; the legal-page header bar (60px,
+  vs. the navbar's 64px) got its own intermediate size rather than reusing the footer's.
 - **The favicon is a different glyph on purpose.** At 16px the head is unreadable, and an SVG
   favicon renders as an isolated document where `currentColor` resolves to black rather than
   `--tx`. So the favicon is a hand-drawn concentric node — ring plus dot, the one part of the
