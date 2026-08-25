@@ -9,8 +9,8 @@ reinvent software, we integrate the products your operation already needs"). The
 site is `index.html` plus a small `assets/` folder of decorative background images — no
 build step, no package manager, no framework, no server-side code. All CSS and JS are
 embedded inline in `index.html`; the only external dependency is the Google Fonts stylesheet
-link (Inter + Space Grotesk + JetBrains Mono — Space Grotesk is reserved for large display
-headings only, see the Typography note below; Inter remains the body and wordmark face).
+link (Inter + Unbounded + JetBrains Mono — Unbounded is reserved for large display headings
+only, see the Typography note below; Inter remains the body and wordmark face).
 
 Hosted on GitHub Pages, serving directly from the repo root on the default branch.
 
@@ -31,18 +31,33 @@ Hosted on GitHub Pages, serving directly from the repo root on the default branc
 default — copy, labels, the nav/footer wordmark (kept in Inter deliberately; see the Brand
 mark note below on why the wordmark stays selectable HTML text). A second selector list
 (`.hero h1, .products-intro h2, .process-head h2, .contact-info h2, .cta-mid h2,
-.flip-back-top h3, .step h3`) overrides `font-family` to Space Grotesk — reserved for text
-set 20px and larger, where its geometric character reads as intentional instead of just
-adding weight; below that size the difference from Inter is imperceptible and not worth a
-second face. The legal pages' top `<h1>` (`Política de Privacidad` / `Privacy Policy`) picks
-up the same Space Grotesk rule directly on the page's own `h1` selector, for brand
-consistency at the one large heading those pages have; their ~15 numbered section `<h2>`s
-stay in Inter, since a display face repeated across that many headings in a legal document
-would read as noise, not brand. `JetBrains Mono` remains reserved for labels, tags, and
-numeric/monospace UI (`.mono`).
+.flip-back-top h3, .step h3`) overrides `font-family` to **Unbounded** (600/700) — a blocky,
+geometric display face chosen deliberately over the Space Grotesk/Inter-everywhere pairing
+common on "modern SaaS" sites, reserved for text set 20px and larger. Unbounded is
+noticeably *wider* per character than Space Grotesk was, so headings using it run smaller
+point sizes and looser (near-zero, sometimes positive) letter-spacing than you'd expect from
+the pixel value alone — negative tracking that looked fine on Space Grotesk produces
+letter collision on Unbounded. If you resize a heading, re-check line wraps at the
+component's actual column width, not just in isolation; several headings wrap at 2-3 words
+narrower than their old Space Grotesk equivalents did. The legal pages' top `<h1>` (`Política
+de Privacidad` / `Privacy Policy`) picks up the same Unbounded rule directly on the page's
+own `h1` selector, for brand consistency at the one large heading those pages have; their
+~15 numbered section `<h2>`s stay in Inter, since a display face repeated across that many
+headings in a legal document would read as noise, not brand. `JetBrains Mono` remains
+reserved for labels, tags, and numeric/monospace UI (`.mono`).
 
 **Theming**: All colors are CSS custom properties. `:root` holds the **dark** palette and
 `[data-theme="light"]` overrides it with the light one, using `oklch()` for the accent colors.
+The palette is **indigo primary / gold secondary** (`--accent`, `--accent-2`) — not the cyan
+that shipped originally. `--accent` is used everywhere (links, buttons, focus rings, the
+signal-loom's threads and node); `--accent-2` is deliberately rarer — the eyebrow badge's
+conic-gradient border, the hero's second ambient glow, and the flip-card "Conocer más" hint —
+so it reads as a focal accent, not a second primary. `--accent-2-soft` exists alongside
+`--accent-soft` for the same reason `--accent-soft` does: a low-alpha version for glows/fills
+without re-deriving the alpha at every use site. Both bg tones carry the accent's undertone
+rather than neutral slate/blue-grey (dark is ink-with-violet `#100d1a`, light is warm stone
+`#f5f3ee`) — if you adjust either, keep that undertone rather than drifting back to neutral
+grey, or the backgrounds stop reading as part of the same palette as the accent.
 Note the indirection: the *stylesheet's* base is dark, but the *site's default* is light —
 `<html>` ships with `data-theme="light"` on all three pages and `'light'` is the localStorage
 fallback, so a first-time visitor sees the light palette. Keep `<meta name="theme-color">` in
@@ -104,16 +119,22 @@ crisp at any size, and the kit's thin wide-tracked wordmark does not sit in a 64
 - **The favicon is a different glyph on purpose.** At 16px the head is unreadable, and an SVG
   favicon renders as an isolated document where `currentColor` resolves to black rather than
   `--tx`. So the favicon is a hand-drawn concentric node — ring plus dot, the one part of the
-  mark that survives 16px — with **explicit** colors (`#070a0f` disc, `#00b8d7` ring, the
-  resolved value of the dark `--accent`). Same data-URI in all three files. Don't point it at
-  the kit's `.ico`: that file is 285KB.
+  mark that survives 16px — with **explicit** colors (`#100d1a` disc, `#8c8fff` ring, the
+  resolved value of the dark `--accent`/`--bg`). Same data-URI in all three files. Don't point
+  it at the kit's `.ico`: that file is 285KB. If the palette's accent hue changes again,
+  resolve the new `oklch()` to hex before updating this (browser devtools, or a canvas
+  `getImageData` round-trip — `oklch()` strings don't stringify back to hex on their own) and
+  update all three files together, same as the brand mark.
 
 **Hero & product imagery**: everything in `assets/` is WebP, and it must stay that way — the
-whole page is ~206KB over the wire (gzipped `index.html` + the hero and card images actually
-loaded; up from ~149KB before the card renders were re-matted, see below) and the images are
-most of it.
-- `hero-bg.webp` / `hero-bg-light.webp` — theme-swapped hero background, toggled by the same
-  `[data-theme]` CSS attribute selectors as the theme switch, no JS.
+whole page is ~187KB over the wire (gzipped `index.html` + the card images actually loaded)
+and the images are most of it. There is no hero background photo any more: the original
+`hero-bg.webp`/`hero-bg-light.webp` pair (deleted) baked in a cyan-toned "converging lines"
+render — the same idea as `.signal-net` below, pre-rendered as a flat image — which became
+redundant once `.signal-net` carried that concept live, and it was color-locked to the old
+cyan accent so it fought the current indigo palette. The hero's atmosphere now comes from two
+CSS radial gradients only (`.hero-glow`, `.hero-glow-2`), both keyed to theme variables so
+they always match the palette with no separate asset to keep in sync.
 - `card-automation.webp`, `card-dashboards.webp`, `card-whatsapp.webp`,
   `card-omnichannel.webp`, `card-analytics.webp` — one behind each flip card's front face,
   set as an inline `background-image` on `.flip-front-bg`. These are 3D allegorical renders
@@ -182,11 +203,18 @@ keyframe is namespaced `zn-*`. The deliberate principle, borrowed from the Resen
 the direction came from, is that motion is *concentrated rather than scattered* — one
 signature plus slow ambient movement. Resist adding more effects per section; that is what
 makes this read as designed rather than generated.
-- **`.signal-net` is the signature.** An inline SVG in the hero where four source lines
-  converge into a single node, with accent pulses travelling along the curves via CSS
-  `offset-path` + `offset-distance` (not SMIL, so the global reduced-motion rule disables it
-  like any other animation). It encodes the company thesis — many systems integrated into
-  one — so keep the converging geometry if you restyle it. It is masked on the left
+- **`.signal-net` is the signature — a loom, not a generic network diagram.** An inline SVG
+  in the hero with two layers: four static `.signal-warp` verticals (the loom's frame) and
+  four `.signal-line` weft paths that undulate through them and converge into a single node,
+  with accent pulses travelling the weft paths via CSS `offset-path` + `offset-distance` (not
+  SMIL, so the global reduced-motion rule disables it like any other animation). This is a
+  deliberate reframe of the integration thesis as *weaving* — separate threads (systems)
+  interlaced into one fabric (the client's operation) — rather than a generic "converging
+  network lines" graphic, and it's why the paths oscillate (`C…S…` multi-segment beziers)
+  instead of running as a single smooth arc: a straight convergence doesn't read as weaving,
+  an undulating one does. If you edit the weft `<path>` `d` values, the matching
+  `.signal-pulse.pN` `offset-path` values a few lines below must be updated to the exact same
+  string, or the travelling pulse and the visible line diverge. It is masked on the left
   (`mask-image`) so pulses fade before they reach the headline, sits *below* `.hero-fade` in
   DOM order so the fade veils it, and is `display: none` under 900px.
 - **`.eyebrow-wrap`** is the hero badge's rotating conic-gradient border: an oversized
