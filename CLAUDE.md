@@ -109,7 +109,9 @@ crisp at any size, and the kit's thin wide-tracked wordmark does not sit in a 64
   the kit's `.ico`: that file is 285KB.
 
 **Hero & product imagery**: everything in `assets/` is WebP, and it must stay that way — the
-whole page is ~220KB over the wire and the images are most of it.
+whole page is ~206KB over the wire (gzipped `index.html` + the hero and card images actually
+loaded; up from ~149KB before the card renders were re-matted, see below) and the images are
+most of it.
 - `hero-bg.webp` / `hero-bg-light.webp` — theme-swapped hero background, toggled by the same
   `[data-theme]` CSS attribute selectors as the theme switch, no JS.
 - `card-automation.webp`, `card-dashboards.webp`, `card-whatsapp.webp`,
@@ -119,21 +121,34 @@ whole page is ~220KB over the wire and the images are most of it.
 - `bg-1.webp`…`bg-5.webp` are **orphaned** — leftovers from the removed product-card cycle.
   Nothing references them; delete them if you're tidying.
 
-The renders arrived as ~500–800KB JPEGs (2.9MB total, which dominated page load). They are
-now 1100px-wide WebP, 106KB for all five. Re-encode anything new the same way:
+The renders arrived as ~500–800KB JPEGs (2.9MB total, which dominated page load), then went
+through an intermediate 1100px-wide flat-WebP pass, and are now **pre-matted RGBA WebP**
+(alpha-cut from their near-black backdrop, true color un-premultiplied back out) via
+`tools/matte-card-render.py` — see that script's docstring for the technique and the exact
+per-image parameters used. Re-run it on any new render before committing:
 
 ```
-ffmpeg -i in.jpg -vf scale=1100:-1 -c:v libwebp -quality 75 -compression_level 6 out.webp
+python tools/matte-card-render.py in.webp assets/card-name.webp <floor> <quality> <max_w>
 ```
 
-1100px covers a 2× desktop card and a 3× phone card; the art is smooth-gradient so quality 75
-is visually lossless here, and the front-face overlay hides any residual artefacts anyway.
-**Don't commit source JPEGs/PNGs** — convert first.
+Tune `floor` by eye against composites over both a light and a dark background before
+committing — there's no value that's correct for every image (see the script for what was
+used for the current five). **Don't commit source JPEGs/PNGs, or a from-scratch render that
+hasn't been through this script** — a flat (non-matted) image dropped straight into
+`.flip-front-bg` will carry its own near-black backdrop into the light-theme card face.
 
-In light theme `.flip-front-bg` is inverted via CSS filter
-(`invert(1) hue-rotate(180deg) saturate(.7)`) at `opacity: .3`. That filter was written for the
-old line art; on the current photographic renders it washes them out to near-white, and light is
-now the default theme, so this is a known open design question rather than a settled choice.
+**Why the mattes exist, and why there's no per-theme filter any more**: `.flip-front-bg` used
+to run a CSS filter in light theme (`invert(1) hue-rotate(180deg) saturate(.7)` at
+`opacity: .3`) to compensate for the renders' near-black backdrop. That filter was written for
+an earlier abstract-line-art asset set; on the photographic renders it inverted the backdrop to
+near-white as intended but also rotated and desaturated the subject itself, washing every card
+to a near-invisible pale ghost in light theme — the *default* theme, so this was the default
+experience of the whole product section. The pre-matting above fixes the actual cause (a flat
+image with a baked-in dark backdrop being asked to work on two different card backgrounds)
+instead of trying to compensate for it with a filter, so `.flip-front-bg` carries no per-theme
+override any more: `background-size: contain` (not `cover` — these are isolated cutouts now,
+not full-bleed photos, so cropping them would cut the render off) at `opacity: .85` / `1` on
+hover, unchanged across themes.
 
 **3D flip cards** (replaced the old auto-advancing product-card cycle — that machinery is gone):
 `.flip-cards-grid` holds 5 `.flip-card` articles, each a `perspective` container around a
