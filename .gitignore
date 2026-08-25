@@ -1,1 +1,6 @@
 planes-de-negocio/
+
+# Claude Code local tooling state (skill installs, not site content)
+.agents/
+.claude/skills/
+skills-lock.json
