@@ -9,7 +9,8 @@ reinvent software, we integrate the products your operation already needs"). The
 site is `index.html` plus a small `assets/` folder of decorative background images — no
 build step, no package manager, no framework, no server-side code. All CSS and JS are
 embedded inline in `index.html`; the only external dependency is the Google Fonts stylesheet
-link (Inter + JetBrains Mono).
+link (Inter + Space Grotesk + JetBrains Mono — Space Grotesk is reserved for large display
+headings only, see the Typography note below; Inter remains the body and wordmark face).
 
 Hosted on GitHub Pages, serving directly from the repo root on the default branch.
 
@@ -25,6 +26,20 @@ Hosted on GitHub Pages, serving directly from the repo root on the default branc
 - `.nojekyll` at the repo root disables GitHub Pages' Jekyll processing — don't remove it.
 
 ## Architecture inside `index.html`
+
+**Typography**: two-tier system. `body` sets Inter (400/500/600/700) for everything by
+default — copy, labels, the nav/footer wordmark (kept in Inter deliberately; see the Brand
+mark note below on why the wordmark stays selectable HTML text). A second selector list
+(`.hero h1, .products-intro h2, .process-head h2, .contact-info h2, .cta-mid h2,
+.flip-back-top h3, .step h3`) overrides `font-family` to Space Grotesk — reserved for text
+set 20px and larger, where its geometric character reads as intentional instead of just
+adding weight; below that size the difference from Inter is imperceptible and not worth a
+second face. The legal pages' top `<h1>` (`Política de Privacidad` / `Privacy Policy`) picks
+up the same Space Grotesk rule directly on the page's own `h1` selector, for brand
+consistency at the one large heading those pages have; their ~15 numbered section `<h2>`s
+stay in Inter, since a display face repeated across that many headings in a legal document
+would read as noise, not brand. `JetBrains Mono` remains reserved for labels, tags, and
+numeric/monospace UI (`.mono`).
 
 **Theming**: All colors are CSS custom properties. `:root` holds the **dark** palette and
 `[data-theme="light"]` overrides it with the light one, using `oklch()` for the accent colors.
