@@ -231,23 +231,23 @@
     mask-image: linear-gradient(90deg, transparent 2%, #000 34%);
   }
   .signal-net svg { width: 100%; height: auto; overflow: visible; }
-  .signal-line { fill: none; stroke: currentColor; stroke-width: 1; opacity: .16; }
+  .signal-line { fill: none; stroke: currentColor; stroke-width: 1.5; opacity: .3; }
   .signal-pulse {
     fill: currentColor;
     offset-rotate: 0deg;
-    filter: drop-shadow(0 0 5px var(--accent));
+    filter: drop-shadow(0 0 6px var(--accent));
     animation: zn-travel 5.2s cubic-bezier(.45,0,.55,1) infinite, zn-travel-fade 5.2s linear infinite;
   }
   .signal-pulse.p1 { offset-path: path('M0,54 C170,66 320,124 470,200'); animation-delay: 0s, 0s; }
   .signal-pulse.p2 { offset-path: path('M0,150 C175,164 330,186 470,200'); animation-delay: -1.3s, -1.3s; }
   .signal-pulse.p3 { offset-path: path('M0,258 C160,250 330,236 470,200'); animation-delay: -2.6s, -2.6s; }
   .signal-pulse.p4 { offset-path: path('M0,352 C185,336 340,276 470,200'); animation-delay: -3.9s, -3.9s; }
-  .signal-node { fill: currentColor; opacity: .9; }
+  .signal-node { fill: currentColor; opacity: 1; filter: drop-shadow(0 0 8px var(--accent)); }
   .signal-ping {
-    fill: none; stroke: currentColor; stroke-width: 1.2; transform-origin: 470px 200px;
+    fill: none; stroke: currentColor; stroke-width: 1.4; transform-origin: 470px 200px;
     animation: zn-node-ping 2.6s ease-out infinite;
   }
-  .signal-tap { fill: currentColor; opacity: .35; }
+  .signal-tap { fill: currentColor; opacity: .5; }
   @media (max-width: 900px) { .signal-net { display: none; } }
 
   .hero-content { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 112px 32px 64px; }
@@ -314,7 +314,7 @@
 
   .products-grid {
     position: relative; max-width: 1200px; margin: 0 auto; padding: 88px 32px;
-    display: grid; grid-template-columns: minmax(260px,32fr) minmax(320px,68fr); gap: 48px;
+    display: grid; grid-template-columns: minmax(240px,27fr) minmax(320px,73fr); gap: 48px;
     align-items: start;
   }
   .eyebrow-num { font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
@@ -459,8 +459,11 @@
   }
 
   /* ========== PROCESS ========== */
-  .process { border-bottom: 1px solid var(--bd2); }
-  .process .container { padding: 88px 32px; }
+  /* Panel tone (not --bg) so this section reads as its own band between two
+     flat-bg sections, instead of the page settling into one uniform tone
+     hairline-divided from top to bottom. */
+  .process { background: var(--panel); border-bottom: 1px solid var(--bd2); }
+  .process .container { padding: 104px 32px; }
   .process-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
   .process-head h2 { margin-top: 18px; font-size: 34px; font-weight: 600; letter-spacing: -0.03em; }
   .process-head p { max-width: 340px; font-size: 15px; color: var(--mut); }
@@ -652,12 +655,12 @@
           <circle class="signal-tap" cx="0" cy="150" r="2"/>
           <circle class="signal-tap" cx="0" cy="258" r="2"/>
           <circle class="signal-tap" cx="0" cy="352" r="2"/>
-          <circle class="signal-ping" cx="470" cy="200" r="5"/>
-          <circle class="signal-node" cx="470" cy="200" r="3.2"/>
-          <circle class="signal-pulse p1" r="2.6"/>
-          <circle class="signal-pulse p2" r="2.6"/>
-          <circle class="signal-pulse p3" r="2.6"/>
-          <circle class="signal-pulse p4" r="2.6"/>
+          <circle class="signal-ping" cx="470" cy="200" r="6"/>
+          <circle class="signal-node" cx="470" cy="200" r="4.2"/>
+          <circle class="signal-pulse p1" r="3"/>
+          <circle class="signal-pulse p2" r="3"/>
+          <circle class="signal-pulse p3" r="3"/>
+          <circle class="signal-pulse p4" r="3"/>
         </svg>
       </div>
       <div class="hero-fade" aria-hidden="true"></div>
