@@ -18,7 +18,7 @@
 1. **Automatización de flujos de procesos** — orquestación de workflows, eliminación de tareas manuales repetitivas
 2. **Dashboards de métricas** — visualización en tiempo real, KPIs, data-dense, monitoring
 3. **Bots de WhatsApp** — automatización conversacional, atención 24/7, integración con APIs
-4. **Plataforma omnicanal** — integración de bandejas de atención (WhatsApp, email, chat web, telefónica) en una sola bandeja unificada
+4. **Plataforma multicanal** — integración de bandejas de atención (WhatsApp, email, chat web, telefónica) en una sola bandeja unificada
 5. **Analítica de datos on-premises** — BI local sin enviar datos a la nube, privacidad total, despliegue en infraestructura propia
 
 ---
@@ -70,7 +70,7 @@ zignal-site/
 | 1 | Automatización de procesos | Process Automation | Orquesta workflows de principio a fin. Elimina tareas manuales repetitivas y reduce errores operativos. | Orchestrate workflows end-to-end. Eliminate repetitive manual tasks and reduce operational errors. |
 | 2 | Dashboards de métricas | Metrics Dashboards | Visualiza KPIs en tiempo real. Monitoreo de operaciones con datos densos y accionables. | Visualize KPIs in real-time. Operational monitoring with dense, actionable data. |
 | 3 | Bots de WhatsApp | WhatsApp Bots | Atención conversacional 24/7. Responde, deriva y transacciona directamente en WhatsApp Business. | 24/7 conversational support. Respond, route, and transact directly on WhatsApp Business. |
-| 4 | Plataforma omnicanal | Omnichannel Platform | Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar. | One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place. |
+| 4 | Plataforma multicanal | Multichannel Platform | Una sola bandeja para WhatsApp, email, chat web y voz. Tus agentes responden desde un único lugar. | One unified inbox for WhatsApp, email, web chat, and voice. Your agents respond from one place. |
 | 5 | Analítica on-premises | On-premises Analytics | Business intelligence en tu infraestructura. Tus datos nunca salen de tu red. Privacidad por diseño. | Business intelligence on your infrastructure. Your data never leaves your network. Privacy by design. |
 
 ### 4. Sección "Cómo funciona" / "How it works" (Decide/Learn)
