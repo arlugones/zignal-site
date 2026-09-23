@@ -1158,6 +1158,13 @@
             <span><span lang="es">¿Qué proceso quieres automatizar?</span><span lang="en">Which process do you want to automate?</span></span>
             <textarea name="message" rows="4" data-es-ph="Describe brevemente el flujo actual…" data-en-ph="Briefly describe your current flow…" placeholder="Describe brevemente el flujo actual…"></textarea>
           </label>
+          <label class="field field-full">
+            <span class="field-label-row">
+              <span><span lang="es">Verificación</span><span lang="en">Verification</span>: <strong id="captcha-question"></strong></span>
+              <span class="field-error" id="captcha-error"></span>
+            </span>
+            <input type="number" id="captcha-input" required autocomplete="off" data-es-ph="Resultado" data-en-ph="Result" placeholder="Resultado">
+          </label>
           <div class="form-actions">
             <button type="submit" class="btn btn-primary" id="submit-btn"><span lang="es">Enviar solicitud</span><span lang="en">Send request</span></button>
             <span class="form-status" id="form-status"></span>
@@ -1613,6 +1620,22 @@
       var emailError = document.getElementById('email-error');
       var statusEl = document.getElementById('form-status');
 
+      var captchaQuestionEl = document.getElementById('captcha-question');
+      var captchaInput = document.getElementById('captcha-input');
+      var captchaError = document.getElementById('captcha-error');
+      var captchaAnswer = 0;
+
+      function generateCaptcha() {
+        var num1 = Math.floor(Math.random() * 10) + 1;
+        var num2 = Math.floor(Math.random() * 10) + 1;
+        captchaAnswer = num1 + num2;
+        captchaQuestionEl.textContent = num1 + ' + ' + num2 + ' = ?';
+        captchaInput.value = '';
+        captchaInput.dataset.invalid = 'false';
+        captchaError.style.opacity = '0';
+      }
+      generateCaptcha();
+
       function emailIssue(value) {
         var es = currentLang === 'es';
         var v = (value || '').trim().toLowerCase();
@@ -1639,10 +1662,27 @@
         statusEl.className = 'form-status';
         statusEl.textContent = '';
 
+        var userCaptcha = parseInt(captchaInput.value, 10);
+        var captchaIssue = isNaN(userCaptcha) || userCaptcha !== captchaAnswer;
+        if (captchaIssue) {
+          captchaError.textContent = es ? 'Respuesta incorrecta' : 'Incorrect answer';
+          captchaError.style.opacity = '1';
+          captchaInput.dataset.invalid = 'true';
+        } else {
+          captchaError.style.opacity = '0';
+          captchaInput.dataset.invalid = 'false';
+        }
+
         var issue = checkEmail();
-        if (issue) {
-          emailInput.focus();
-          statusEl.textContent = es ? 'Necesitamos un correo corporativo (no Gmail, Outlook, Yahoo…).' : 'We need a work email address (no Gmail, Outlook, Yahoo…).';
+        if (captchaIssue || issue) {
+          if (captchaIssue) {
+            captchaInput.focus();
+            statusEl.textContent = es ? 'Por favor, resuelve la verificación matemática.' : 'Please solve the math verification.';
+            generateCaptcha();
+          } else {
+            emailInput.focus();
+            statusEl.textContent = es ? 'Necesitamos un correo corporativo (no Gmail, Outlook, Yahoo…).' : 'We need a work email address (no Gmail, Outlook, Yahoo…).';
+          }
           statusEl.className = 'form-status error';
           return;
         }
@@ -1670,6 +1710,7 @@
             .then(function (res) {
               if (!res.ok) throw new Error('bad response');
               form.reset();
+              generateCaptcha();
               statusEl.textContent = es ? '✓ Gracias. Te contactamos en menos de 24 h.' : '✓ Thank you. We reply within one business day.';
               statusEl.className = 'form-status ok';
             })
