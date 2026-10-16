@@ -16,10 +16,13 @@
   const savedTheme = localStorage.getItem('zn-theme');
   if (savedTheme === 'dark' || savedTheme === 'light') {
     root.setAttribute('data-theme', savedTheme);
+  } else {
+    root.setAttribute('data-theme', 'dark');
   }
 
   function toggleTheme() {
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    const current = root.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     localStorage.setItem('zn-theme', next);
   }

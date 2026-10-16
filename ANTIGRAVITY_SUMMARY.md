@@ -15,4 +15,4 @@
      - *Bots de WhatsApp* (`WhatsApp Bots`)
      - *Plataforma multicanal* (`Multichannel Platform` — *En desarrollo*)
      - *Analítica on-premises* (`On-premises Analytics`)
-  3. Soporte bilingüe (`ES` / `EN`), modo claro/oscuro (`light` por defecto) y formulario de contacto funcional conectado a Formspree.
+  3. Soporte bilingüe (`ES` / `EN`), modo claro/oscuro (`dark` por defecto) y formulario de contacto funcional conectado a Formspree.
