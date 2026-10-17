@@ -50,7 +50,7 @@
   }
 
   const savedLang = localStorage.getItem('zn-lang');
-  if (savedLang === 'en' || savedLang === 'es') {
+  if (!root.hasAttribute('data-lang-fixed') && (savedLang === 'en' || savedLang === 'es')) {
     applyLanguage(savedLang);
   }
 

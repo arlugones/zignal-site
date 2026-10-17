@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-lang="en" data-lang-fixed="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Terms and Conditions — Zignal Nexora</title>
 <meta name="description" content="Zignal Nexora's Terms and Conditions: scope of our systems integration, automation, and data services, commercial terms, intellectual property, liability, and governing law.">
 <meta name="robots" content="index, follow">
@@ -14,99 +14,61 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230b0f17'/%3E%3Ccircle cx='16' cy='16' r='8.4' fill='none' stroke='%23818cf8' stroke-width='2.6'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23818cf8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  /* Tokens aligned with Antigravity Design System from motion.css */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root,
-  [data-theme="dark"] {
-    --bg: #0b0f17; --panel: #101622; --elev: #161f30;
-    --tx: #f8fafc; --tx2: #cbd5e1; --mut: #94a3b8; --sub: #64748b;
-    --accent: #818cf8; --accent-2: #2dd4bf;
-    --accent-soft: rgba(129, 140, 248, 0.12); --accent-line: rgba(129, 140, 248, 0.28);
-    --on-accent: #ffffff;
-    --bd: rgba(255, 255, 255, 0.12); --bd2: rgba(255, 255, 255, 0.08); --fill: rgba(255, 255, 255, 0.03);
-  }
-  [data-theme="light"] {
-    --bg: #f7f7f4; --panel: #ffffff; --elev: #f0efe9;
-    --tx: #0f172a; --tx2: #334155; --mut: #475569; --sub: #64748b;
-    --accent: #4f46e5; --accent-2: #0d9488;
-    --accent-soft: rgba(79, 70, 229, 0.08); --accent-line: rgba(79, 70, 229, 0.24);
-    --on-accent: #ffffff;
-    --bd: rgba(15, 23, 42, 0.12); --bd2: rgba(15, 23, 42, 0.08); --fill: rgba(15, 23, 42, 0.03);
-  }
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body {
-    background: var(--bg); color: var(--tx);
-    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    font-feature-settings: "cv01", "ss03"; line-height: 1.65;
-    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  svg { display: block; }
-  .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
-
-  .bar { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--bd2); }
-  .bar-inner { max-width: 940px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; gap: 10px; }
-  .brand-mark { flex-shrink: 0; }
-  .brand { display: flex; align-items: center; gap: 9px; color: var(--tx); font-weight: 600; font-size: 15px; letter-spacing: -0.02em; }
-  .brand:hover { text-decoration: none; }
-  .spacer { flex: 1; }
-  .bar-btn {
-    font-size: 12px; color: var(--mut); border: 1px solid var(--bd); border-radius: 6px;
-    padding: 6px 10px; background: var(--fill); cursor: pointer; font-family: inherit; line-height: 1.4;
-  }
-  .bar-btn:hover { color: var(--tx); border-color: var(--accent-line); text-decoration: none; }
-
-  main { padding: 52px 0 76px; }
-  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-  .kicker { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
-  h1 { margin-top: 14px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.22; font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif; }
-  .updated { margin-top: 14px; font-size: 12px; color: var(--sub); }
-  .lede { margin-top: 22px; font-size: 17px; color: var(--tx2); }
-  h2 { margin-top: 42px; padding-top: 24px; border-top: 1px solid var(--bd2); font-size: 21px; font-weight: 600; letter-spacing: -0.02em; }
-  h3 { margin-top: 26px; font-size: 15px; font-weight: 600; color: var(--tx2); }
-  p { margin-top: 14px; color: var(--mut); }
-  ul { margin: 12px 0 0 20px; color: var(--mut); }
-  li { margin-top: 7px; }
-  li::marker { color: var(--sub); }
-  strong { color: var(--tx2); font-weight: 600; }
-  .callout {
-    margin-top: 24px; padding: 20px 22px; border: 1px solid var(--accent-line);
-    background: var(--accent-soft); border-radius: 10px;
-  }
-  .callout h3 { margin-top: 0; color: var(--tx); font-size: 16px; }
-  .callout p { color: var(--tx2); }
-  .toc { margin-top: 28px; padding: 18px 20px; border: 1px solid var(--bd2); border-radius: 10px; background: var(--fill); }
-  .toc ol { margin: 10px 0 0 18px; color: var(--mut); font-size: 14px; }
-  .toc li { margin-top: 5px; }
-
-  .foot { border-top: 1px solid var(--bd2); background: var(--panel); padding: 26px 0; }
-  .foot-inner {
-    max-width: 940px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between;
-    gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--sub);
-  }
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="motion.css">
 </head>
 <body>
+  <!-- Official Zignal Nexora Brand Mark -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="zn-mark" viewBox="492.3 472.81 1015.3 1054.66">
+      <path d="M1502.9,982.7l-80.2-103.4c-2.2-3.1-3.1-7-2.4-10.8c2.2-12.8,5.2-47.4,6-70.2c1.1-33.9-2.7-84.8-27.3-135.1 c-15.7-32-46.2-78.4-103.1-118.1c-59.6-41.6-133.4-65.5-219.5-71.2c-46-3-91.2,0.2-134.2,9.7c-34.5,7.6-67.8,19.1-98.9,34.3 c-40.8,19.9-67,40.8-77.5,49.9c-6.1-4.7-13.8-7.5-22.1-7.5c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6 c20.2,0,36.6-16.4,36.6-36.6c0-3-0.4-6-1.1-8.8c6.7-6,32.7-28.2,75.6-49c46-22.3,121.5-47.5,220-41.1 c201.8,13.2,278.8,127.4,302.5,175.9c22.3,45.6,25.9,92,24.9,123c-1,33.9-7.6,76.2-7.6,76.4c-1,3.4-0.4,7,1.7,9.9l86.6,113 c1.3,2,0.9,3.8,0.5,4.7c-0.4,0.9-1.3,2.6-3.6,3.1l-52.9,13c-8.3,2-15.3,7.6-19.1,15.3c-3.8,7.7-4,16.6-0.6,24.4l9.9,22.7 l-33.6,16.7c-4.1,2.3-6.8,6.5-7.2,11.2c-0.4,4.7,1.6,9.3,5.3,12.2l22.7,19.9c0.4,0.6,0.5,1.1,0.5,1.6c0,0.5-0.2,1.2-0.9,1.8 c-17.2,14.5-20.6,22.1-21.6,27.1c-1.1,5.3,0.6,11.3,3.7,22.2c8.1,28.6,15.1,59.9-5.1,69.5c-18.6,8.9-74.7,12.8-241.3-60.4 c-32.8-14.4-62.8-36.3-86.7-63.3c-4.8-5.4-9.9-11.2-14.9-16.9c-27.5-31.4-45-70.5-50.2-111.7c17.2,5.7,35.6,8.8,54.7,8.8 c17.7,0,34.9-2.7,51-7.6v37.1l69.4,39.5c-0.9,3.1-1.3,6.4-1.3,9.7c0,20.2,16.4,36.6,36.6,36.6s36.6-16.4,36.6-36.6 s-16.4-36.6-36.6-36.6c-8,0-15.4,2.6-21.5,7l-59.1-33.6v-32.5c59.2-28.2,100.2-88.6,100.2-158.4c0-8.8-0.7-17.5-1.9-25.9l55.1-44.2 v-73c13.6-5.4,23.2-18.6,23.2-34c0-20.2-16.4-36.6-36.6-36.6c-20.2,0-36.6,16.4-36.6,36.6c0,16.5,10.9,30.4,25.9,35v60.4l-37,29.6 c-10.8-34.8-32.2-64.9-60.4-86.7v-74.9l-51.9-35c1.7-4.3,2.7-8.9,2.7-13.8c0-20.2-16.4-36.6-36.6-36.6s-36.6,16.4-36.6,36.6 c0,20.2,16.4,36.6,36.6,36.6c6.4,0,12.5-1.7,17.8-4.6l43.9,29.6v46.4c-24.7-13.3-52.9-20.9-82.9-20.9 c-68.9,0-128.6,39.9-157.3,97.9v-1.7H641.9c-5-14.3-18.6-24.5-34.6-24.5c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6 c16,0,29.6-10.3,34.6-24.5h234c-5.3,16.1-8.4,33.2-8.8,51H742.6l-58.7,55.9l-120.8-0.9c-5.3-13.8-18.6-23.6-34.2-23.6 c-20.2,0-36.6,16.4-36.6,36.6s16.4,36.6,36.6,36.6c16.3,0,30.2-10.7,34.9-25.5l129.7,1l58.8-56h115.9 c6.8,59.3,43.3,109.7,94.2,135.9c3.4,50.9,23.5,99.7,57.3,138.2c5,5.8,10.2,11.6,15,17c26.2,29.5,59.1,53.5,95.1,69.3 c37.1,16.3,71,29.8,101.1,40.2c-22.3,14.8-55.6,42-75.2,81.8c-20.3,35.9-18.7,100.1-15.6,138.4c-17-13.5-43.1-32.3-77.8-52 c-38.5-21.8-79.7-40.3-122.7-54.9c-46.4-15.7-94.9-27-144.4-33.5c10.2-12.3,23.7-30.4,36.3-52.3c14-24.5,23.9-48.8,29.2-72.2 c6.8-29.8,6.4-58.2-1.3-84.5c-12.3-42.1-41.5-74.3-84.3-93.1c-20.8-9.2-40-13-51.1-14.6c-4.5-15.1-18.5-26.2-35.1-26.2 c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6c15.3,0,28.4-9.4,33.9-22.8c9.9,1.6,26.1,5.1,43.3,12.8 c36.2,16.1,59.8,42.2,70.1,77.5c14.8,50.6-5.7,102.6-25.5,137.3c-22.1,38.7-48.3,65.3-48.6,65.6l-2.6,2.6c-2.1,2.1-2.7,5.1-1.7,7.8 l1.7,4.8c1,2.7,3.4,4.6,6.3,4.9l3.6,0.4c125.8,12.7,221.7,54.6,279.9,87.6c63.2,35.8,97.1,69,97.5,69.3l4,4c2.9,2.9,7.5,2.9,10.4,0 l4.4-4.3c1.7-1.7,2.5-4.1,2.1-6.4l-0.6-3.7c-0.2-1.1-16.3-109.3,9.4-154.2l0.4-0.7c13.3-27.4,34.7-48.3,53-62.4 c13.9-10.8,25.9-17.6,31.1-20.4c5.5,1.7,10.9,3.2,16,4.6c30.5,8.3,55.7,12.5,76,12.5c15.3,0,27.9-2.4,37.8-7.1 c12.4-5.9,27.2-19.2,26.9-49c-0.1-17.6-5.3-35.6-9-48.8c-1.1-3.9-2.4-8.6-2.9-11.1c1.1-1.7,4.3-5.7,13.1-13.1 c5.7-4.8,9.1-11.8,9.5-19.2c0.3-7.4-2.5-14.7-7.8-20l-0.5-0.5l-12.2-11.6l22.1-10.3l0.7-0.4c9.4-6.1,12.9-17.9,8.5-28.2l-10.4-23.9 c-0.8-1.8-0.3-3.3,0.1-4c0.4-0.7,1.3-2.1,3.2-2.5l52.9-13c9.2-2.3,16.8-8.9,20.3-17.8C1509.1,1000.6,1508.1,990.6,1502.9,982.7z M743.6,609.2c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C756.1,603.6,750.5,609.2,743.6,609.2z M1198.2,1084c6.9,0,12.5,5.6,12.5,12.5s-5.6,12.5-12.5,12.5c-6.9,0-12.5-5.6-12.5-12.5S1191.3,1084,1198.2,1084z M1257.5,652.8 c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5s-12.5-5.6-12.5-12.5C1245.1,658.4,1250.7,652.8,1257.5,652.8z M1063.7,592.4 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5s12.5,5.6,12.5,12.5C1076.2,586.8,1070.6,592.4,1063.7,592.4z M607.4,787.8 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C619.8,782.2,614.2,787.8,607.4,787.8z M528.9,918.8 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C541.4,913.2,535.8,918.8,528.9,918.8z M891.2,842.4 c0-83.4,67.8-151.2,151.2-151.2c83.4,0,151.2,67.8,151.2,151.2s-67.8,151.2-151.2,151.2C959.1,993.6,891.2,925.8,891.2,842.4z M689.1,1049.2c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5 C701.6,1043.6,696,1049.2,689.1,1049.2z"/>
+      <path d="M1142.6,842.4c0-55.2-44.9-100.1-100.1-100.1c-55.2,0-100.1,44.9-100.1,100.1s44.9,100.1,100.1,100.1 C1097.7,942.6,1142.6,897.6,1142.6,842.4z M966.4,842.4c0-41.9,34.1-76,76-76c41.9,0,76,34.1,76,76c0,41.9-34.1,76-76,76 C1000.5,918.4,966.4,884.3,966.4,842.4z"/>
+      <circle cx="1042.4" cy="842.4" r="33.6" fill="var(--accent)"/>
+      <path d="M679.6,732.9c15.6,0,29-9.8,34.2-23.6h105.7l80.8-81c5,2.6,10.6,4,16.6,4c20.2,0,36.6-16.4,36.6-36.6 c0-20.2-16.4-36.6-36.6-36.6c-20.2,0-36.6,16.4-36.6,36.6c0,5.4,1.2,10.5,3.3,15.2l-74.1,74.3h-95c-4.7-14.7-18.6-25.4-34.9-25.4 c-20.2,0-36.6,16.4-36.6,36.6C643,716.5,659.4,732.9,679.6,732.9z M916.9,583.2c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5 c-6.9,0-12.5-5.6-12.5-12.5C904.5,588.8,910.1,583.2,916.9,583.2z M679.6,683.8c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5 c-6.9,0-12.5-5.6-12.5-12.5C667.1,689.4,672.7,683.8,679.6,683.8z"/>
+      <path d="M784.6,912.9c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6c8.5,0,16.4-2.9,22.6-7.8 c28.4,26.9,79.8,69.6,89.8,82.6c8.7,54.7,15.1,186.2,15.2,187.6l0.6,5l50.1,39.6c-1.1,3.4-1.7,7.1-1.7,10.9 c0,20.2,16.4,36.6,36.6,36.6c20.2,0,36.6-16.4,36.6-36.6s-16.4-36.6-36.6-36.6c-7.6,0-14.7,2.3-20.6,6.3l-41.7-33 c-3-25.2-7.5-138.9-15.2-186.5l-0.4-2.5l-1.4-2.1c-10.5-16.1-89.3-83.6-97.2-91.2l-1.7,1.8c1-3.4,1.6-7,1.6-10.7 C821.2,929.3,804.8,912.9,784.6,912.9z M1010.3,1304c0,6.9-5.6,12.5-12.5,12.5c-6.9,0-12.5-5.6-12.5-12.5s5.6-12.5,12.5-12.5 C1004.7,1291.5,1010.3,1297.1,1010.3,1304z M784.6,962c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5 c6.9,0,12.5,5.6,12.5,12.5C797.1,956.4,791.5,962,784.6,962z"/>
+    </symbol>
+  </svg>
 
-<header class="bar">
-  <div class="bar-inner">
-    <a class="brand" href="index.html" aria-label="Zignal Nexora — Home">
-      <svg class="brand-mark" width="34" height="35" viewBox="492.3 472.81 1015.3 1054.66" fill="currentColor" aria-hidden="true"><path d="M1502.9,982.7l-80.2-103.4c-2.2-3.1-3.1-7-2.4-10.8c2.2-12.8,5.2-47.4,6-70.2c1.1-33.9-2.7-84.8-27.3-135.1 c-15.7-32-46.2-78.4-103.1-118.1c-59.6-41.6-133.4-65.5-219.5-71.2c-46-3-91.2,0.2-134.2,9.7c-34.5,7.6-67.8,19.1-98.9,34.3 c-40.8,19.9-67,40.8-77.5,49.9c-6.1-4.7-13.8-7.5-22.1-7.5c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6 c20.2,0,36.6-16.4,36.6-36.6c0-3-0.4-6-1.1-8.8c6.7-6,32.7-28.2,75.6-49c46-22.3,121.5-47.5,220-41.1 c201.8,13.2,278.8,127.4,302.5,175.9c22.3,45.6,25.9,92,24.9,123c-1,33.9-7.6,76.2-7.6,76.4c-1,3.4-0.4,7,1.7,9.9l86.6,113 c1.3,2,0.9,3.8,0.5,4.7c-0.4,0.9-1.3,2.6-3.6,3.1l-52.9,13c-8.3,2-15.3,7.6-19.1,15.3c-3.8,7.7-4,16.6-0.6,24.4l9.9,22.7 l-33.6,16.7c-4.1,2.3-6.8,6.5-7.2,11.2c-0.4,4.7,1.6,9.3,5.3,12.2l22.7,19.9c0.4,0.6,0.5,1.1,0.5,1.6c0,0.5-0.2,1.2-0.9,1.8 c-17.2,14.5-20.6,22.1-21.6,27.1c-1.1,5.3,0.6,11.3,3.7,22.2c8.1,28.6,15.1,59.9-5.1,69.5c-18.6,8.9-74.7,12.8-241.3-60.4 c-32.8-14.4-62.8-36.3-86.7-63.3c-4.8-5.4-9.9-11.2-14.9-16.9c-27.5-31.4-45-70.5-50.2-111.7c17.2,5.7,35.6,8.8,54.7,8.8 c17.7,0,34.9-2.7,51-7.6v37.1l69.4,39.5c-0.9,3.1-1.3,6.4-1.3,9.7c0,20.2,16.4,36.6,36.6,36.6s36.6-16.4,36.6-36.6 s-16.4-36.6-36.6-36.6c-8,0-15.4,2.6-21.5,7l-59.1-33.6v-32.5c59.2-28.2,100.2-88.6,100.2-158.4c0-8.8-0.7-17.5-1.9-25.9l55.1-44.2 v-73c13.6-5.4,23.2-18.6,23.2-34c0-20.2-16.4-36.6-36.6-36.6c-20.2,0-36.6,16.4-36.6,36.6c0,16.5,10.9,30.4,25.9,35v60.4l-37,29.6 c-10.8-34.8-32.2-64.9-60.4-86.7v-74.9l-51.9-35c1.7-4.3,2.7-8.9,2.7-13.8c0-20.2-16.4-36.6-36.6-36.6s-36.6,16.4-36.6,36.6 c0,20.2,16.4,36.6,36.6,36.6c6.4,0,12.5-1.7,17.8-4.6l43.9,29.6v46.4c-24.7-13.3-52.9-20.9-82.9-20.9 c-68.9,0-128.6,39.9-157.3,97.9v-1.7H641.9c-5-14.3-18.6-24.5-34.6-24.5c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6 c16,0,29.6-10.3,34.6-24.5h234c-5.3,16.1-8.4,33.2-8.8,51H742.6l-58.7,55.9l-120.8-0.9c-5.3-13.8-18.6-23.6-34.2-23.6 c-20.2,0-36.6,16.4-36.6,36.6s16.4,36.6,36.6,36.6c16.3,0,30.2-10.7,34.9-25.5l129.7,1l58.8-56h115.9 c6.8,59.3,43.3,109.7,94.2,135.9c3.4,50.9,23.5,99.7,57.3,138.2c5,5.8,10.2,11.6,15,17c26.2,29.5,59.1,53.5,95.1,69.3 c37.1,16.3,71,29.8,101.1,40.2c-22.3,14.8-55.6,42-75.2,81.8c-20.3,35.9-18.7,100.1-15.6,138.4c-17-13.5-43.1-32.3-77.8-52 c-38.5-21.8-79.7-40.3-122.7-54.9c-46.4-15.7-94.9-27-144.4-33.5c10.2-12.3,23.7-30.4,36.3-52.3c14-24.5,23.9-48.8,29.2-72.2 c6.8-29.8,6.4-58.2-1.3-84.5c-12.3-42.1-41.5-74.3-84.3-93.1c-20.8-9.2-40-13-51.1-14.6c-4.5-15.1-18.5-26.2-35.1-26.2 c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6c15.3,0,28.4-9.4,33.9-22.8c9.9,1.6,26.1,5.1,43.3,12.8 c36.2,16.1,59.8,42.2,70.1,77.5c14.8,50.6-5.7,102.6-25.5,137.3c-22.1,38.7-48.3,65.3-48.6,65.6l-2.6,2.6c-2.1,2.1-2.7,5.1-1.7,7.8 l1.7,4.8c1,2.7,3.4,4.6,6.3,4.9l3.6,0.4c125.8,12.7,221.7,54.6,279.9,87.6c63.2,35.8,97.1,69,97.5,69.3l4,4c2.9,2.9,7.5,2.9,10.4,0 l4.4-4.3c1.7-1.7,2.5-4.1,2.1-6.4l-0.6-3.7c-0.2-1.1-16.3-109.3,9.4-154.2l0.4-0.7c13.3-27.4,34.7-48.3,53-62.4 c13.9-10.8,25.9-17.6,31.1-20.4c5.5,1.7,10.9,3.2,16,4.6c30.5,8.3,55.7,12.5,76,12.5c15.3,0,27.9-2.4,37.8-7.1 c12.4-5.9,27.2-19.2,26.9-49c-0.1-17.6-5.3-35.6-9-48.8c-1.1-3.9-2.4-8.6-2.9-11.1c1.1-1.7,4.3-5.7,13.1-13.1 c5.7-4.8,9.1-11.8,9.5-19.2c0.3-7.4-2.5-14.7-7.8-20l-0.5-0.5l-12.2-11.6l22.1-10.3l0.7-0.4c9.4-6.1,12.9-17.9,8.5-28.2l-10.4-23.9 c-0.8-1.8-0.3-3.3,0.1-4c0.4-0.7,1.3-2.1,3.2-2.5l52.9-13c9.2-2.3,16.8-8.9,20.3-17.8C1509.1,1000.6,1508.1,990.6,1502.9,982.7z M743.6,609.2c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C756.1,603.6,750.5,609.2,743.6,609.2z M1198.2,1084c6.9,0,12.5,5.6,12.5,12.5s-5.6,12.5-12.5,12.5c-6.9,0-12.5-5.6-12.5-12.5S1191.3,1084,1198.2,1084z M1257.5,652.8 c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5s-12.5-5.6-12.5-12.5C1245.1,658.4,1250.7,652.8,1257.5,652.8z M1063.7,592.4 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5s12.5,5.6,12.5,12.5C1076.2,586.8,1070.6,592.4,1063.7,592.4z M607.4,787.8 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C619.8,782.2,614.2,787.8,607.4,787.8z M528.9,918.8 c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5C541.4,913.2,535.8,918.8,528.9,918.8z M891.2,842.4 c0-83.4,67.8-151.2,151.2-151.2c83.4,0,151.2,67.8,151.2,151.2s-67.8,151.2-151.2,151.2C959.1,993.6,891.2,925.8,891.2,842.4z M689.1,1049.2c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5c6.9,0,12.5,5.6,12.5,12.5 C701.6,1043.6,696,1049.2,689.1,1049.2z"></path><path d="M1142.6,842.4c0-55.2-44.9-100.1-100.1-100.1c-55.2,0-100.1,44.9-100.1,100.1s44.9,100.1,100.1,100.1 C1097.7,942.6,1142.6,897.6,1142.6,842.4z M966.4,842.4c0-41.9,34.1-76,76-76c41.9,0,76,34.1,76,76c0,41.9-34.1,76-76,76 C1000.5,918.4,966.4,884.3,966.4,842.4z"></path><circle cx="1042.4" cy="842.4" r="33.6" fill="var(--accent)"></circle><path d="M679.6,732.9c15.6,0,29-9.8,34.2-23.6h105.7l80.8-81c5,2.6,10.6,4,16.6,4c20.2,0,36.6-16.4,36.6-36.6 c0-20.2-16.4-36.6-36.6-36.6c-20.2,0-36.6,16.4-36.6,36.6c0,5.4,1.2,10.5,3.3,15.2l-74.1,74.3h-95c-4.7-14.7-18.6-25.4-34.9-25.4 c-20.2,0-36.6,16.4-36.6,36.6C643,716.5,659.4,732.9,679.6,732.9z M916.9,583.2c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5 c-6.9,0-12.5-5.6-12.5-12.5C904.5,588.8,910.1,583.2,916.9,583.2z M679.6,683.8c6.9,0,12.5,5.6,12.5,12.5c0,6.9-5.6,12.5-12.5,12.5 c-6.9,0-12.5-5.6-12.5-12.5C667.1,689.4,672.7,683.8,679.6,683.8z"></path><path d="M784.6,912.9c-20.2,0-36.6,16.4-36.6,36.6c0,20.2,16.4,36.6,36.6,36.6c8.5,0,16.4-2.9,22.6-7.8 c28.4,26.9,79.8,69.6,89.8,82.6c8.7,54.7,15.1,186.2,15.2,187.6l0.6,5l50.1,39.6c-1.1,3.4-1.7,7.1-1.7,10.9 c0,20.2,16.4,36.6,36.6,36.6c20.2,0,36.6-16.4,36.6-36.6s-16.4-36.6-36.6-36.6c-7.6,0-14.7,2.3-20.6,6.3l-41.7-33 c-3-25.2-7.5-138.9-15.2-186.5l-0.4-2.5l-1.4-2.1c-10.5-16.1-89.3-83.6-97.2-91.2l-1.7,1.8c1-3.4,1.6-7,1.6-10.7 C821.2,929.3,804.8,912.9,784.6,912.9z M1010.3,1304c0,6.9-5.6,12.5-12.5,12.5c-6.9,0-12.5-5.6-12.5-12.5s5.6-12.5,12.5-12.5 C1004.7,1291.5,1010.3,1297.1,1010.3,1304z M784.6,962c-6.9,0-12.5-5.6-12.5-12.5c0-6.9,5.6-12.5,12.5-12.5 c6.9,0,12.5,5.6,12.5,12.5C797.1,956.4,791.5,962,784.6,962z"></path></svg>
-      Zignal Nexora
-    </a>
-    <span class="spacer"></span>
-    <a class="bar-btn mono" href="terminos.html" hreflang="es" lang="es">ES</a>
-    <button class="bar-btn mono" id="theme-toggle" type="button" aria-label="Toggle theme">THEME</button>
-  </div>
-</header>
+  <!-- ====== NAVBAR ====== -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Zignal Nexora — Home">
+        <svg class="brand-mark" width="32" height="33" fill="currentColor" aria-hidden="true"><use href="#zn-mark"/></svg>
+        <span class="brand-name">Zignal Nexora</span>
+      </a>
 
-<main>
-  <div class="container">
-    <div class="kicker mono">Legal</div>
+      <nav class="nav-links" id="mobile-nav">
+        <a href="index.html#enfoque">Commercial impact</a>
+        <a href="index.html#productos">Services</a>
+        <a href="index.html#proceso">How we work</a>
+        <a href="index.html#contacto">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-switch" id="theme-toggle" role="switch" aria-label="Toggle theme">
+          <svg class="icon-moon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+          <svg class="icon-sun" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M19.1 4.9l-1.5 1.5M6.4 17.6l-1.5 1.5"/></svg>
+          <span class="knob"></span>
+        </button>
+
+        <a href="terminos.html" class="lang-btn mono" aria-label="Cambiar a español" onclick="localStorage.setItem('zn-lang','es')">ES</a>
+
+        <a href="index.html#contacto" class="btn btn-primary btn-sm nav-cta">
+          Talk to an advisor
+        </a>
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="15" x2="17" y2="15"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-page">
+    <div class="container legal-container">
+      <div class="kicker mono">Legal</div>
     <h1>Terms and Conditions</h1>
     <p class="updated mono">Last updated: August 27, 2026 · Version 1.0</p>
 
@@ -409,23 +371,54 @@
   </div>
 </main>
 
-<footer class="foot">
-  <div class="foot-inner">
-    <span>© 2026 Zignal Nexora. All rights reserved.</span>
-    <span><a href="index.html">Back to home</a> · <a href="privacy.html">Privacy</a> · <a href="terminos.html" hreflang="es" lang="es">Español</a></span>
-  </div>
-</footer>
+  <!-- ====== FOOTER ====== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a href="index.html" class="footer-brand">
+          <svg class="brand-mark" width="28" height="29" fill="currentColor" aria-hidden="true"><use href="#zn-mark"/></svg>
+          <span>Zignal Nexora</span>
+        </a>
+        <p class="footer-tagline">
+          Systems integration, automation, and data for operations that cannot fail.
+        </p>
+      </div>
 
-<script>
-  (function () {
-    var html = document.documentElement;
-    html.setAttribute('data-theme', localStorage.getItem('zn-theme') || 'dark');
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-      var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('zn-theme', next);
-    });
-  })();
-</script>
+      <div class="footer-col">
+        <div class="footer-col-title mono">Services</div>
+        <a href="index.html#productos" data-product-select="0">Automation</a>
+        <a href="index.html#productos" data-product-select="1">Dashboards</a>
+        <a href="index.html#productos" data-product-select="2">WhatsApp bots</a>
+        <a href="index.html#productos" data-product-select="3">Multichannel</a>
+        <a href="index.html#productos" data-product-select="4">On-prem analytics</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title mono">Company</div>
+        <a href="index.html#enfoque">Commercial focus</a>
+        <a href="index.html#proceso">How we work</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms and Conditions</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-title mono">Contact</div>
+        <a href="mailto:contact@zignalnexora.com">contact@zignalnexora.com</a>
+        <span class="static">+593 98 315 6210</span>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div class="footer-copy">© 2026 Zignal Nexora. All rights reserved.</div>
+      <div class="footer-toggles">
+        <button class="theme-switch theme-switch-sm" id="theme-toggle-footer" role="switch" aria-label="Toggle theme">
+          <span class="knob"></span>
+        </button>
+        <a href="terminos.html" class="lang-btn lang-btn-sm mono" aria-label="Cambiar a español" onclick="localStorage.setItem('zn-lang','es')">ES</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="motion.js" defer></script>
 </body>
 </html>
